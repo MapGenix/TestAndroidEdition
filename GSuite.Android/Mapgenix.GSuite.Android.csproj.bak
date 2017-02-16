@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4163C82C-2C6E-4D00-95E1-F35FA64B52EA}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapgenix.GSuite.Android</RootNamespace>
+    <AssemblyName>Mapgenix.GSuite.Android</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <TargetFrameworkVersion>v6.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoAPI.1.7.4\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\GeoAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GeoAPI.Bootstrapper.NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\GeoAPI.Bootstrapper.NetTopologySuite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Backend.Portable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Backend.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Canvas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Canvas.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.FeatureSource, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.FeatureSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Gdal.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Gdal.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Index, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Index.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Layers, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Layers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.RasterSource, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.RasterSource.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Shapes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Shapes.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Styles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Styles.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Symbology, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Symbology.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Utils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\NetTopologySuite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OpenTK" />
+    <Reference Include="PowerCollections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2573bf8a1bdddcd5, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\PowerCollections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing">
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\BaseBitmapTileCache.cs" />
+    <Compile Include="Cache\BaseNativeImageTileCache.cs" />
+    <Compile Include="Cache\BaseTileCache.cs" />
+    <Compile Include="Cache\FileBitmapTileCache.cs" />
+    <Compile Include="Events\CoordinateEventArgs.cs" />
+    <Compile Include="Events\ExtentChangedEventArgs.cs" />
+    <Compile Include="Events\ExtentChangingEventArgs.cs" />
+    <Compile Include="Events\ExtentEventArgs.cs" />
+    <Compile Include="Events\FeatureEditEventArgs.cs" />
+    <Compile Include="Events\FeatureEventArgs.cs" />
+    <Compile Include="Events\MapKeyEventArgs.cs" />
+    <Compile Include="Events\MapMouseEventArgs.cs" />
+    <Compile Include="Events\OverlayEventArgs.cs" />
+    <Compile Include="Events\OverlaysEventArgs.cs" />
+    <Compile Include="Events\PointShapeEventArgs.cs" />
+    <Compile Include="Events\ScaleChangedEventArgs.cs" />
+    <Compile Include="Events\ScaleChangingEventArgs.cs" />
+    <Compile Include="Events\VertexEditEventArgs.cs" />
+    <Compile Include="Events\VertexFeatureEventArgs.cs" />
+    <Compile Include="MapTools\DisplayZoomBarText.cs" />
+    <Compile Include="MapTools\LogoMapTool.cs" />
+    <Compile Include="MapTools\MapTools.cs" />
+    <Compile Include="MapTools\MouseCoordinateMapTool.cs" />
+    <Compile Include="MapTools\Advanced\BaseMapTool.cs" />
+    <Compile Include="Map\MapArguments.cs" />
+    <Compile Include="Map\Map.animation.cs" />
+    <Compile Include="Map\Map.event.cs" />
+    <Compile Include="Overlays\BackgroundOverlay.cs" />
+    <Compile Include="MapTools\PanZoomBarMapTool.cs" />
+    <Compile Include="Overlays\InteractiveOverlay\InteractionArguments.cs" />
+    <Compile Include="Overlays\InteractiveOverlay\KeyEventInteractionArguments.cs" />
+    <Compile Include="Properties\ExceptionMessage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExceptionMessage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Events\GeoCanvasEventArgs.cs" />
+    <Compile Include="Events\TileEventArgs.cs" />
+    <Compile Include="Events\TimedProgressEventArgs.cs" />
+    <Compile Include="GeoDrawing\DrawingVisualGeoCanvas.cs" />
+    <Compile Include="Helpers\CoordinateHelper.cs" />
+    <Compile Include="Helpers\MapUtil.cs" />
+    <Compile Include="Helpers\ResourceUtil.cs" />
+    <Compile Include="Helpers\Validators.cs" />
+    <Compile Include="Helpers\ZIndexes.cs" />
+    <Compile Include="Map\Map.cs" />
+    <Compile Include="Overlays\Advanced\BaseInteractiveOverlay.cs" />
+    <Compile Include="Overlays\Advanced\BaseOverlay.cs" />
+    <Compile Include="Overlays\Advanced\BaseTileOverlay.cs" />
+    <Compile Include="Overlays\Advanced\BaseTileOverlayForWrapDateline.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MapTools\ScaleLineMapTool.cs" />
+    <Compile Include="Tiles\Advanced\Tile.cs" />
+    <Compile Include="Tiles\Advanced\Tile.Single.cs" />
+    <Compile Include="Tiles\BaseTile.cs" />
+    <Compile Include="Tiles\BitmapTile.cs" />
+    <Compile Include="Tiles\LayerTile.cs" />
+    <Compile Include="Tiles\NativeImageTile.cs" />
+    <Compile Include="Types\ClearTilesMode.cs" />
+    <Compile Include="Types\ControlPointType.cs" />
+    <Compile Include="Types\DrawType.cs" />
+    <Compile Include="Types\ExtentChangedType.cs" />
+    <Compile Include="Types\MapMouseButton.cs" />
+    <Compile Include="Types\MouseCoordinateType.cs" />
+    <Compile Include="Types\OverlayRefreshType.cs" />
+    <Compile Include="Types\ProcessOtherOverlaysMode.cs" />
+    <Compile Include="Types\RenderMode.cs" />
+    <Compile Include="Types\TileType.cs" />
+    <Compile Include="Types\TransitionEffect.cs" />
+    <Compile Include="Types\WrapDatelineMode.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\AboutResources.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
