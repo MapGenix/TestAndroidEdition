@@ -112,6 +112,7 @@
     <Compile Include="Cache\BaseTileCache.cs" />
     <Compile Include="Cache\FileBitmapTileCache.cs" />
     <Compile Include="Drawing\Graphics.cs" />
+    <Compile Include="Drawing\GraphicsPath.cs" />
     <Compile Include="Events\CoordinateEventArgs.cs" />
     <Compile Include="Events\ExtentChangedEventArgs.cs" />
     <Compile Include="Events\ExtentChangingEventArgs.cs" />
@@ -147,7 +148,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="Events\GeoCanvasEventArgs.cs" />
     <Compile Include="Events\TileEventArgs.cs" />
     <Compile Include="Events\TimedProgressEventArgs.cs" />
@@ -180,6 +180,7 @@
     <Compile Include="Types\OverlayRefreshType.cs" />
     <Compile Include="Types\ProcessOtherOverlaysMode.cs" />
     <Compile Include="Types\RenderMode.cs" />
+    <Compile Include="Types\SmoothingMode.cs" />
     <Compile Include="Types\TileType.cs" />
     <Compile Include="Types\TransitionEffect.cs" />
     <Compile Include="Types\WrapDatelineMode.cs" />
