@@ -55,7 +55,7 @@ namespace Mapgenix.GSuite.Android
             _tile.LayoutParameters = p;
             _tile.TargetExtent = targetExtent;
 
-            GdiPlusGeoCanvas geoCanvas = new GdiPlusGeoCanvas();
+            GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas();
             using (Bitmap nativeImage = Bitmap.CreateBitmap((int)MapArguments.ActualWidth, (int)MapArguments.ActualHeight, Bitmap.Config.Argb8888))
             //using (System.Drawing.Bitmap nativeImage = new System.Drawing.Bitmap((int)MapArguments.ActualWidth, (int)MapArguments.ActualHeight))
             {

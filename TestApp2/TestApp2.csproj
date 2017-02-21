@@ -157,6 +157,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AndroidAsset Include="Assets\panama\panama_districts.dbf" />
+    <AndroidAsset Include="Assets\panama\panama_districts.ids" />
+    <AndroidAsset Include="Assets\panama\panama_districts.idx" />
+    <AndroidAsset Include="Assets\panama\panama_districts.shp" />
+    <AndroidAsset Include="Assets\panama\panama_districts.shx" />
+    <AndroidAsset Include="Assets\panama\panama_locations.dbf" />
+    <AndroidAsset Include="Assets\panama\panama_locations.ids" />
+    <AndroidAsset Include="Assets\panama\panama_locations.idx" />
+    <AndroidAsset Include="Assets\panama\panama_locations.shp" />
+    <AndroidAsset Include="Assets\panama\panama_locations.shx" />
+    <AndroidAsset Include="Assets\panama\Panama_Roads.dbf" />
+    <AndroidAsset Include="Assets\panama\Panama_Roads.ids" />
+    <AndroidAsset Include="Assets\panama\Panama_Roads.idx" />
+    <AndroidAsset Include="Assets\panama\Panama_Roads.prj" />
+    <AndroidAsset Include="Assets\panama\Panama_Roads.shp" />
+    <AndroidAsset Include="Assets\panama\Panama_Roads.shx" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />

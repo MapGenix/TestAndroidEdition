@@ -78,6 +78,8 @@ namespace Mapgenix.GSuite.Android
             _interactiveOverlays.Removing += InteractiveOverlaysRemoving;
             _interactiveOverlays.ClearingItems += InteractiveOverlaysClearingItems;*/
 
+            _toolsGrid = new GridLayout(Context);
+
             _currentCenter = new PointF(0f, 0f);
             _previousSnappedScale = Double.NaN;
             _zoomLevelScales = new Collection<double>();
@@ -87,6 +89,13 @@ namespace Mapgenix.GSuite.Android
             TrackOverlay = new TrackInteractiveOverlay();
             EditOverlay = new EditInteractiveOverlay();
             _adornmentOverlay = new AdornmentOverlay();*/
+
+            /*_overlayCanvas = new FrameLayout(Context);
+            RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
+            p.TopMargin = 0;
+            p.LeftMargin = 0;
+            _overlayCanvas.LayoutParameters = p;
+            AddView(_overlayCanvas, p);*/
 
             _minimumScale = 200;
             _maximumScale = double.MaxValue;
@@ -233,6 +242,16 @@ namespace Mapgenix.GSuite.Android
 
         public void Refresh()
         {
+            if(_overlayCanvas == null)
+            {
+                _overlayCanvas = new FrameLayout(Context);
+                RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
+                p.TopMargin = 0;
+                p.LeftMargin = 0;
+                _overlayCanvas.LayoutParameters = p;
+                AddView(_overlayCanvas, p);
+            }
+
             _needsRefreshOverlayChildren = true;
             Draw(CurrentExtent);
             _needsRefreshOverlayChildren = false;

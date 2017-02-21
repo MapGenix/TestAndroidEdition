@@ -59,10 +59,6 @@
       <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Index.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Mapgenix.Layers, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Layers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Mapgenix.RasterSource, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.RasterSource.dll</HintPath>
       <Private>True</Private>
@@ -143,6 +139,7 @@
     <Compile Include="MapTools\PanZoomBarMapTool.cs" />
     <Compile Include="Overlays\InteractiveOverlay\InteractionArguments.cs" />
     <Compile Include="Overlays\InteractiveOverlay\KeyEventInteractionArguments.cs" />
+    <Compile Include="Overlays\LayerOverlay.cs" />
     <Compile Include="Properties\ExceptionMessage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -170,6 +167,7 @@
     <Compile Include="Tiles\BaseTile.cs" />
     <Compile Include="Tiles\BitmapTile.cs" />
     <Compile Include="Tiles\LayerTile.cs" />
+    <Compile Include="Tiles\LockLayerMode.cs" />
     <Compile Include="Tiles\NativeImageTile.cs" />
     <Compile Include="Types\ClearTilesMode.cs" />
     <Compile Include="Types\ControlPointType.cs" />
@@ -199,6 +197,10 @@
     <ProjectReference Include="..\..\GSuite1\Mapgenix.Canvas\Mapgenix.Canvas.csproj">
       <Project>{ac2e86d2-21a0-4036-bf5f-a3cb2d756a64}</Project>
       <Name>Mapgenix.Canvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GSuite1\Mapgenix.Layers\Mapgenix.Layers.csproj">
+      <Project>{1a0ba404-ab14-461e-bf24-e6826b5d7021}</Project>
+      <Name>Mapgenix.Layers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

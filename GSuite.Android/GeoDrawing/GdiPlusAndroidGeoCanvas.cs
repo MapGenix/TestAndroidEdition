@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Mapgenix.GSuite.Android
 {
-    class GdiPlusAndroidGeoCanvas : BaseGeoCanvas
+    public class GdiPlusAndroidGeoCanvas : BaseGeoCanvas
     {
         private const float StandardDpi = 96f;
 
@@ -383,48 +383,48 @@ namespace Mapgenix.GSuite.Android
             }
             else if (count != 0)
             {
-                //GraphicsPath graphicsPath = null;
+                GraphicsPath graphicsPath = null;
 
                 try
                 {
-                    //graphicsPath = new GraphicsPath();
+                    graphicsPath = new GraphicsPath();
                     //graphicsPath.FillMode = FillMode.Winding;
                     foreach (var points in ringsCollection)
                     {
-                        //graphicsPath.AddPolygon(points);
+                        graphicsPath.AddPolygon(points);
                     }
 
-                    //var graphics = SelectImageGraphicsByDrawingLevel(drawingLevel);
+                    var graphics = SelectImageGraphicsByDrawingLevel(drawingLevel);
 
                     if (penBrushDrawingOrder == PenBrushDrawingOrder.BrushFirst)
                     {
                         if (fillBrush != null)
                         {
-                            //graphics.FillPath(GetGdiPlusBrushFromGeoBrush(fillBrush, cachePoints), graphicsPath);
+                            graphics.FillPath(GetGdiPlusBrushFromGeoBrush(fillBrush, cachePoints), graphicsPath);
                         }
                         if (outlinePen != null)
                         {
-                            //graphics.DrawPath(GetGdiPlusPenFromGeoPen(outlinePen), graphicsPath);
+                            graphics.DrawPath(GetGdiPlusPenFromGeoPen(outlinePen), graphicsPath);
                         }
                     }
                     else
                     {
                         if (outlinePen != null)
                         {
-                            //graphics.DrawPath(GetGdiPlusPenFromGeoPen(outlinePen), graphicsPath);
+                            graphics.DrawPath(GetGdiPlusPenFromGeoPen(outlinePen), graphicsPath);
                         }
                         if (fillBrush != null)
                         {
-                            //graphics.FillPath(GetGdiPlusBrushFromGeoBrush(fillBrush, cachePoints), graphicsPath);
+                            graphics.FillPath(GetGdiPlusBrushFromGeoBrush(fillBrush, cachePoints), graphicsPath);
                         }
                     }
                 }
                 finally
                 {
-                    /*if (graphicsPath != null)
+                    if (graphicsPath != null)
                     {
                         graphicsPath.Dispose();
-                    }*/
+                    }
                 }
             }
         }
@@ -1728,6 +1728,7 @@ namespace Mapgenix.GSuite.Android
             }
 
             var resultPen = new Paint();//new Pen(GetGdiPlusColorFromGeoColor(pen.Color));
+            resultPen.SetStyle(Paint.Style.Stroke);
             //resultPen.Width = pen.Width*(Dpi/StandardDpi);
             resultPen.StrokeWidth = pen.Width * (Dpi / StandardDpi);
             //resultPen.Brush = GetGdiPlusBrushFromGeoBrush(pen.Brush, null);
@@ -2181,7 +2182,7 @@ namespace Mapgenix.GSuite.Android
             {
                 return image.GetWidth();
             }
-            return ((Image) nativeImage).Width;
+            return ((NativeAndroid.Graphics.Canvas) nativeImage).Width;
         }
 
         /// <summary>Gets the canvas height of a native image object.</summary>
@@ -2195,7 +2196,7 @@ namespace Mapgenix.GSuite.Android
             {
                 return image.GetHeight();
             }
-            return ((Image) nativeImage).Height;
+            return ((NativeAndroid.Graphics.Canvas) nativeImage).Height;
         }
 
         /// <summary>Draws an unscaled image on the canvas.</summary>
@@ -2292,14 +2293,14 @@ namespace Mapgenix.GSuite.Android
             var screenY = centerYInScreen;
 
             screenX += -imageWidth/2.0f + xOffset;
-            screenY += -imageHeight/2.0f + yOffset;
+            screenY += -imageHeight/2.0f + yOffset;        
 
-            var tempVDpi = image.HorizontalResolution;
+            /*var tempVDpi = image.HorizontalResoluton;
             var tempHDpi = image.VerticalResolution;
             if (image.HorizontalResolution != Dpi)
             {
                 image.SetResolution(Dpi, Dpi);
-            }
+            }*/
             UseKeyColor(image);
 
             if (rotateAngle == 0)
@@ -2333,7 +2334,7 @@ namespace Mapgenix.GSuite.Android
                 graphics.TranslateTransform(-screenX, -screenY);
             }
 
-            image.SetResolution(tempHDpi, tempVDpi);
+            //image.SetResolution(tempHDpi, tempVDpi);
         }
     }
 }

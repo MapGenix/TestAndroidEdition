@@ -55,10 +55,12 @@ namespace Mapgenix.GSuite.Android
             TransitionEffect = TransitionEffect.Stretch;
 
             _drawingCanvas = new FrameLayout(context);
-            OverlayCanvas.AddView(_drawingCanvas, ZIndexes.DrawingTileCanvas);
+            _drawingCanvas.Elevation = ZIndexes.DrawingTileCanvas;
+            OverlayCanvas.AddView(_drawingCanvas);
 
             _stretchCanvas = new FrameLayout(context);
-            OverlayCanvas.AddView(_stretchCanvas, ZIndexes.StretchTileCanvas);
+            _stretchCanvas.Elevation = ZIndexes.StretchTileCanvas;
+            OverlayCanvas.AddView(_stretchCanvas);
 
             /*_translateTransform = new TranslateTransform();
             OverlayCanvas.RenderTransform = _translateTransform;*/
@@ -389,8 +391,11 @@ namespace Mapgenix.GSuite.Android
         }
 
         private Tile GetTile(RectangleShape targetExtent, double tileScreenWidth, double tileScreenHeight, long tileColumnIndex, long tileRowIndex, int zoomLevelIndex)
-        {
+        {            
             Tile newTile = GetTileCore();
+
+            LayoutParams p = new LayoutParams((int)tileScreenWidth, (int)tileScreenHeight);
+            newTile.LayoutParameters = p;
             newTile.LayoutParameters.Width = Convert.ToInt32(tileScreenWidth);
             newTile.LayoutParameters.Height = Convert.ToInt32(tileScreenHeight);
             newTile.IsAsync = (TileType != TileType.SingleTile);
@@ -618,7 +623,7 @@ namespace Mapgenix.GSuite.Android
                         double resolution = 1 / MapUtil.GetResolution(targetExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
                         double offsetX = Math.Round((cell.BoundingBox.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) * resolution);
                         double offsetY = Math.Round((targetExtent.UpperLeftPoint.Y - cell.BoundingBox.UpperLeftPoint.Y) * resolution);
-                        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(tile.Width, tile.Height);
+                        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(tile.LayoutParameters.Width, tile.LayoutParameters.Height);
                         p.LeftMargin = Convert.ToInt32(offsetX);
                         p.TopMargin = Convert.ToInt32(offsetY);
                         tile.LayoutParameters = p;
