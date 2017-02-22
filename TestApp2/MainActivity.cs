@@ -11,14 +11,13 @@ using Android.Content.Res;
 using System.IO;
 using System.Net;
 using Mapgenix.Styles;
+using Android.Views;
 
 namespace TestApp2
 {
     [Activity(Label = "Test GSuite", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-
-        private ImageView image1;
         private Map MainMap;
         private string sampleDataPath;
         protected override void OnCreate(Bundle bundle)
@@ -98,8 +97,6 @@ namespace TestApp2
 
             AssetManager am = this.Assets;
             string[] files = am.List("panama");
-            Stream stream = null;
-            FileStream fileStream = null;
 
             foreach (string file in files)
             { 
@@ -114,7 +111,7 @@ namespace TestApp2
                 try
                 {
 
-                    /**string uri = string.Format("http://license.mapgenix.com/sampledata/vector/shapefiles/panama/{0}", file);
+                    /*string uri = string.Format("http://license.mapgenix.com/sampledata/vector/shapefiles/panama/{0}", file);
                     HttpWebRequest webRequest = WebRequest.Create(uri) as HttpWebRequest;
                     HttpWebResponse webResponse = webRequest.GetResponse() as HttpWebResponse;
                     string statusCode = webResponse.StatusCode.ToString();
@@ -198,6 +195,12 @@ namespace TestApp2
                 MainMap.Refresh();
             }
         }
+
+        public override bool OnTouchEvent(MotionEvent e)
+        {
+            return base.OnTouchEvent(e);
+        }
+
     }
 }
 

@@ -11,7 +11,7 @@ namespace Mapgenix.GSuite.Android
     [Serializable]
     public abstract class BaseInteractiveOverlay : BaseOverlay
     {
-        public event EventHandler<MapMouseEventArgs> MapMouseDown;
+        /*public event EventHandler<MapMouseEventArgs> MapMouseDown;
 
         public event EventHandler<MapMouseEventArgs> MapMouseMove;
 
@@ -25,7 +25,7 @@ namespace Mapgenix.GSuite.Android
 
         public event EventHandler<MapMouseEventArgs> MapMouseLeave;
 
-        public event EventHandler<MapMouseEventArgs> MapMouseEnter;
+        public event EventHandler<MapMouseEventArgs> MapMouseEnter;*/
 
         public event EventHandler<MapKeyEventArgs> MapKeyDown;
 
@@ -73,9 +73,39 @@ namespace Mapgenix.GSuite.Android
         {
      
             return new InteractiveResult();
+        }*/
+
+        public InteractiveResult MotionDown(MotionEventArgs motionArgs)
+        {
+            Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
+            if (!IsOverlayInitialized) return new InteractiveResult();
+
+            //OnMapMouseDown(new MapMouseEventArgs(interactionArguments));
+            return MotionDownCore(motionArgs);
         }
 
-        public InteractiveResult MouseUp(InteractionArguments interactionArguments)
+        protected virtual InteractiveResult MotionDownCore(MotionEventArgs motionArgs)
+        {
+
+            return new InteractiveResult();
+        }
+
+        public InteractiveResult MotionMove(MotionEventArgs motionArgs)
+        {
+            Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
+            if (!IsOverlayInitialized) return new InteractiveResult();
+
+            //OnMapMotionMove(new MapMotionEventArgs(motionArgs))
+
+            return MotionMoveCore(motionArgs);
+        }
+
+        protected virtual InteractiveResult MotionMoveCore(MotionEventArgs motionArgs)
+        {
+            return new InteractiveResult();
+        }
+
+        /*public InteractiveResult MouseUp(InteractionArguments interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
             if (!IsOverlayInitialized) return new InteractiveResult();
@@ -182,7 +212,7 @@ namespace Mapgenix.GSuite.Android
         }*/
 
 
-        protected void OnMapMouseDown(MapMouseEventArgs e)
+        /*protected void OnMapMouseDown(MapMouseEventArgs e)
         {
             EventHandler<MapMouseEventArgs> handler = MapMouseDown;
 
@@ -278,7 +308,7 @@ namespace Mapgenix.GSuite.Android
             {
                 handler(this, e);
             }
-        }
+        }*/
 
         protected override void DrawCore(RectangleShape targetExtent, OverlayRefreshType overlayRefreshType) { }
     }

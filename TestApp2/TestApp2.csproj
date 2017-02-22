@@ -70,6 +70,10 @@
     <Reference Include="gdal_csharp">
       <HintPath>..\..\GSuite1\packages\Mapgenix.Gdal.Extension.1.0.0.0\lib\net40\gdal_csharp.dll</HintPath>
     </Reference>
+    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\GeoAPI.1.7.4\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\GeoAPI.dll</HintPath>
+    </Reference>
     <Reference Include="LumenWorks.Framework.IO">
       <HintPath>..\..\GSuite1\packages\LumenWorksCsvReader.3.9.1\lib\net20\LumenWorks.Framework.IO.dll</HintPath>
     </Reference>
@@ -93,6 +97,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GSuite.Android\bin\Debug\Mapgenix.Layers.dll</HintPath>
     </Reference>
+    <Reference Include="Mapgenix.Projection">
+      <HintPath>..\..\GSuite1\ManagedProj4j\bin\Debug\Mapgenix.Projection.dll</HintPath>
+    </Reference>
     <Reference Include="Mapgenix.RasterSource, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GSuite.Android\bin\Debug\Mapgenix.RasterSource.dll</HintPath>
@@ -114,6 +121,10 @@
       <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Mono.Security.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\NetTopologySuite.dll</HintPath>
+    </Reference>
     <Reference Include="NetTopologySuite.IO.PostGis">
       <HintPath>..\..\GSuite1\packages\NetTopologySuite.IO.PostGis.1.13.2\lib\net40-client\NetTopologySuite.IO.PostGis.dll</HintPath>
     </Reference>
@@ -131,6 +142,9 @@
     </Reference>
     <Reference Include="osr_csharp">
       <HintPath>..\..\GSuite1\packages\Mapgenix.Gdal.Extension.1.0.0.0\lib\net40\osr_csharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp">
+      <HintPath>..\..\GSuite1\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
     </Reference>
     <Reference Include="Portable.Licensing">
       <HintPath>..\Mapgenix.GSuite.Wpf\bin\Debug\Portable.Licensing.dll</HintPath>

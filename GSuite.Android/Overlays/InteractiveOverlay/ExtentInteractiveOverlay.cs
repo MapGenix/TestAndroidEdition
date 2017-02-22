@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using Mapgenix.Shapes;
 using Mapgenix.Canvas;
+using Android.Graphics;
+using Android.Content;
+using Android.Views;
+using Android.Widget;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -15,47 +16,50 @@ namespace Mapgenix.GSuite.Android
     [Serializable]
     public class ExtentInteractiveOverlay : BaseInteractiveOverlay
     {
-        private Point _mousePosition = new Point();
-        private Point _originPosition = new Point();
+        private PointF _tapPosition = new PointF();
+        private PointF _originPosition = new PointF(0, 0);
 
-        private Point _trackStartScreenPoint = new Point();
-        private Point _trackEndScreenPoint = new Point();
+        private PointF _trackStartScreenPoint = new PointF();
+        private PointF _trackEndScreenPoint = new PointF();
 
         private int _zoomPercentage;
 
         [NonSerialized]
-        private Rectangle _trackShape;
+        private RelativeLayout _trackShape;
 
-        public ExtentInteractiveOverlay()
+        public ExtentInteractiveOverlay(Context context)
+            : base(context)
         {
-            OverlayCanvas.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.ExtentInteractiveOverlay);
+
+            OverlayCanvas.Elevation = ZIndexes.ExtentInteractiveOverlay;
+            //OverlayCanvas.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.ExtentInteractiveOverlay);
 
             PanMode = MapPanMode.Default;
-            MouseWheelMode = MapMouseWheelMode.Default;
-            LeftClickDragMode = MapLeftClickDragMode.Default;
-            DoubleLeftClickMode = MapDoubleLeftClickMode.Default;
-            RightClickDragMode = MapRightClickDragMode.Default;
-            DoubleRightClickMode = MapDoubleRightClickMode.Default;
-            LeftClickDragKey = Keys.ShiftKey;
-            RightClickDragKey = Keys.ShiftKey;
+            //MouseWheelMode = MapMouseWheelMode.Default;
+            //LeftClickDragMode = MapLeftClickDragMode.Default;
+            //DoubleLeftClickMode = MapDoubleLeftClickMode.Default;
+            //RightClickDragMode = MapRightClickDragMode.Default;
+            //DoubleRightClickMode = MapDoubleRightClickMode.Default;
+            //LeftClickDragKey = Keys.ShiftKey;
+            //RightClickDragKey = Keys.ShiftKey;
             _zoomPercentage = 50;
         }
 
         public MapPanMode PanMode { get; set; }
 
-        public MapMouseWheelMode MouseWheelMode { get; set; }
+        //public MapMouseWheelMode MouseWheelMode { get; set; }
 
-        public MapDoubleLeftClickMode DoubleLeftClickMode { get; set; }
+        //public MapDoubleLeftClickMode DoubleLeftClickMode { get; set; }
 
-        public MapDoubleRightClickMode DoubleRightClickMode { get; set; }
+        //public MapDoubleRightClickMode DoubleRightClickMode { get; set; }
 
-        public MapLeftClickDragMode LeftClickDragMode { get; set; }
+        //public MapLeftClickDragMode LeftClickDragMode { get; set; }
 
-        public Keys LeftClickDragKey { get; set; }
+        //public Keys LeftClickDragKey { get; set; }
 
-        public MapRightClickDragMode RightClickDragMode { get; set; }
+        //public MapRightClickDragMode RightClickDragMode { get; set; }
 
-        public Keys RightClickDragKey { get; set; }
+        //public Keys RightClickDragKey { get; set; }
 
         public ExtentChangedType ExtentChangedType { get; protected set; }
 
@@ -65,46 +69,29 @@ namespace Mapgenix.GSuite.Android
             set { _zoomPercentage = value; }
         }
 
-        protected override InteractiveResult MouseDownCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult MotionDownCore(MotionEventArgs motionArgs)
         {
-            InteractiveResult interactiveResult = base.MouseDownCore(interactionArguments);
+            InteractiveResult interactiveResult = base.MotionDownCore(motionArgs);
        
-            if ((interactionArguments.MouseButton == MapMouseButton.Left && UnsafeHelper.IsKeyPressed(LeftClickDragKey) && LeftClickDragMode != MapLeftClickDragMode.Disabled)
-                || (interactionArguments.MouseButton == MapMouseButton.Right && UnsafeHelper.IsKeyPressed(RightClickDragKey) && RightClickDragMode != MapRightClickDragMode.Disabled)
-                || LeftClickDragKey == Keys.None || RightClickDragKey == Keys.None)
-            {
-                ExtentChangedType = ExtentChangedType.TrackZoomIn;
-                _trackStartScreenPoint = new Point(interactionArguments.ScreenX, interactionArguments.ScreenY);
-
-                _trackShape = new Rectangle();
-                _trackShape.SetValue(System.Windows.Controls.Canvas.LeftProperty, _trackStartScreenPoint.X);
-                _trackShape.SetValue(System.Windows.Controls.Canvas.TopProperty, _trackStartScreenPoint.Y);
-                _trackShape.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.TrackZoomingRectangle);
-                _trackShape.Width = 1;
-                _trackShape.Height = 1;
-                _trackShape.Fill = new SolidColorBrush(Colors.White);
-                _trackShape.Stroke = new SolidColorBrush(Colors.Red);
-                _trackShape.Opacity = .5;
-
-                OverlayCanvas.Children.Add(_trackShape);
-            }
-            else if ((interactionArguments.MouseButton == MapMouseButton.Left || interactionArguments.MouseButton == MapMouseButton.Right) && PanMode != MapPanMode.Disabled)
+            if(motionArgs.MotionAction == MotionEventActions.Move)
             {
                 ExtentChangedType = ExtentChangedType.Pan;
             }
             else return interactiveResult;
 
-            _originPosition = new Point(interactionArguments.ScreenX, interactionArguments.ScreenY);
+            _originPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
             return interactiveResult;
         }
 
-        protected override InteractiveResult MouseMoveCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult MotionMoveCore(MotionEventArgs motionArgs)
         {
-            InteractiveResult interactiveResult = base.MouseMoveCore(interactionArguments);
+            InteractiveResult interactiveResult = base.MotionMoveCore(motionArgs);
 
-            Point currentPosition = new Point(interactionArguments.ScreenX, interactionArguments.ScreenY);
-            _mousePosition = currentPosition;
+            PointF currentPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
+            _tapPosition = currentPosition;
+
+            ExtentChangedType = ExtentChangedType.Pan;
 
             if (ExtentChangedType == ExtentChangedType.Pan)
             {
@@ -114,17 +101,17 @@ namespace Mapgenix.GSuite.Android
                 double offsetWorldX = offsetScreenX * currentResolution;
                 double offsetWorldY = offsetScreenY * currentResolution;
 
-                double left = interactionArguments.CurrentExtent.UpperLeftPoint.X - offsetWorldX;
-                double top = interactionArguments.CurrentExtent.UpperLeftPoint.Y + offsetWorldY;
-                double right = interactionArguments.CurrentExtent.LowerRightPoint.X - offsetWorldX;
-                double bottom = interactionArguments.CurrentExtent.LowerRightPoint.Y + offsetWorldY;
+                double left = motionArgs.CurrentExtent.UpperLeftPoint.X - offsetWorldX;
+                double top = motionArgs.CurrentExtent.UpperLeftPoint.Y + offsetWorldY;
+                double right = motionArgs.CurrentExtent.LowerRightPoint.X - offsetWorldX;
+                double bottom = motionArgs.CurrentExtent.LowerRightPoint.Y + offsetWorldY;
 
                 interactiveResult.NewCurrentExtent = new RectangleShape(left, top, right, bottom);
                 _originPosition = currentPosition;
             }
             else if (ExtentChangedType == ExtentChangedType.TrackZoomIn)
             {
-                if (_trackShape != null)
+                /*if (_trackShape != null)
                 {
                     if (currentPosition.X < _trackStartScreenPoint.X)
                     {
@@ -136,13 +123,13 @@ namespace Mapgenix.GSuite.Android
                     }
                     _trackShape.Width = Math.Abs(_mousePosition.X - _trackStartScreenPoint.X);
                     _trackShape.Height = Math.Abs(_mousePosition.Y - _trackStartScreenPoint.Y);
-                }
+                }*/
             }
 
             return interactiveResult;
         }
 
-        protected override InteractiveResult MouseUpCore(InteractionArguments interactionArguments)
+        /**protected override InteractiveResult MouseUpCore(InteractionArguments interactionArguments)
         {
             InteractiveResult interactiveResult = base.MouseUpCore(interactionArguments);
             Point currentScreenPoint = new Point(interactionArguments.ScreenX, interactionArguments.ScreenY);
@@ -251,6 +238,6 @@ namespace Mapgenix.GSuite.Android
             }
 
             return base.MouseEnterCore(interactionArguments);
-        }
+        }*/
     }
 }

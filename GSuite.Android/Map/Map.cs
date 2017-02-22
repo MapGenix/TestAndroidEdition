@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NavitveAndroid = Android;
+using NativeAndroid = Android;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -29,8 +29,8 @@ namespace Mapgenix.GSuite.Android
         private double _targetMapScreenHeight;
         private double _minimumScale;
         private double _maximumScale;
-        private FrameLayout _overlayCanvas;
-        private FrameLayout _eventCanvas;
+        private RelativeLayout _overlayCanvas;
+        private RelativeLayout _eventCanvas;
         private GridLayout _toolsGrid;
         //private DispatcherTimer _resizeTimer;
         private GeographyUnit _mapUnit;
@@ -85,12 +85,12 @@ namespace Mapgenix.GSuite.Android
             _zoomLevelScales = new Collection<double>();
             SyncZoomLevelScales(new ZoomLevelSet().GetZoomLevels());
 
-            /*ExtentOverlay = new ExtentInteractiveOverlay();
-            TrackOverlay = new TrackInteractiveOverlay();
+            ExtentOverlay = new ExtentInteractiveOverlay(Context);
+            /*TrackOverlay = new TrackInteractiveOverlay();
             EditOverlay = new EditInteractiveOverlay();
             _adornmentOverlay = new AdornmentOverlay();*/
 
-            /*_overlayCanvas = new FrameLayout(Context);
+            /*_overlayCanvas = new RelativeLayout(Context);
             RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
             p.TopMargin = 0;
             p.LeftMargin = 0;
@@ -126,7 +126,7 @@ namespace Mapgenix.GSuite.Android
 
         //public TrackInteractiveOverlay TrackOverlay { get; set; }
 
-        //public ExtentInteractiveOverlay ExtentOverlay { get; set; }
+        public ExtentInteractiveOverlay ExtentOverlay { get; set; }
 
 
         //public EditInteractiveOverlay EditOverlay { get; set; }
@@ -197,9 +197,9 @@ namespace Mapgenix.GSuite.Android
 
         public RectangleShape MaxExtent { get { return _maxExtent; } }
 
-        protected FrameLayout OverlayCanvas { get { return _overlayCanvas; } }
+        protected RelativeLayout OverlayCanvas { get { return _overlayCanvas; } }
 
-        protected FrameLayout EventCanvas { get { return _eventCanvas; } }
+        protected RelativeLayout EventCanvas { get { return _eventCanvas; } }
 
         public GridLayout ToolsGrid { get { return _toolsGrid; } }
 
@@ -244,13 +244,18 @@ namespace Mapgenix.GSuite.Android
         {
             if(_overlayCanvas == null)
             {
-                _overlayCanvas = new FrameLayout(Context);
+                _overlayCanvas = new RelativeLayout(Context);
                 RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
                 p.TopMargin = 0;
                 p.LeftMargin = 0;
                 _overlayCanvas.LayoutParameters = p;
                 AddView(_overlayCanvas, p);
             }
+            
+            RelativeLayout.LayoutParams layoutExtent = new LayoutParams(this.LayoutParameters);
+            layoutExtent.TopMargin = 0;
+            layoutExtent.LeftMargin = 0;
+            ExtentOverlay.LayoutParameters = layoutExtent;
 
             _needsRefreshOverlayChildren = true;
             Draw(CurrentExtent);
@@ -317,6 +322,27 @@ namespace Mapgenix.GSuite.Android
             }
 
             return MapUtil.GetSnappedZoomLevelIndex(scale, _zoomLevelScales);
+        }
+
+        public PointShape ToWorldCoordinate(double screenX, double screenY)
+        {
+            PointF worldPoint = MapUtil.ToWorldCoordinate(CurrentExtent, screenX, screenY, LayoutParameters.Width, LayoutParameters.Height);
+            return new PointShape(worldPoint.X, worldPoint.Y);
+        }
+
+        public PointShape ToWorldCoordinate(PointShape screenCoordinate)
+        {
+            return ToWorldCoordinate(screenCoordinate.X, screenCoordinate.Y);
+        }
+
+        public PointShape ToWorldCoordinate(Point screenCoordinate)
+        {
+            return ToWorldCoordinate(screenCoordinate.X, screenCoordinate.Y);
+        }
+
+        public PointShape ToWorldCoordinate(PointF screenCoordinate)
+        {
+            return ToWorldCoordinate(screenCoordinate.X, screenCoordinate.Y);
         }
 
         #endregion
@@ -455,7 +481,7 @@ namespace Mapgenix.GSuite.Android
 
             //if (EditOverlay.IsVisible) currentInteractiveOverlays.Add(EditOverlay);
             //if (TrackOverlay.IsVisible) currentInteractiveOverlays.Add(TrackOverlay);
-            //if (ExtentOverlay.IsVisible) currentInteractiveOverlays.Add(ExtentOverlay);
+            if (ExtentOverlay.IsVisible) currentInteractiveOverlays.Add(ExtentOverlay);
 
             return currentInteractiveOverlays;
         }
@@ -595,6 +621,16 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
+        private bool IsInPanning()
+        {
+            bool isPanning = false;
+            if (ExtentOverlay != null && ExtentOverlay.ExtentChangedType == ExtentChangedType.Pan)
+            {
+                isPanning = true;
+            }
+            return isPanning;
+        }
+
         #endregion
 
         #region protected methods
@@ -632,6 +668,24 @@ namespace Mapgenix.GSuite.Android
                     ExecuteZoomAnimation(_targetSnappedScale, _previousSnappedScale, _currentMousePosition);
                 }
             }
+        }
+
+        protected override void OnDraw(NativeAndroid.Graphics.Canvas canvas)
+        {
+            base.OnDraw(canvas);
+            /*if (_overlayCanvas == null)
+            {
+                _overlayCanvas = new RelativeLayout(Context);
+                RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
+                p.TopMargin = 0;
+                p.LeftMargin = 0;
+                _overlayCanvas.LayoutParameters = p;
+                AddView(_overlayCanvas, p);
+            }
+
+            _needsRefreshOverlayChildren = true;
+            Draw(CurrentExtent);
+            _needsRefreshOverlayChildren = false;*/
         }
 
         #endregion
