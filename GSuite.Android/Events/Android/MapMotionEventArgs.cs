@@ -16,7 +16,7 @@ using System.Globalization;
 namespace Mapgenix.GSuite.Android
 {
     [Serializable]
-    public class MotionEventArgs : EventArgs
+    public class MapMotionEventArgs : EventArgs
     {
         private float _screenX;
         private float _screenY;
@@ -28,11 +28,11 @@ namespace Mapgenix.GSuite.Android
         private int _mapHeight;
         private GeographyUnit _mapUnit;
         private ZoomLevelSet _zoomLevelSet;
-        private int _mouseWheelDelta;
+        //private int _mouseWheelDelta;
         private double _scale;
         private MotionEventActions _motionAction;
 
-        public MotionEventArgs()
+        public MapMotionEventArgs()
         {
             this._motionAction = MotionEventActions.Cancel;
             this._currentExtent = new RectangleShape();
@@ -107,11 +107,11 @@ namespace Mapgenix.GSuite.Android
             set { _zoomLevelSet = value; }
         }
 
-        public int MouseWheelDelta
+        /*public int MouseWheelDelta
         {
             get { return _mouseWheelDelta; }
             set { _mouseWheelDelta = value; }
-        }
+        }*/
 
         public double Scale
         {

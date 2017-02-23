@@ -121,8 +121,9 @@
     <Compile Include="Cache\FileBitmapTileCache.cs" />
     <Compile Include="Drawing\Graphics.cs" />
     <Compile Include="Drawing\GraphicsPath.cs" />
-    <Compile Include="Events\Android\MotionEventArgs.cs" />
-    <Compile Include="Events\Android\MotionEventManager.cs" />
+    <Compile Include="Events\Android\MapMotionEventArgs.cs" />
+    <Compile Include="Events\Android\MapMotionEventManager.cs" />
+    <Compile Include="Events\Android\MapSimpleGestureManager.cs" />
     <Compile Include="Events\CoordinateEventArgs.cs" />
     <Compile Include="Events\ExtentChangedEventArgs.cs" />
     <Compile Include="Events\ExtentChangingEventArgs.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Types\ControlPointType.cs" />
     <Compile Include="Types\DrawType.cs" />
     <Compile Include="Types\ExtentChangedType.cs" />
+    <Compile Include="Types\MapDoubleTapMode.cs" />
     <Compile Include="Types\MapPanMode.cs" />
     <Compile Include="Types\MouseCoordinateType.cs" />
     <Compile Include="Types\OverlayRefreshType.cs" />

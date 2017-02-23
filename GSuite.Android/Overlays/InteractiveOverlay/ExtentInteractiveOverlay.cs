@@ -35,7 +35,7 @@ namespace Mapgenix.GSuite.Android
             //OverlayCanvas.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.ExtentInteractiveOverlay);
 
             PanMode = MapPanMode.Default;
-            //MouseWheelMode = MapMouseWheelMode.Default;
+            MapDoubleTapMode = MapDoubleTapMode.Default;
             //LeftClickDragMode = MapLeftClickDragMode.Default;
             //DoubleLeftClickMode = MapDoubleLeftClickMode.Default;
             //RightClickDragMode = MapRightClickDragMode.Default;
@@ -47,7 +47,7 @@ namespace Mapgenix.GSuite.Android
 
         public MapPanMode PanMode { get; set; }
 
-        //public MapMouseWheelMode MouseWheelMode { get; set; }
+        public MapDoubleTapMode MapDoubleTapMode { get; set; }
 
         //public MapDoubleLeftClickMode DoubleLeftClickMode { get; set; }
 
@@ -69,11 +69,11 @@ namespace Mapgenix.GSuite.Android
             set { _zoomPercentage = value; }
         }
 
-        protected override InteractiveResult MotionDownCore(MotionEventArgs motionArgs)
+        protected override InteractiveResult MotionDownCore(MapMotionEventArgs motionArgs)
         {
             InteractiveResult interactiveResult = base.MotionDownCore(motionArgs);
        
-            if(motionArgs.MotionAction == MotionEventActions.Move)
+            if(motionArgs.MotionAction == MotionEventActions.Down)
             {
                 ExtentChangedType = ExtentChangedType.Pan;
             }
@@ -84,7 +84,7 @@ namespace Mapgenix.GSuite.Android
             return interactiveResult;
         }
 
-        protected override InteractiveResult MotionMoveCore(MotionEventArgs motionArgs)
+        protected override InteractiveResult MotionMoveCore(MapMotionEventArgs motionArgs)
         {
             InteractiveResult interactiveResult = base.MotionMoveCore(motionArgs);
 
@@ -125,6 +125,40 @@ namespace Mapgenix.GSuite.Android
                     _trackShape.Height = Math.Abs(_mousePosition.Y - _trackStartScreenPoint.Y);
                 }*/
             }
+
+            return interactiveResult;
+        }
+
+        protected override InteractiveResult DoubleTapCore(MapMotionEventArgs interactionArguments)
+        {
+            InteractiveResult interactiveResult = base.DoubleTapCore(interactionArguments);
+            if (MapDoubleTapMode == MapDoubleTapMode.Disabled)
+            {
+                return interactiveResult;
+            }
+
+            int level = MapArguments.GetSnappedZoomLevelIndex(interactionArguments.CurrentExtent);
+            double targetScale = MapArguments.ZoomLevelScales[level];
+            /*if (interactionArguments.MouseWheelDelta <= 0)
+            {
+                ExtentChangedType = ExtentChangedType.MouseWheelZoomOut;
+                targetScale *= ((100d + (double)ZoomPercentage) / 100d);
+            }
+            else
+            {*/
+                ExtentChangedType = ExtentChangedType.MouseWheelZoomIn;
+                targetScale *= ((100d - (double)ZoomPercentage) / 100d);
+            //}
+
+            _tapPosition = new PointF(interactionArguments.ScreenX, interactionArguments.ScreenY);
+            targetScale = MapArguments.ZoomLevelScales[MapUtil.GetSnappedZoomLevelIndex(targetScale, MapArguments.ZoomLevelScales, MapArguments.MinimumScale, MapArguments.MaximumScale)];
+            double deltaX = interactionArguments.MapWidth * .5 - _tapPosition.X;
+            double deltaY = _tapPosition.Y - interactionArguments.MapHeight * .5;
+            double newResolution = MapUtil.GetResolutionFromScale(targetScale, interactionArguments.MapUnit);
+            PointShape newWorldCenter = MapArguments.ToWorldCoordinate(new PointShape(_tapPosition.X, _tapPosition.Y));
+            newWorldCenter.X += deltaX * newResolution;
+            newWorldCenter.Y += deltaY * newResolution;
+            interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)newWorldCenter.X, (float)newWorldCenter.Y), targetScale, interactionArguments.MapUnit, interactionArguments.MapWidth, interactionArguments.MapHeight);
 
             return interactiveResult;
         }

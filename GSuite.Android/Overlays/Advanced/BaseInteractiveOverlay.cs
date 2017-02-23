@@ -75,7 +75,7 @@ namespace Mapgenix.GSuite.Android
             return new InteractiveResult();
         }*/
 
-        public InteractiveResult MotionDown(MotionEventArgs motionArgs)
+        public InteractiveResult MotionDown(MapMotionEventArgs motionArgs)
         {
             Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
             if (!IsOverlayInitialized) return new InteractiveResult();
@@ -84,13 +84,12 @@ namespace Mapgenix.GSuite.Android
             return MotionDownCore(motionArgs);
         }
 
-        protected virtual InteractiveResult MotionDownCore(MotionEventArgs motionArgs)
+        protected virtual InteractiveResult MotionDownCore(MapMotionEventArgs motionArgs)
         {
-
             return new InteractiveResult();
         }
 
-        public InteractiveResult MotionMove(MotionEventArgs motionArgs)
+        public InteractiveResult MotionMove(MapMotionEventArgs motionArgs)
         {
             Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
             if (!IsOverlayInitialized) return new InteractiveResult();
@@ -100,7 +99,22 @@ namespace Mapgenix.GSuite.Android
             return MotionMoveCore(motionArgs);
         }
 
-        protected virtual InteractiveResult MotionMoveCore(MotionEventArgs motionArgs)
+        protected virtual InteractiveResult MotionMoveCore(MapMotionEventArgs motionArgs)
+        {
+            return new InteractiveResult();
+        }
+
+        public InteractiveResult DoubleTap(MapMotionEventArgs motionArgs)
+        {
+            Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
+            if (!IsOverlayInitialized) return new InteractiveResult();
+
+            //OnMapMotionMove(new MapMotionEventArgs(motionArgs))
+
+            return DoubleTapCore(motionArgs);
+        }
+
+        protected virtual InteractiveResult DoubleTapCore(MapMotionEventArgs motionArgs)
         {
             return new InteractiveResult();
         }

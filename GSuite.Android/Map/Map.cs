@@ -48,6 +48,7 @@ namespace Mapgenix.GSuite.Android
         private MapTools _mapTools;
         private Collection<RectangleShape> _mapPreviousExtents;
         private bool _needsRefreshOverlayChildren;
+        private GestureDetector _gestureDetector;
 
 
         public Map(Context context, IAttributeSet attrs) :
@@ -96,6 +97,8 @@ namespace Mapgenix.GSuite.Android
             p.LeftMargin = 0;
             _overlayCanvas.LayoutParameters = p;
             AddView(_overlayCanvas, p);*/
+
+            InitMapSimpleGestures();
 
             _minimumScale = 200;
             _maximumScale = double.MaxValue;
@@ -630,6 +633,16 @@ namespace Mapgenix.GSuite.Android
             }
             return isPanning;
         }
+
+        private void InitMapSimpleGestures()
+        {
+            _gestureDetector = new GestureDetector(Context, new MapSimpleGestureManager());
+
+            _gestureDetector.DoubleTap += (object sender, GestureDetector.DoubleTapEventArgs e) => {
+                EventManagerDoubleTap(sender, e.Event);
+            };
+        }
+
 
         #endregion
 

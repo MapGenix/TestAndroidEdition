@@ -12,10 +12,10 @@ using Android.Widget;
 
 namespace Mapgenix.GSuite.Android
 {
-    internal class MotionEventManager
+    internal class MapMotionEventManager
     {
         //public event EventHandler<GenericMotionEventArgs> Move;
-        public event EventHandler<MotionEventArgs> Move;
+        public event EventHandler<MapMotionEventArgs> Move;
 
 
     }

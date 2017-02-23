@@ -45,6 +45,9 @@ namespace Mapgenix.GSuite.Android
 
             _zoomStoryboard.Stop();
             _zoomStoryboard.Begin();*/
+
+            CurrentExtent = _targetSnappedExtent;
+            Refresh();
         }
     }
 }
