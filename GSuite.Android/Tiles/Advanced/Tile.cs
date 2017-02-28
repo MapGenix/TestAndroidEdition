@@ -13,6 +13,8 @@ using Android.Content;
 using System.Threading;
 using NativeAndroid = Android;
 using Android.Graphics;
+using System.Threading.Tasks;
+using Android.OS;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -59,8 +61,8 @@ namespace Mapgenix.GSuite.Android
         {
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.WorkerSupportsCancellation = true;
-            _backgroundWorker.DoWork += backgroundWorker_DoWork;
-            _backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
+            //_backgroundWorker.DoWork += backgroundWorker_DoWork;
+            //_backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
         }
 
         public ImageView ImageSource
@@ -170,41 +172,79 @@ namespace Mapgenix.GSuite.Android
             }
         }*/
 
-        public void DrawAsync(GdiPlusGeoCanvas geoCanvas)
-        {
-         
-            _backgroundWorker.CancelAsync();
-            while (_backgroundWorker != null && _backgroundWorker.IsBusy)
-            {
-                //System.Windows.Forms.Application.DoEvents();
-            }
-
-            if (_backgroundWorker == null) InitializeBackgroundWorkder();
-            _backgroundWorker.RunWorkerAsync(geoCanvas);
-        }
-
         public void DrawAsync(GdiPlusAndroidGeoCanvas geoCanvas)
         {
 
-            _backgroundWorker.CancelAsync();
-            while (_backgroundWorker != null && _backgroundWorker.IsBusy)
+            Task.Factory.StartNew
+            (
+                () => TaskStart(geoCanvas)
+            )
+            .ContinueWith(task =>
             {
-                //System.Windows.Forms.Application.DoEvents();
+                using (var h = new Handler(Context.MainLooper))
+                {
+                    h.Post(() =>
+                    {
+                        TaskComplete(this, task);
+                    });
+                }  
+            });
+        }
+
+        private object TaskStart(GdiPlusAndroidGeoCanvas geoCanvas)
+        {
+            object result;
+            try
+            {
+                object imageSource = geoCanvas.NativeImage;
+                Draw(geoCanvas);
+                geoCanvas.EndDrawing();
+
+                Bitmap bitmap = imageSource as Bitmap;
+                if (bitmap != null)
+                {
+                    MemoryStream memoryStream = new MemoryStream();
+                    bitmap.Compress(Bitmap.CompressFormat.Png, 0, memoryStream);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    imageSource = memoryStream;
+                }
+                result = new TileAsyncResult() { GeoCanvas = geoCanvas, ImageSource = imageSource };
+            }
+            catch (Exception ex)
+            {
+                result = null;
             }
 
-            if (_backgroundWorker == null) InitializeBackgroundWorkder();
-            _backgroundWorker.RunWorkerAsync(geoCanvas);
+            return result;
+        }
+
+        private void TaskComplete(object sender, Task<object> e)
+        {
+            if (e.IsCanceled)
+            {
+                return;
+            }
+            else if (e.Exception == null && e.Result != null)
+            {
+                TileAsyncResult result = (TileAsyncResult)e.Result;
+                CommitDrawing(result.GeoCanvas, result.ImageSource);
+            }
+
+            if (_disposed && _backgroundWorker != null)
+            {
+                _backgroundWorker.Dispose();
+                _backgroundWorker = null;
+            }
         }
 
         public void DrawAsync(DrawingVisualGeoCanvas geoCanvas)
         {
-  
+
             /*new Thread(() => (geoCanvas)
                 {
                     
                 }
             );*/
-
             _backgroundWorker.CancelAsync();
             while (_backgroundWorker != null && _backgroundWorker.IsBusy)
             {
@@ -214,7 +254,6 @@ namespace Mapgenix.GSuite.Android
             if (_backgroundWorker == null) InitializeBackgroundWorkder();
             _backgroundWorker.RunWorkerAsync(geoCanvas);
         }
-
 
         public void Draw(DrawingVisualGeoCanvas geoCanvas)
         {
@@ -535,7 +574,7 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        /*private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             if (_backgroundWorker == null)
             {
@@ -583,7 +622,7 @@ namespace Mapgenix.GSuite.Android
                 _backgroundWorker.Dispose();
                 _backgroundWorker = null;
             }
-        }
+        }*/
     }
 
     public class TileAsyncResult

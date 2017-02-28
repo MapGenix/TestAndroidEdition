@@ -17,6 +17,8 @@ namespace Mapgenix.GSuite.Android
         private float _lastTouchY;
         private float _posX;
         private float _posY;
+        private GestureDetector _gestureDetector;
+        private int _fingerDown = 0;
 
         //public event EventHandler<MapClickEventArgs> MapClick;
 
@@ -57,6 +59,15 @@ namespace Mapgenix.GSuite.Android
         }*/
 
 
+        private void InitMapGestures()
+        {
+            _gestureDetector = new GestureDetector(Context, new MapSimpleGestureManager());
+
+            _gestureDetector.DoubleTap += (object sender, GestureDetector.DoubleTapEventArgs e) => {
+                EventManagerDoubleTap(sender, e.Event);
+            };
+        }
+
         public override bool OnTouchEvent(MotionEvent ev)
         {
             //_scaleDetector.OnTouchEvent(ev);
@@ -68,7 +79,9 @@ namespace Mapgenix.GSuite.Android
             MapMotionEventArgs motionArgs = new MapMotionEventArgs();
             switch (action)
             {
+
                 case MotionEventActions.Down:
+                    _fingerDown++;
                     _tempMotionDownPosition = new PointF(ev.GetX(), ev.GetY());
                     _activePointerId = ev.GetPointerId(0);
                     _currentMousePosition = _tempMotionDownPosition;
@@ -93,36 +106,42 @@ namespace Mapgenix.GSuite.Android
 
                 case MotionEventActions.Move:
 
-                    if (ev != null)
+                    switch(_fingerDown)
                     {
-                        pointerIndex = ev.FindPointerIndex(_activePointerId);
+                        case 1:
 
-                        float x = ev.GetX(pointerIndex);
-                        float y = ev.GetY(pointerIndex);
+                            pointerIndex = ev.FindPointerIndex(_activePointerId);
 
-                        float deltaX = x - _lastTouchX;
-                        float deltaY = y - _lastTouchY;
-                        _posX += deltaX;
-                        _posY += deltaY;
+                            float x = ev.GetX(pointerIndex);
+                            float y = ev.GetY(pointerIndex);
 
-                        currentScreenPoint = new PointF(x, y);
-                        _currentMousePosition = currentScreenPoint;
-                        motionArgs = CollectMotionEventArguments(currentScreenPoint);
+                            float deltaX = x - _lastTouchX;
+                            float deltaY = y - _lastTouchY;
+                            _posX += deltaX;
+                            _posY += deltaY;
 
-                        motionArgs.MotionAction = action;
+                            currentScreenPoint = new PointF(x, y);
+                            _currentMousePosition = currentScreenPoint;
+                            motionArgs = CollectMotionEventArguments(currentScreenPoint);
 
-                        Invalidate();
+                            motionArgs.MotionAction = action;
 
-                        /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
-                        if (mapMouseButton != MapMouseButton.None)
-                        {
-                            interactionArguments.MouseButton = mapMouseButton;
-                        }*/
+                            Invalidate();
 
-                        _lastTouchX = x;
-                        _lastTouchY = y;
+                            /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
+                            if (mapMouseButton != MapMouseButton.None)
+                            {
+                                interactionArguments.MouseButton = mapMouseButton;
+                            }*/
 
-                        EventManagerMotionMoveCore(motionArgs);
+                            _lastTouchX = x;
+                            _lastTouchY = y;
+
+                            EventManagerMotionMoveCore(motionArgs);
+
+                            break;
+                        case 2:
+                            break;
                     }
 
                     /*pointerIndex = ev.FindPointerIndex(_activePointerId);
@@ -148,9 +167,13 @@ namespace Mapgenix.GSuite.Android
                     // activity going in the background) or when the pointer has been lifted up.
                     // We no longer need to keep track of the active pointer.
                     //_activePointerId = InvalidPointerId;
+                    if(_fingerDown > 0)
+                        _fingerDown--;
                     break;
 
                 case MotionEventActions.PointerUp:
+                    if (_fingerDown > 0)
+                        _fingerDown--;
                     /*// We only want to update the last touch position if the the appropriate pointer
                     // has been lifted off the screen.
                     pointerIndex = (int)(ev.Action & MotionEventActions.PointerIndexMask) >> (int)MotionEventActions.PointerIndexShift;

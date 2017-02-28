@@ -45,8 +45,8 @@ namespace Mapgenix.GSuite.Android
         protected BaseTileOverlay(Context context)
             :base (context)
         {
-            TileWidth = 256;
-            TileHeight = 256;
+            TileWidth = 400;
+            TileHeight = 400;
             ImageFormat = TileImageFormat.Png;
             JpegQuality = 80;
             _lockerObject = new object();
@@ -761,6 +761,16 @@ namespace Mapgenix.GSuite.Android
             p.Width = Convert.ToInt32(newTileWidth);
             p.Height = Convert.ToInt32(newTileHeight);
 
+        }
+
+        internal void SetMatrixTiles(Matrix matrix)
+        {
+            for(var i = 0; i < DrawingCanvas.ChildCount; i++)
+            {
+                Tile tile = (Tile)DrawingCanvas.GetChildAt(i);
+                if(tile != null)
+                    tile.ImageSource.ImageMatrix = matrix;
+            }
         }
     }
 }
