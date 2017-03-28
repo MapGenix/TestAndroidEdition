@@ -68,7 +68,8 @@ namespace Mapgenix.GSuite.Android
 
             float fromX = Convert.ToSingle(zoomLogicCenter.X - 1);
             float fromy = Convert.ToSingle(zoomLogicCenter.Y - 1);
-            float zoomFactor = Convert.ToSingle(previousZoomingScale / targetZoomingScale);
+            float zoomFactor = Math.Max(1f, Convert.ToSingle(previousZoomingScale / targetZoomingScale));
+
             /* _zoomAnimationX.To = zoomFactor;
              _zoomAnimationY.To = zoomFactor;
 
@@ -91,6 +92,10 @@ namespace Mapgenix.GSuite.Android
             }
 
             StartAnimation(_zoomAnimation);
+
+            //CurrentExtent = _targetSnappedExtent;
+            //Refresh();
+
         }
     }
 }

@@ -10,9 +10,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Mapgenix.Canvas;
-/*using NativeDrawing = System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Text;*/
 using System.Collections.ObjectModel;
 using Android.Graphics;
 using NativeAndroid = Android;
@@ -32,6 +29,7 @@ namespace Mapgenix.GSuite.Android
         private Bitmap _bufferImageForLevel02;
         private Bitmap _bufferImageForLevel03;
         private Bitmap _bufferImageForLevel04;
+        private Context _context;
 
         //private CompositingQuality _compositiongQuality = CompositingQuality.Default;
         private object _drawingImage;
@@ -53,6 +51,13 @@ namespace Mapgenix.GSuite.Android
 
         private int _localCanvasWidth;
         private Dictionary<long, Paint> _penCache;
+
+        public GdiPlusAndroidGeoCanvas(Context context)
+            : base()
+        {
+            _context = context;
+        }
+
         //private SmoothingMode _smoothingMode = SmoothingMode.HighQuality;
         //private TextRenderingHint _textRenderingHint = TextRenderingHint.AntiAlias;
 
@@ -76,21 +81,21 @@ namespace Mapgenix.GSuite.Android
             set { _compositiongQuality = value; }
         }*/
 
-       /// <summary>Gets or sets the rendering quality.</summary>
-       /// <remarks>
-       /// 	<para>Used for GDI+ drawing.<br/>
-       /// 		<br/>
-       /// 		<br/>
-       ///     The smoothing mode specifies whether lines, curves, and the edges of filled areas
-       ///     use smoothing (also called antialiasing). One exception is that path gradient
-       ///     brushes do not obey the smoothing mode. Areas filled using a PathGradientBrush are
-       ///     rendered the same way (aliased) regardless of the SmoothingMode property.</para>
-       /// </remarks>
-       /*public SmoothingMode SmoothingMode
-        {
-            get { return _smoothingMode; }
-            set { _smoothingMode = value; }
-        }*/
+        /// <summary>Gets or sets the rendering quality.</summary>
+        /// <remarks>
+        /// 	<para>Used for GDI+ drawing.<br/>
+        /// 		<br/>
+        /// 		<br/>
+        ///     The smoothing mode specifies whether lines, curves, and the edges of filled areas
+        ///     use smoothing (also called antialiasing). One exception is that path gradient
+        ///     brushes do not obey the smoothing mode. Areas filled using a PathGradientBrush are
+        ///     rendered the same way (aliased) regardless of the SmoothingMode property.</para>
+        /// </remarks>
+        /*public SmoothingMode SmoothingMode
+         {
+             get { return _smoothingMode; }
+             set { _smoothingMode = value; }
+         }*/
 
         /// <summary>Indicates if GdiPlusGeoCanvas has the KeyColor or not. </summary>
         /// <remarks>The default value is true.</remarks>
@@ -950,7 +955,7 @@ namespace Mapgenix.GSuite.Android
                 _isBitmap = true;
                 _bufferImageForLevel01 = tempBitmap;
                 _graphicsForLevel01 = Graphics.FromImage(_bufferImageForLevel01);
-                Dpi = _bufferImageForLevel01.Width;
+                Dpi = _context.Resources.DisplayMetrics.Xdpi / 3;
                 SetGraphicsMode((Graphics) _graphicsForLevel01);
             }
             else
@@ -1262,11 +1267,11 @@ namespace Mapgenix.GSuite.Android
         /// <remarks>Allows to fill a GeoImage with a GeoBrush. Useful for setting backgrounds.</remarks>
         /// <param name="image">GeoImage to set the background on.</param>
         /// <param name="brush">GeoBrush to fill the background with.</param>
-        public static void FillBackground(GeoImage image, BaseGeoBrush brush)
+        public static void FillBackground(Context context, GeoImage image, BaseGeoBrush brush)
         {
             Validators.CheckParameterIsNotNull(image, "image");
 
-            var canvas = new GdiPlusAndroidGeoCanvas();
+            var canvas = new GdiPlusAndroidGeoCanvas(context);
             Stream imageStream;
             Bitmap bitmap = null;
             Graphics g = null;

@@ -31,6 +31,7 @@ namespace Mapgenix.GSuite.Android
         //private int _mouseWheelDelta;
         private double _scale;
         private MotionEventActions _motionAction;
+        private float _pinchFactor = 1;
 
         public MapMotionEventArgs()
         {
@@ -107,11 +108,11 @@ namespace Mapgenix.GSuite.Android
             set { _zoomLevelSet = value; }
         }
 
-        /*public int MouseWheelDelta
+        public float PinchFactor
         {
-            get { return _mouseWheelDelta; }
-            set { _mouseWheelDelta = value; }
-        }*/
+            get { return _pinchFactor; }
+            set { _pinchFactor = value; }
+        }
 
         public double Scale
         {

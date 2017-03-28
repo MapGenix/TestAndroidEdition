@@ -143,5 +143,13 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
+        internal static void CheckOpenStreetMapUnit(GeographyUnit fromUnit, string parameterName)
+        {
+            if (fromUnit != GeographyUnit.Meter)
+            {
+                throw new ArgumentException(ExceptionMessage.GeographicUnitNotValidWithGoogle, parameterName);
+            }
+        }
+
     }
 }

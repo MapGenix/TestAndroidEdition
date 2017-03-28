@@ -15,6 +15,7 @@ using NativeAndroid = Android;
 using Android.Graphics;
 using System.Threading.Tasks;
 using Android.OS;
+using System.Collections.ObjectModel;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -499,7 +500,7 @@ namespace Mapgenix.GSuite.Android
 
         protected virtual void DrawExceptionCore(BaseGeoCanvas canvas, Exception exception)
         {
-            using (Bitmap exceptionImage = Bitmap.CreateBitmap(256,256,null))
+            using (Bitmap exceptionImage = Bitmap.CreateBitmap(256,256, Bitmap.Config.Argb8888))
             {
                 canvas.Clear(new GeoSolidBrush(GeoColor.FromArgb(128, 255, 192, 203)));
                 MemoryStream streamSource = new MemoryStream();

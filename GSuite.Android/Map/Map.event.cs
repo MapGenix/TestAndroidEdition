@@ -18,6 +18,7 @@ namespace Mapgenix.GSuite.Android
         private float _posX;
         private float _posY;
         private GestureDetector _gestureDetector;
+        private ScaleGestureDetector _scaleDetector;
         private int _fingerDown = 0;
 
         //public event EventHandler<MapClickEventArgs> MapClick;
@@ -66,6 +67,11 @@ namespace Mapgenix.GSuite.Android
             _gestureDetector.DoubleTap += (object sender, GestureDetector.DoubleTapEventArgs e) => {
                 EventManagerDoubleTap(sender, e.Event);
             };
+
+            /*_scaleDetector = new ScaleGestureDetector(Context, new MapPinchGestureManager()
+            {
+                Sender = this
+            });*/
         }
 
         public override bool OnTouchEvent(MotionEvent ev)
@@ -80,6 +86,7 @@ namespace Mapgenix.GSuite.Android
             switch (action)
             {
 
+                case MotionEventActions.PointerDown:
                 case MotionEventActions.Down:
                     _fingerDown++;
                     _tempMotionDownPosition = new PointF(ev.GetX(), ev.GetY());
@@ -106,43 +113,41 @@ namespace Mapgenix.GSuite.Android
 
                 case MotionEventActions.Move:
 
-                    switch(_fingerDown)
+                    /*if (!_scaleDetector.IsInProgress)
+                    {*/
+                        pointerIndex = ev.FindPointerIndex(_activePointerId);
+
+                        float x = ev.GetX(pointerIndex);
+                        float y = ev.GetY(pointerIndex);
+
+                        float deltaX = x - _lastTouchX;
+                        float deltaY = y - _lastTouchY;
+                        _posX += deltaX;
+                        _posY += deltaY;
+
+                        currentScreenPoint = new PointF(x, y);
+                        _currentMousePosition = currentScreenPoint;
+                        motionArgs = CollectMotionEventArguments(currentScreenPoint);
+
+                        motionArgs.MotionAction = action;
+
+                        Invalidate();
+
+                        /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
+                        if (mapMouseButton != MapMouseButton.None)
+                        {
+                            interactionArguments.MouseButton = mapMouseButton;
+                        }*/
+
+                        _lastTouchX = x;
+                        _lastTouchY = y;
+
+                        EventManagerMotionMoveCore(motionArgs);
+                    /*}
+                    else
                     {
-                        case 1:
-
-                            pointerIndex = ev.FindPointerIndex(_activePointerId);
-
-                            float x = ev.GetX(pointerIndex);
-                            float y = ev.GetY(pointerIndex);
-
-                            float deltaX = x - _lastTouchX;
-                            float deltaY = y - _lastTouchY;
-                            _posX += deltaX;
-                            _posY += deltaY;
-
-                            currentScreenPoint = new PointF(x, y);
-                            _currentMousePosition = currentScreenPoint;
-                            motionArgs = CollectMotionEventArguments(currentScreenPoint);
-
-                            motionArgs.MotionAction = action;
-
-                            Invalidate();
-
-                            /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
-                            if (mapMouseButton != MapMouseButton.None)
-                            {
-                                interactionArguments.MouseButton = mapMouseButton;
-                            }*/
-
-                            _lastTouchX = x;
-                            _lastTouchY = y;
-
-                            EventManagerMotionMoveCore(motionArgs);
-
-                            break;
-                        case 2:
-                            break;
-                    }
+                        EventManagerPich(_scaleDetector);
+                    }*/
 
                     /*pointerIndex = ev.FindPointerIndex(_activePointerId);
                     float x = ev.GetX(pointerIndex);
@@ -432,6 +437,28 @@ namespace Mapgenix.GSuite.Android
             {
                 if (!overlay.IsVisible) continue;
                 InteractiveResult interactiveResult = overlay.DoubleTap(interactionArguments);
+                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
+            }
+        }
+
+        internal void EventManagerPich(ScaleGestureDetector detector)
+        {
+            PointF currentScreenPoint = new PointF(detector.FocusX, detector.FocusY);
+            MapMotionEventArgs interactionArguments = CollectMotionEventArguments(currentScreenPoint);
+            interactionArguments.PinchFactor = detector.ScaleFactor;
+            //InteractiveOverlays
+            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+
+            EventManagerPichCore(interactionArguments);
+        }
+
+        private void EventManagerPichCore(MapMotionEventArgs interactionArguments)
+        {
+            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
+            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
+            {
+                if (!overlay.IsVisible) continue;
+                InteractiveResult interactiveResult = overlay.Pich(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
         }

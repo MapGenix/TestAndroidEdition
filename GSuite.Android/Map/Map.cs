@@ -297,6 +297,7 @@ namespace Mapgenix.GSuite.Android
 
         public int GetSnappedZoomLevelIndex(RectangleShape targetExtent)
         {
+            
             double screenWidth = LayoutParameters.Width;
             double screenHeight = LayoutParameters.Height;
             if (screenWidth == 0 || screenHeight == 0)

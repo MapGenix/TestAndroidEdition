@@ -119,6 +119,23 @@ namespace Mapgenix.GSuite.Android
             return new InteractiveResult();
         }
 
+        public InteractiveResult Pich(MapMotionEventArgs motionArgs)
+        {
+            Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
+            if (!IsOverlayInitialized) return new InteractiveResult();
+
+            //OnMapMotionMove(new MapMotionEventArgs(motionArgs))
+
+            return PichCore(motionArgs);
+        }
+
+        protected virtual InteractiveResult PichCore(MapMotionEventArgs motionArgs)
+        {
+            return new InteractiveResult();
+        }
+
+        //public InteractiveResult
+
         /*public InteractiveResult MouseUp(InteractionArguments interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");

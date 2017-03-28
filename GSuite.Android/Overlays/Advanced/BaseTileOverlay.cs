@@ -45,8 +45,8 @@ namespace Mapgenix.GSuite.Android
         protected BaseTileOverlay(Context context)
             :base (context)
         {
-            TileWidth = 400;
-            TileHeight = 400;
+            TileWidth = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(128, Context.Resources.DisplayMetrics.Xdpi));
+            TileHeight = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(128, Context.Resources.DisplayMetrics.Xdpi)); ;
             ImageFormat = TileImageFormat.Png;
             JpegQuality = 80;
             _lockerObject = new object();
@@ -396,8 +396,13 @@ namespace Mapgenix.GSuite.Android
 
             LayoutParams p = new LayoutParams((int)tileScreenWidth, (int)tileScreenHeight);
             newTile.LayoutParameters = p;
+
             newTile.LayoutParameters.Width = Convert.ToInt32(tileScreenWidth);
             newTile.LayoutParameters.Height = Convert.ToInt32(tileScreenHeight);
+            if(newTile.LayoutParameters.Width == 0)
+            {
+                newTile.LayoutParameters.Width = 64;
+            }
             newTile.IsAsync = (TileType != TileType.SingleTile);
             newTile.IsPartial = (TileType != TileType.SingleTile);
             newTile.RowIndex = tileRowIndex;
@@ -594,7 +599,7 @@ namespace Mapgenix.GSuite.Android
                         double offsetX = Math.Round((tile.TargetExtent.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) / tile.TargetExtent.Width * TileWidth);
                         double offsetY = Math.Round((targetExtent.UpperLeftPoint.Y - tile.TargetExtent.UpperLeftPoint.Y) / tile.TargetExtent.Height * TileHeight);
 
-                        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(tile.Width, tile.Height);
+                        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(tile.LayoutParameters.Width, tile.LayoutParameters.Height);
                         p.LeftMargin = Convert.ToInt32(offsetX);
                         p.TopMargin = Convert.ToInt32(offsetY);
                         tile.LayoutParameters = p;

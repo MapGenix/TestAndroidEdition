@@ -23,16 +23,19 @@ namespace Mapgenix.GSuite.Android
         public Graphics()
         {
             _canvas = new NativeAndroid.Graphics.Canvas();
+            _drawConfig = new Paint();
         }
 
         public Graphics(NativeAndroid.Graphics.Canvas canvas)
         {
             _canvas = canvas;
+            _drawConfig = new Paint();
         }
 
         public Graphics(Bitmap sourceBitmap)
         {
             _canvas = new NativeAndroid.Graphics.Canvas(sourceBitmap);
+            _drawConfig = new Paint();
         }
 
         #region public properties
@@ -250,7 +253,8 @@ namespace Mapgenix.GSuite.Android
         public void Dispose()
         {
             _canvas.Dispose();
-            _drawConfig.Dispose();
+            if(_drawConfig != null)
+                _drawConfig.Dispose();
         }
 
         #endregion

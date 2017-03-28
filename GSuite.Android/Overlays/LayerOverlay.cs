@@ -200,7 +200,7 @@ namespace Mapgenix.GSuite.Android
             else
             {
                 if (TileCache != null) { layerTile.TileCache = TileCache; }
-                GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas()
+                GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context)
                 {
                     //CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed,
                     DrawingQuality = DrawingQuality.HighSpeed,
