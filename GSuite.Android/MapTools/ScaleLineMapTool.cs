@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-/*using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Windows.Threading;*/
 using Mapgenix.Shapes;
 using Android.Content;
+using NativeAndroid = Android;
+using Android.Widget;
+using Android.Graphics;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -22,44 +21,43 @@ namespace Mapgenix.GSuite.Android
         private double _scaleLineHeightPixel;
         private double _scaleLineWidthPixel;
         private Dictionary<string, string> _displayUnitString;
-        /*private System.Windows.Controls.Canvas _scaleLineCanvas;
-        private TextBlock _topText;
-        private TextBlock _bottomText;
-        private DispatcherTimer _updateTimer;
+        private RelativeLayout _scaleLineCanvas;
+        private ImageView _scaleLineImage;
 
-        private Line _topLine;
-        private Line _middleLine;
-        private Line _bottomLine;*/
+        private TextView _topText;
+        private TextView _bottomText;
 
-       
         public ScaleLineMapTool(Context context)
             : this(context, false)
         { }
-
       
         public ScaleLineMapTool(Context context, bool isEnabled)
             : base(context, isEnabled)
         {
-            /*DefaultStyleKey = typeof(ScaleLineMapTool);
+            _scaleLineHeightPixel = LayoutUnitsUtil.convertDpToPixel(12, Context.Resources.DisplayMetrics.Ydpi);
+            _scaleLineWidthPixel = LayoutUnitsUtil.convertDpToPixel(100, Context.Resources.DisplayMetrics.Xdpi);
 
-            Margin = new System.Windows.Thickness(5);
-            _updateTimer = new DispatcherTimer();
-            _updateTimer.Interval = TimeSpan.FromMilliseconds(50);
-            _updateTimer.Tick += updateTimer_Tick;
+            RelativeLayout.LayoutParams scaleLineLayout = new RelativeLayout.LayoutParams((int)_scaleLineWidthPixel, 
+                (int)_scaleLineHeightPixel * 2);
+            scaleLineLayout.AddRule(LayoutRules.AlignParentBottom);
+            scaleLineLayout.BottomMargin = (int)LayoutUnitsUtil.convertDpToPixel(5, Context.Resources.DisplayMetrics.Xdpi);
+            scaleLineLayout.LeftMargin = 10;
 
-            _scaleLineHeightPixel = 12;
-            _scaleLineWidthPixel = 100;
+            _scaleLineCanvas = new RelativeLayout(Context);
+            _scaleLineCanvas.LayoutParameters = scaleLineLayout;
 
-            _topText = new TextBlock() { FontSize = 10 };
-            _topText.SetValue(System.Windows.Controls.Canvas.LeftProperty, 3.0);
+            _topText = new TextView(Context) { TextSize = 5, Text = "20" };
+            _topText.SetTextColor(Color.Black);
+            LayoutParams topLaout = new LayoutParams((int)100, 20);
+            topLaout.LeftMargin = 4;
+            _topText.LayoutParameters = topLaout;
 
-            _bottomText = new TextBlock() { FontSize = 10 };
-            _bottomText.SetValue(System.Windows.Controls.Canvas.LeftProperty, 3.0);
-            _bottomText.SetValue(System.Windows.Controls.Canvas.TopProperty, _scaleLineHeightPixel);
-
-            _topLine = GetLine(0, 2, 0, _scaleLineHeightPixel);
-            _middleLine = GetLine(0, _scaleLineHeightPixel, 0, _scaleLineHeightPixel);
-            _bottomLine = GetLine(0, _scaleLineHeightPixel, 0, _scaleLineHeightPixel * 2 - 2);
+            _bottomText = new TextView(Context) { TextSize = 5, Text = "10" };
+            _bottomText.SetTextColor(Color.Black);
+            LayoutParams bottomLayout = new LayoutParams((int)100, 20);
+            bottomLayout.LeftMargin = 4;
+            bottomLayout.TopMargin = (int)_scaleLineHeightPixel / 2;
+            _bottomText.LayoutParameters = bottomLayout;
 
             _displayUnitString = new Dictionary<string, string>();
             _displayUnitString.Add("Meter", "m");
@@ -67,73 +65,86 @@ namespace Mapgenix.GSuite.Android
             _displayUnitString.Add("Kilometer", "km");
             _displayUnitString.Add("Mile", "mi");
             _displayUnitString.Add("UsSurveyFeet", "usf");
-            _displayUnitString.Add("Yard", "f");*/
+            _displayUnitString.Add("Yard", "f");
         }
 
-       
-        /*public override void OnApplyTemplate()
+        protected override void InitializeCore(Map map)
         {
-            base.OnApplyTemplate();
-
-            _scaleLineCanvas = (System.Windows.Controls.Canvas)GetTemplateChild("Canvas");
-            Name = "ScaleLine" + CurrentMap.Name;
-            SetValue(Grid.ColumnProperty, 0);
-            SetValue(Grid.RowProperty, 2);
-            HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            VerticalAlignment = System.Windows.VerticalAlignment.Bottom;
-
-            EnabledChangedCore(IsEnabled);
-        }*/
-
-      
-        /*protected override void InitializeCore(Map wpfMap)
-        {
-            base.InitializeCore(wpfMap);
+            base.InitializeCore(map);
             CurrentMap.CurrentExtentChanged -= MapExtentChanged;
             CurrentMap.CurrentExtentChanged += MapExtentChanged;
             UpdateBarItems(CurrentMap.CurrentExtent);
-        }*/
+        }
 
-      
         protected override void EnabledChangedCore(bool newValue)
         {
-            /*base.EnabledChangedCore(newValue);
+            base.EnabledChangedCore(newValue);
             if (_scaleLineCanvas != null)
             {
-                _scaleLineCanvas.Visibility = IsEnabled ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
-                if (IsEnabled)
+                if (Enabled)
                 {
-                    _scaleLineCanvas.Children.Clear();
-                    _scaleLineCanvas.Width = _scaleLineWidthPixel;
-                    _scaleLineCanvas.Height = _scaleLineHeightPixel * 2;
+                    if(ChildCount == 0)
+                        AddView(_scaleLineCanvas);
 
-                    _scaleLineCanvas.Children.Add(_topText);
-                    _scaleLineCanvas.Children.Add(_bottomText);
-                    _scaleLineCanvas.Children.Add(GetLine(0, 2, 0, _scaleLineHeightPixel * 2 - 2));
-                    _scaleLineCanvas.Children.Add(_topLine);
-                    _scaleLineCanvas.Children.Add(_middleLine);
-                    _scaleLineCanvas.Children.Add(_bottomLine);
+                    _scaleLineCanvas.RemoveAllViews();
+                    _scaleLineCanvas.AddView(_topText);
+                    _scaleLineCanvas.AddView(_bottomText);
                 }
-            }*/
+            }
         }
 
         private void MapExtentChanged(object sender, ExtentChangedEventArgs e)
         {
-            /*if (IsEnabled)
+            if (Enabled)
             {
-                if (_updateTimer.IsEnabled)
-                {
-                    _updateTimer.Stop();
-                }
-
-                _updateTimer.Start();
-            }*/
+                UpdateBarItems(CurrentMap.CurrentExtent);
+            }
         }
 
-        private void updateTimer_Tick(object sender, EventArgs e)
+        private void DrawScaleLine(float xTopLine, float xMiddleLine, float xBottomLine)
         {
-            /*UpdateBarItems(CurrentMap.CurrentExtent);
-            _updateTimer.Stop();*/
+            Path leftLine = new Path();
+            leftLine.MoveTo(0, 2);
+            leftLine.LineTo(0, (float)_scaleLineHeightPixel * 2 - 2);
+            leftLine.Close();
+
+            //_topLine = GetLine(0, 2, 0, _scaleLineHeightPixel);
+            Path topLine = new Path();
+            topLine.MoveTo(xTopLine, 2);
+            topLine.LineTo(xTopLine, (float)_scaleLineHeightPixel / 2);
+            topLine.Close();
+
+            //_middleLine = GetLine(0, _scaleLineHeightPixel, 0, _scaleLineHeightPixel);
+            Path middleLine = new Path();
+            middleLine.MoveTo(0, (float)_scaleLineHeightPixel / 2);
+            middleLine.LineTo(xMiddleLine, (float)_scaleLineHeightPixel / 2);
+            middleLine.Close();
+
+            //_bottomLine = GetLine(0, _scaleLineHeightPixel, 0, _scaleLineHeightPixel * 2 - 2);
+            Path bottomLine = new Path();
+            bottomLine.MoveTo(xBottomLine, (float)_scaleLineHeightPixel / 2);
+            bottomLine.LineTo(xBottomLine, (float)_scaleLineHeightPixel * 2 - 2);
+            bottomLine.Close();
+
+            Paint paint = new Paint();
+            paint.SetStyle(Paint.Style.Stroke);
+            paint.Color = Color.Black;
+            paint.StrokeWidth = 3;
+
+            Bitmap background = Bitmap.CreateBitmap((int)_scaleLineWidthPixel, (int)_scaleLineHeightPixel, Bitmap.Config.Argb8888);
+            NativeAndroid.Graphics.Canvas backGroundCanvas = new NativeAndroid.Graphics.Canvas(background);
+            backGroundCanvas.DrawPath(leftLine, paint);
+            backGroundCanvas.DrawPath(topLine, paint);
+            backGroundCanvas.DrawPath(middleLine, paint);
+            backGroundCanvas.DrawPath(bottomLine, paint);
+
+            if (_scaleLineImage == null)
+            {
+                _scaleLineImage = new ImageView(Context);
+                _scaleLineCanvas.AddView(_scaleLineImage);
+            }
+
+            _scaleLineImage.SetImageBitmap(background);            
         }
 
         private void UpdateBarItems(RectangleShape extent)
@@ -146,9 +157,8 @@ namespace Mapgenix.GSuite.Android
             DistanceUnit bottomUnits;
             DistanceUnit topUnits;
 
-            double resolution = extent.Width / CurrentMap.Width;
+            double resolution = extent.Width / CurrentMap.MapWidth;
 
-       
             long maxSizeData = Convert.ToInt64(MaxBarLength * resolution * GetInchesPreUnit(CurrentMap.MapUnit));
 
             if (maxSizeData > 100000)
@@ -180,31 +190,11 @@ namespace Mapgenix.GSuite.Android
             double bottomLengthPixel = Convert.ToInt32(bottomMax / resolution);
             if (bottomLengthPixel > _scaleLineWidthPixel) { bottomLengthPixel = _scaleLineWidthPixel; }
 
-            /*_topText.Text = string.Format(CultureInfo.InvariantCulture, "{0} {1}", topRounded, GetShortUnitString(topUnits));
+            _topText.Text = string.Format(CultureInfo.InvariantCulture, "{0} {1}", topRounded, GetShortUnitString(topUnits));
             _bottomText.Text = string.Format(CultureInfo.InvariantCulture, "{0} {1}", bottomRounded, GetShortUnitString(bottomUnits));
 
-            _topLine.X1 = topLengthPixel;
-            _topLine.X2 = topLengthPixel;
-
-          
-            _middleLine.X2 = Math.Max(topLengthPixel, bottomLengthPixel);
-
-           
-            _bottomLine.X1 = bottomLengthPixel;
-            _bottomLine.X2 = bottomLengthPixel;*/
+            DrawScaleLine((float)topLengthPixel, (float)Math.Max(topLengthPixel, bottomLengthPixel), (float)bottomLengthPixel);
         }
-
-        /*private static Line GetLine(double x1, double y1, double x2, double y2)
-        {
-            Line line = new Line();
-            line.Stroke = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0));
-            line.X1 = x1;
-            line.X2 = x2;
-            line.Y1 = y1;
-            line.Y2 = y2;
-
-            return line;
-        }*/
 
         private string GetShortUnitString(DistanceUnit targetUnits)
         {

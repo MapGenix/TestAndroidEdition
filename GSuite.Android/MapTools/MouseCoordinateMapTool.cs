@@ -4,6 +4,9 @@ using System.Globalization;
 using System.Windows;
 using Mapgenix.Shapes;
 using Android.Content;
+using Android.Widget;
+using Android.Graphics;
+using NativeAndroid = Android;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -16,13 +19,35 @@ namespace Mapgenix.GSuite.Android
     {
         //public static readonly DependencyProperty CoordinateTextProperty  = DependencyProperty.Register("CoordinateText", typeof(string), typeof(MouseCoordinateMapTool), new PropertyMetadata("--°--'--\"E  --°--'--\"N"));
 
-        //public event EventHandler<CoordinateEventArgs> CustomFormatted;
+        private float _coordinateWidth;
+        private float _coordinateHeight;
+        private TextView _coordinateText;
+        public event EventHandler<CoordinateEventArgs> CustomFormatted;
 
         public MouseCoordinateMapTool(Context context)
             : base(context, false)
         {
             //DefaultStyleKey = typeof(MouseCoordinateMapTool);
+
+            _coordinateWidth = LayoutUnitsUtil.convertDpToPixel(90, Context.Resources.DisplayMetrics.Xdpi);
+            _coordinateHeight = LayoutUnitsUtil.convertDpToPixel(15, Context.Resources.DisplayMetrics.Ydpi);
+
+            RelativeLayout.LayoutParams layout = new RelativeLayout.LayoutParams((int)_coordinateWidth, (int)_coordinateHeight);
+            layout.AddRule(LayoutRules.AlignParentEnd);
+            layout.AddRule(LayoutRules.AlignParentBottom);
+            layout.RightMargin = 10;
+            layout.BottomMargin = 0;
+
+            LayoutParameters = layout;
             
+            _coordinateText = new TextView(Context) { TextSize = 8 };
+            _coordinateText.TextAlignment = NativeAndroid.Views.TextAlignment.TextEnd;
+            _coordinateText.SetWidth((int)_coordinateWidth);
+            _coordinateText.SetHeight((int)_coordinateHeight);
+            _coordinateText.SetTextColor(Color.Black);
+
+            AddView(_coordinateText);
+
             MouseCoordinateType = MouseCoordinateType.LongitudeLatitude;
             /*HorizontalAlignment = HorizontalAlignment.Right;
             VerticalAlignment = VerticalAlignment.Bottom;
@@ -42,18 +67,24 @@ namespace Mapgenix.GSuite.Android
         protected override void EnabledChangedCore(bool newValue)
         {
             base.EnabledChangedCore(newValue);
+            
+        }
+
+        protected override void InitializeCore(Map map)
+        {
+            base.InitializeCore(map);
             InitEvent();
         }
 
         protected string OnCustomFormatted(CoordinateEventArgs args)
         {
             string result = String.Empty;
-            /*EventHandler<CoordinateEventArgs> handler = CustomFormatted;
+            EventHandler<CoordinateEventArgs> handler = CustomFormatted;
             if (handler != null)
             {
                 handler(this, args);
                 result = args.Result;
-            }*/
+            }
 
             return result;
         }
@@ -62,22 +93,18 @@ namespace Mapgenix.GSuite.Android
         {
             if (CurrentMap == null) { return; }
 
-            /*if (IsEnabled)
+            CurrentMap.MapMove -= CurrentMapMouseMove;
+
+            if (Enabled)
             {
-                CurrentMap.MouseMove += CurrentMapMouseMove;
+                CurrentMap.MapMove += CurrentMapMouseMove;
             }
-            else
-            {
-                CurrentMap.MouseMove -= CurrentMapMouseMove;
-            }*/
         }
 
-        /*private void CurrentMapMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            Point screenCoordinate = e.GetPosition(CurrentMap);
-            PointShape lonlat = CurrentMap.ToWorldCoordinate(screenCoordinate);
-            CoordinateText = GetMouseCoordinates(lonlat.X, lonlat.Y);
-        }*/
+        private void CurrentMapMouseMove(object sender, MapMotionEventArgs e)
+        {            
+            _coordinateText.Text = GetMouseCoordinates(e.WorldX, e.WorldY);
+        }
 
         private string GetMouseCoordinates(double lon, double lat)
         {

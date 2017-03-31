@@ -41,6 +41,8 @@ namespace Mapgenix.GSuite.Android
 
         public event EventHandler<OverlaysEventArgs> OverlaysDrawn;
 
+        public event EventHandler<MapMotionEventArgs> MapMove;
+
         /*protected virtual void OnMapClick(MapClickEventArgs e)
         {
             EventHandler<MapClickEventArgs> handler = MapClick;
@@ -115,34 +117,37 @@ namespace Mapgenix.GSuite.Android
 
                     /*if (!_scaleDetector.IsInProgress)
                     {*/
-                        pointerIndex = ev.FindPointerIndex(_activePointerId);
+                    pointerIndex = ev.FindPointerIndex(_activePointerId);
 
-                        float x = ev.GetX(pointerIndex);
-                        float y = ev.GetY(pointerIndex);
+                    float x = ev.GetX(pointerIndex);
+                    float y = ev.GetY(pointerIndex);
 
-                        float deltaX = x - _lastTouchX;
-                        float deltaY = y - _lastTouchY;
-                        _posX += deltaX;
-                        _posY += deltaY;
+                    float deltaX = x - _lastTouchX;
+                    float deltaY = y - _lastTouchY;
+                    _posX += deltaX;
+                    _posY += deltaY;
 
-                        currentScreenPoint = new PointF(x, y);
-                        _currentMousePosition = currentScreenPoint;
-                        motionArgs = CollectMotionEventArguments(currentScreenPoint);
+                    currentScreenPoint = new PointF(x, y);
+                    _currentMousePosition = currentScreenPoint;
+                    motionArgs = CollectMotionEventArguments(currentScreenPoint);
 
-                        motionArgs.MotionAction = action;
+                    motionArgs.MotionAction = action;
 
-                        Invalidate();
+                    Invalidate();
 
-                        /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
-                        if (mapMouseButton != MapMouseButton.None)
-                        {
-                            interactionArguments.MouseButton = mapMouseButton;
-                        }*/
+                    /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
+                    if (mapMouseButton != MapMouseButton.None)
+                    {
+                        interactionArguments.MouseButton = mapMouseButton;
+                    }*/
 
-                        _lastTouchX = x;
-                        _lastTouchY = y;
+                    _lastTouchX = x;
+                    _lastTouchY = y;
 
-                        EventManagerMotionMoveCore(motionArgs);
+                    EventManagerMotionMoveCore(motionArgs);
+
+                    OnMapMove(motionArgs);
+
                     /*}
                     else
                     {
@@ -276,6 +281,15 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
+        protected virtual void OnMapMove(MapMotionEventArgs e)
+        {
+            EventHandler<MapMotionEventArgs> handler = MapMove;
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         private void BindingEvent()
         {
             /*MouseEventManager eventManager = new MouseEventManager(_eventCanvas);
@@ -299,8 +313,8 @@ namespace Mapgenix.GSuite.Android
             PointShape currentWorldPoint = ToWorldCoordinate(currentScreenPoint);
             MapMotionEventArgs arguments = new MapMotionEventArgs();
             arguments.CurrentExtent = CurrentExtent;
-            arguments.MapHeight = (int)LayoutParameters.Height;
-            arguments.MapWidth = (int)LayoutParameters.Width;
+            arguments.MapHeight = (int)MapHeight;
+            arguments.MapWidth = (int)MapWidth;
             arguments.MapUnit = MapUnit;
             //arguments.MouseWheelDelta = 0;
             arguments.Scale = CurrentScale;
@@ -310,9 +324,9 @@ namespace Mapgenix.GSuite.Android
             arguments.WorldY = currentWorldPoint.Y;
             arguments.MotionAction = MotionEventActions.Mask;
 
-            if (!Double.IsNaN(LayoutParameters.Width) && LayoutParameters.Width != 0 && !Double.IsNaN(LayoutParameters.Height) && LayoutParameters.Height != 0)
+            if (!Double.IsNaN(MapWidth) && MapWidth != 0 && !Double.IsNaN(MapHeight) && MapHeight != 0)
             {
-                arguments.SearchingTolerance = ClickPointTolerance * Math.Max(CurrentExtent.Width / LayoutParameters.Height, CurrentExtent.Height / LayoutParameters.Height);
+                arguments.SearchingTolerance = ClickPointTolerance * Math.Max(CurrentExtent.Width / MapWidth, CurrentExtent.Height / MapHeight);
             }
 
             return arguments;

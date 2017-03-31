@@ -91,7 +91,7 @@ namespace Mapgenix.GSuite.Android
                 //baseOverlay.SetMatrixTiles(toMatrix);
             }
 
-            StartAnimation(_zoomAnimation);
+            OverlayCanvas.StartAnimation(_zoomAnimation);
 
             //CurrentExtent = _targetSnappedExtent;
             //Refresh();

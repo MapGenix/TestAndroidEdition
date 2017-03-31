@@ -4,7 +4,7 @@ using Android.Widget;
 
 namespace Mapgenix.GSuite.Android
 {
-    public abstract class BaseMapTool : FrameLayout
+    public abstract class BaseMapTool : RelativeLayout
     {
         private Map _currentMap;
         
@@ -25,14 +25,31 @@ namespace Mapgenix.GSuite.Android
             set { _currentMap = value; }
         }
 
-        public void Initialize(Map wpfMap)
+        public void Initialize(Map map)
         {
-            InitializeCore(wpfMap);
+            InitializeCore(map);
         }
 
-        protected virtual void InitializeCore(Map wpfMap)
+        public override bool Enabled
         {
-            _currentMap = wpfMap;
+            get
+            {
+                return base.Enabled;
+            }
+
+            set
+            {
+                base.Enabled = value;
+                if(Enabled)
+                {
+                    EnabledChangedCore(Enabled);
+                }
+            }
+        }
+
+        protected virtual void InitializeCore(Map map)
+        {
+            _currentMap = map;
             if (_currentMap.ToolsGrid.IndexOfChild(this) == -1)
             {
                 _currentMap.ToolsGrid.AddView(this);
@@ -41,13 +58,7 @@ namespace Mapgenix.GSuite.Android
 
         protected virtual void EnabledChangedCore(bool newValue)
         {
-            //Visibility = newValue ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
             Visibility = newValue ? ViewStates.Visible : ViewStates.Invisible;
         }
-
-        /*private void MapToolIsEnabledChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
-        {
-            EnabledChangedCore((bool)e.NewValue);
-        }*/
     }
 }

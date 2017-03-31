@@ -9,7 +9,7 @@
         private Map _currentMap;
         private LogoMapTool _logo;
         private MouseCoordinateMapTool _mouseCoordinate;
-        private PanZoomBarMapTool _panZoomBar;
+        private ZoomMapTool _panZoomBar;
         private ScaleLineMapTool _scaleLine;
 
       
@@ -23,7 +23,7 @@
             _currentMap = wpfMap;
             _logo = new LogoMapTool(wpfMap.Context);
             _mouseCoordinate = new MouseCoordinateMapTool(_currentMap.Context);
-            _panZoomBar = new PanZoomBarMapTool(_currentMap.Context);
+            _panZoomBar = new ZoomMapTool(_currentMap.Context);
             _scaleLine = new ScaleLineMapTool(_currentMap.Context);
         }
 
@@ -34,7 +34,7 @@
         public MouseCoordinateMapTool MouseCoordinate { get { return _mouseCoordinate; } }
 
      
-        public PanZoomBarMapTool PanZoomBar { get { return _panZoomBar; } }
+        public ZoomMapTool PanZoomBar { get { return _panZoomBar; } }
 
       
         public ScaleLineMapTool ScaleLine { get { return _scaleLine; } }

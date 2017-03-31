@@ -31,7 +31,7 @@ namespace Mapgenix.GSuite.Android
         private double _maximumScale;
         private RelativeLayout _overlayCanvas;
         private RelativeLayout _eventCanvas;
-        private GridLayout _toolsGrid;
+        private RelativeLayout _toolsGrid;
         //private DispatcherTimer _resizeTimer;
         private GeographyUnit _mapUnit;
         private RectangleShape _maxExtent;
@@ -77,7 +77,7 @@ namespace Mapgenix.GSuite.Android
             _interactiveOverlays.Removing += InteractiveOverlaysRemoving;
             _interactiveOverlays.ClearingItems += InteractiveOverlaysClearingItems;*/
 
-            _toolsGrid = new GridLayout(Context);
+            //_toolsGrid = new RelativeLayout(Context);
 
             _currentCenter = new PointF(0f, 0f);
             _previousSnappedScale = Double.NaN;
@@ -163,16 +163,16 @@ namespace Mapgenix.GSuite.Android
                     RectangleShape previousExtent = CurrentExtent;
                     RectangleShape newSnappedExtent = GetSnappedExtent(value);
 
-                    OnCurrentExtentChanging(new ExtentChangingEventArgs(previousExtent, newSnappedExtent, MapUnit, (float)LayoutParameters.Width, (float)LayoutParameters.Height, false));
+                    OnCurrentExtentChanging(new ExtentChangingEventArgs(previousExtent, newSnappedExtent, MapUnit, (float)MapWidth, (float)MapHeight, false));
 
                     int targetLevelIndex = GetSnappedZoomLevelIndex(value);
                     bool isLevelChanged = (_currentLevelIndex != targetLevelIndex);
-                    _targetSnappedScale = MapUtil.GetScale(MapUnit, newSnappedExtent, LayoutParameters.Width, LayoutParameters.Height);
-                    _previousSnappedScale = MapUtil.GetScale(MapUnit, previousExtent, LayoutParameters.Width, LayoutParameters.Height);
+                    _targetSnappedScale = MapUtil.GetScale(MapUnit, newSnappedExtent, MapWidth, MapHeight);
+                    _previousSnappedScale = MapUtil.GetScale(MapUnit, previousExtent, MapWidth, MapHeight);
 
                     if (isLevelChanged)
                     {
-                        OnCurrentScaleChanging(new ScaleChangingEventArgs(previousExtent, _previousSnappedScale, _targetSnappedScale, MapUnit, (float)LayoutParameters.Width, (float)LayoutParameters.Height, false));
+                        OnCurrentScaleChanging(new ScaleChangingEventArgs(previousExtent, _previousSnappedScale, _targetSnappedScale, MapUnit, (float)MapWidth, (float)MapHeight, false));
                     }
 
                     PointShape centerPoint = value.GetCenterPoint();
@@ -185,10 +185,10 @@ namespace Mapgenix.GSuite.Android
 
                     if (isLevelChanged)
                     {
-                        OnCurrentScaleChanged(new ScaleChangedEventArgs(newSnappedExtent, _targetSnappedScale, MapUnit, (float)LayoutParameters.Width, (float)LayoutParameters.Height));
+                        OnCurrentScaleChanged(new ScaleChangedEventArgs(newSnappedExtent, _targetSnappedScale, MapUnit, (float)MapWidth, (float)MapHeight));
                     }
 
-                    OnCurrentExtentChanged(new ExtentChangedEventArgs(newSnappedExtent, MapUnit, (float)LayoutParameters.Width, (float)LayoutParameters.Height));
+                    OnCurrentExtentChanged(new ExtentChangedEventArgs(newSnappedExtent, MapUnit, (float)MapWidth, (float)MapHeight));
                 }
             }
         }
@@ -203,7 +203,7 @@ namespace Mapgenix.GSuite.Android
 
         protected RelativeLayout EventCanvas { get { return _eventCanvas; } }
 
-        public GridLayout ToolsGrid { get { return _toolsGrid; } }
+        public RelativeLayout ToolsGrid { get { return _toolsGrid; } }
 
         public MapTools MapTools { get { return _mapTools; } }
 
@@ -238,6 +238,22 @@ namespace Mapgenix.GSuite.Android
 
         public RectangleShape RestrictExtent { get; set; }
 
+        public int MapWidth
+        {
+            get
+            {
+                return this.LayoutParameters.Width > 0 ? this.LayoutParameters.Width : Context.Resources.DisplayMetrics.WidthPixels;
+            }
+        }
+
+        public int MapHeight
+        {
+            get
+            {
+                return this.LayoutParameters.Height > 0 ? this.LayoutParameters.Height : Context.Resources.DisplayMetrics.HeightPixels;
+            }
+        }
+
         #endregion
 
         #region public methods
@@ -252,6 +268,17 @@ namespace Mapgenix.GSuite.Android
                 p.LeftMargin = 0;
                 _overlayCanvas.LayoutParameters = p;
                 AddView(_overlayCanvas, p);
+            }
+
+            if(_toolsGrid == null)
+            {
+                _toolsGrid = new RelativeLayout(Context);
+                RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
+                p.TopMargin = 0;
+                p.LeftMargin = 0;
+                _toolsGrid.LayoutParameters = p;
+                _toolsGrid.Elevation = 200;
+                AddView(_toolsGrid, p);
             }
             
             RelativeLayout.LayoutParams layoutExtent = new LayoutParams(this.LayoutParameters);
@@ -298,8 +325,8 @@ namespace Mapgenix.GSuite.Android
         public int GetSnappedZoomLevelIndex(RectangleShape targetExtent)
         {
             
-            double screenWidth = LayoutParameters.Width;
-            double screenHeight = LayoutParameters.Height;
+            double screenWidth = MapWidth;
+            double screenHeight = MapHeight;
             if (screenWidth == 0 || screenHeight == 0)
             {                
                 /*Measure(new Size(float.PositiveInfinity, float.PositiveInfinity));
@@ -329,7 +356,7 @@ namespace Mapgenix.GSuite.Android
 
         public PointShape ToWorldCoordinate(double screenX, double screenY)
         {
-            PointF worldPoint = MapUtil.ToWorldCoordinate(CurrentExtent, screenX, screenY, LayoutParameters.Width, LayoutParameters.Height);
+            PointF worldPoint = MapUtil.ToWorldCoordinate(CurrentExtent, screenX, screenY, MapWidth, MapHeight);
             return new PointShape(worldPoint.X, worldPoint.Y);
         }
 
@@ -348,6 +375,144 @@ namespace Mapgenix.GSuite.Android
             return ToWorldCoordinate(screenCoordinate.X, screenCoordinate.Y);
         }
 
+        public PointShape ToScreenCoordinate(double worldX, double worldY)
+        {
+            PointF screenPoint = MapUtil.ToScreenCoordinate(CurrentExtent, worldX, worldY, MapWidth, MapWidth);
+            return new PointShape(screenPoint.X, screenPoint.Y);
+        }
+
+        public PointShape ToScreenCoordinate(PointShape worldCoordinate)
+        {
+            return ToScreenCoordinate(worldCoordinate.X, worldCoordinate.Y);
+        }
+
+        public PointShape ToScreenCoordinate(Point worldCoordinate)
+        {
+            return ToScreenCoordinate(worldCoordinate.X, worldCoordinate.Y);
+        }
+
+        public void ZoomIn()
+        {
+            RectangleShape extentForZooming = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+            int level = GetSnappedZoomLevelIndex(extentForZooming);
+            if (level < ZoomLevelScales.Count - 1)
+            {
+                level++;
+            }
+
+            ZoomToScale(ZoomLevelScales[level]);
+        }
+
+        public void ZoomIn(int percentage)
+        {
+            ZoomIntoCenter(percentage, new PointShape(_currentCenter.X, _currentCenter.Y));
+        }
+
+        public void ZoomIntoCenter(int percentage, Feature centerFeature)
+        {
+            Validators.CheckParameterIsNotNull(centerFeature, "centerFeature");
+            ZoomIntoCenter(percentage, centerFeature.GetShape().GetCenterPoint());
+        }
+
+        public void ZoomIntoCenter(int percentage, PointShape worldPoint)
+        {
+            Validators.CheckParameterIsNotNull(worldPoint, "worldPoint");
+            PointShape screenPoint = ToScreenCoordinate(worldPoint);
+            ZoomIntoCenter(percentage, new ScreenPointF((float)screenPoint.X, (float)screenPoint.Y));
+        }
+
+        public void ZoomIntoCenter(int percentage, ScreenPointF screenPoint)
+        {
+            Validators.CheckIfInputValueIsInRange(percentage, "percentage", 0, RangeCheckingInclusion.ExcludeValue, 100, RangeCheckingInclusion.ExcludeValue);
+            RectangleShape newExtent = ExtentHelper.ZoomIntoCenter(CurrentExtent, percentage, screenPoint.X, screenPoint.Y, (float)MapWidth, (float)MapHeight);
+
+            double logicCenterX = screenPoint.X * 2 - MapWidth * .5;
+            double logicCenterY = screenPoint.Y * 2 - MapHeight * .5;
+            _currentMousePosition = new PointF((float)logicCenterX, (float)logicCenterY);
+            Draw(newExtent);
+        }
+
+        public void ZoomIntoCenter(int percentage, Single screenX, Single screenY)
+        {
+            ZoomIntoCenter(percentage, new ScreenPointF(screenX, screenY));
+        }
+
+        public void ZoomTo(PointShape targetWorldCenter, double targetScale)
+        {
+            RectangleShape newExtent = MapUtil.CalculateExtent(new PointF((float)targetWorldCenter.X, (float)targetWorldCenter.Y), targetScale, MapUnit, MapWidth, MapHeight);
+            CalculateZoomLogicPoint(CurrentExtent, newExtent);
+            Draw(newExtent);
+        }
+
+        public void ZoomOut()
+        {
+            RectangleShape extentForZooming = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+            int level = GetSnappedZoomLevelIndex(extentForZooming);
+            if (level > 0)
+            {
+                level--;
+            }
+
+            ZoomToScale(ZoomLevelScales[level]);
+        }
+
+        public void ZoomOut(int percentage)
+        {
+            ZoomOutToCenter(percentage, new PointShape(_currentCenter.X, _currentCenter.Y));
+        }
+
+        public void ZoomOutToCenter(int percentage, Feature centerFeature)
+        {
+            Validators.CheckParameterIsNotNull(centerFeature, "centerFeature");
+            ZoomOutToCenter(percentage, centerFeature.GetShape().GetCenterPoint());
+        }
+
+        public void ZoomOutToCenter(int percentage, PointShape worldPoint)
+        {
+            Validators.CheckParameterIsNotNull(worldPoint, "worldPoint");
+            PointShape screenCenter = ToScreenCoordinate(worldPoint);
+
+            ZoomOutToCenter(percentage, new ScreenPointF((float)screenCenter.X, (float)screenCenter.Y));
+        }
+
+        public void ZoomOutToCenter(int percentage, ScreenPointF screenPoint)
+        {
+            Validators.CheckIfInputValueIsInRange(percentage, "percentage", 0, RangeCheckingInclusion.ExcludeValue, 100, RangeCheckingInclusion.ExcludeValue);
+
+            RectangleShape extentForZooming = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+            extentForZooming = ExtentHelper.ZoomOutToCenter(extentForZooming, percentage, screenPoint.X, screenPoint.Y, (float)MapWidth, (float)MapHeight);
+
+            double logicCenterX = MapWidth * 1.5 - screenPoint.X * 2;
+            double logicCenterY = MapHeight * 1.5 - screenPoint.Y * 2;
+            _currentMousePosition = new PointF((float)logicCenterX, (float)logicCenterY);
+            Draw(extentForZooming);
+        }
+
+        public void ZoomOutToCenter(int percentage, Single screenX, Single screenY)
+        {
+            ZoomOutToCenter(percentage, new ScreenPointF(screenX, screenY));
+        }
+
+        public void ZoomToScale(double targetScale)
+        {
+            _currentMousePosition = new PointF((float)(MapWidth * .5), (float)(MapHeight * .5));
+            int level = GetSnappedZoomLevelIndex(targetScale);
+            Draw(GetRectangle(CurrentExtent.GetCenterPoint(), ZoomLevelScales[level]));
+        }
+
+        public void ZoomToScale(double targetScale, ScreenPointF offsetScreenPoint)
+        {
+            Validators.CheckScaleIsValid(targetScale, "targetScale");
+
+            RectangleShape newExtent = ExtentHelper.ZoomToScale(targetScale, CurrentExtent, MapUnit, (float)MapWidth, (float)MapHeight, offsetScreenPoint);
+            Draw(newExtent);
+        }
+
+        public void ZoomToScale(double targetScale, Single offsetScreenX, Single offsetScreenY)
+        {
+            ZoomToScale(targetScale, new ScreenPointF(offsetScreenX, offsetScreenY));
+        }
+
         #endregion
 
         #region private methods
@@ -355,10 +520,10 @@ namespace Mapgenix.GSuite.Android
         private RectangleShape GetRectangle(PointShape center, double scale)
         {
             double resolution = MapUtil.GetResolutionFromScale(scale, MapUnit);
-            double left = center.X - resolution * LayoutParameters.Width * .5;
-            double top = center.Y + resolution * LayoutParameters.Height * .5;
-            double right = center.X + resolution * LayoutParameters.Width * .5;
-            double bottom = center.Y - resolution * LayoutParameters.Height * .5;
+            double left = center.X - resolution * MapWidth * .5;
+            double top = center.Y + resolution * MapHeight * .5;
+            double right = center.X + resolution * MapWidth * .5;
+            double bottom = center.Y - resolution * MapHeight * .5;
             return new RectangleShape(left, top, right, bottom);
         }
 
@@ -376,7 +541,7 @@ namespace Mapgenix.GSuite.Android
                 double right = targetExtent.UpperRightPoint.X;
                 double top = targetExtent.UpperRightPoint.Y;
 
-                double restrictResolution = Math.Min(RestrictExtent.Width / LayoutParameters.Width, RestrictExtent.Height / LayoutParameters.Height) * .5;
+                double restrictResolution = Math.Min(RestrictExtent.Width / MapWidth, RestrictExtent.Height / MapHeight) * .5;
                 double restrictScale = MapUtil.GetScaleFromResolution(restrictResolution, MapUnit);
                 double snappedRestrictScale = ZoomLevelScales[MapUtil.GetSnappedZoomLevelIndex(restrictScale, ZoomLevelScales)];
                 double snappedRestrictResolution = MapUtil.GetResolutionFromScale(snappedRestrictScale, MapUnit);
@@ -389,21 +554,21 @@ namespace Mapgenix.GSuite.Android
                 }
                 else if (targetExtent.Width > RestrictExtent.Width && targetExtent.Height > RestrictExtent.Height)
                 {
-                    double targetResolution = MapUtil.GetResolution(targetExtent, Width, LayoutParameters.Height);
+                    double targetResolution = MapUtil.GetResolution(targetExtent, MapWidth, MapHeight);
                     PointShape centerPoint = RestrictExtent.GetCenterPoint();
-                    left = centerPoint.X - LayoutParameters.Width * targetResolution * .5;
-                    right = centerPoint.X + LayoutParameters.Width * targetResolution * .5;
-                    top = centerPoint.Y + LayoutParameters.Height * targetResolution * .5;
-                    bottom = centerPoint.Y - LayoutParameters.Height * targetResolution * .5;
+                    left = centerPoint.X - MapWidth * targetResolution * .5;
+                    right = centerPoint.X + MapWidth * targetResolution * .5;
+                    top = centerPoint.Y + MapHeight * targetResolution * .5;
+                    bottom = centerPoint.Y - MapHeight * targetResolution * .5;
                 }
                 else
                 {
-                    double targetResolution = MapUtil.GetResolution(targetExtent, LayoutParameters.Width, LayoutParameters.Height);
+                    double targetResolution = MapUtil.GetResolution(targetExtent, MapWidth, MapHeight);
                     PointShape centerPoint = RestrictExtent.GetCenterPoint();
                     if (targetExtent.Width > RestrictExtent.Width)
                     {
-                        left = centerPoint.X - LayoutParameters.Width * targetResolution * .5;
-                        right = centerPoint.X + LayoutParameters.Width * targetResolution * .5;
+                        left = centerPoint.X - MapWidth * targetResolution * .5;
+                        right = centerPoint.X + MapWidth * targetResolution * .5;
                     }
                     else if (right < RestrictExtent.LowerLeftPoint.X || left > RestrictExtent.UpperRightPoint.X)
                     {
@@ -418,8 +583,8 @@ namespace Mapgenix.GSuite.Android
 
                     if (targetExtent.Height > RestrictExtent.Height)
                     {
-                        top = centerPoint.Y + LayoutParameters.Height * targetResolution * .5;
-                        bottom = centerPoint.Y - LayoutParameters.Height * targetResolution * .5;
+                        top = centerPoint.Y + MapHeight * targetResolution * .5;
+                        bottom = centerPoint.Y - MapHeight * targetResolution * .5;
                     }
                     else if (bottom > RestrictExtent.UpperRightPoint.Y || top < RestrictExtent.LowerLeftPoint.Y)
                     {
@@ -459,7 +624,7 @@ namespace Mapgenix.GSuite.Android
             Collection<BaseOverlay> currentOverlays = new Collection<BaseOverlay>();
             if (_backgroundOverlay != null) { currentOverlays.Add(_backgroundOverlay); }
 
-            for (int i = Overlays.Count - 1; i >= 0; i--)
+            for (int i = 0; i < Overlays.Count; i++)
             {
                 currentOverlays.Add(Overlays[i]);
             }
@@ -567,8 +732,8 @@ namespace Mapgenix.GSuite.Android
         private MapArguments GetMapArguments()
         {
             MapArguments mapArgs = new MapArguments();
-            mapArgs.ActualHeight = LayoutParameters.Height;
-            mapArgs.ActualWidth = LayoutParameters.Width;
+            mapArgs.ActualHeight = MapHeight;
+            mapArgs.ActualWidth = MapWidth;
             mapArgs.CurrentExtent = (RectangleShape)CurrentExtent.CloneDeep();
             mapArgs.CurrentResolution = CurrentResolution;
             mapArgs.CurrentScale = CurrentScale;
@@ -634,6 +799,22 @@ namespace Mapgenix.GSuite.Android
             return isPanning;
         }
 
+        private void CalculateZoomLogicPoint(RectangleShape sourceExtent, RectangleShape targetExtent)
+        {
+            if (sourceExtent.Width != targetExtent.Width && (sourceExtent.Contains(targetExtent) || targetExtent.Contains(sourceExtent)))
+            {
+                double lGap = Math.Abs(targetExtent.UpperLeftPoint.X - sourceExtent.UpperLeftPoint.X);
+                double rGap = Math.Abs(sourceExtent.LowerRightPoint.X - targetExtent.LowerRightPoint.X);
+                double newX = MapWidth * lGap / (lGap + rGap);
+
+                double tGap = Math.Abs(sourceExtent.UpperLeftPoint.Y - targetExtent.UpperLeftPoint.Y);
+                double bGap = Math.Abs(targetExtent.LowerRightPoint.Y - sourceExtent.LowerRightPoint.Y);
+                double newY = MapHeight * tGap / (tGap + bGap);
+
+                _currentMousePosition = new PointF((float)newX, (float)newY);
+            }
+        }
+
         #endregion
 
         #region protected methods
@@ -650,8 +831,8 @@ namespace Mapgenix.GSuite.Android
             RectangleShape previousExtent = CurrentExtent;
             _targetSnappedExtent = GetSnappedExtent(targetExtent);
 
-            _targetSnappedScale = MapUtil.GetScale(MapUnit, _targetSnappedExtent, LayoutParameters.Width, LayoutParameters.Height);
-            _previousSnappedScale = MapUtil.GetScale(MapUnit, previousExtent, LayoutParameters.Width, LayoutParameters.Height);
+            _targetSnappedScale = MapUtil.GetScale(MapUnit, _targetSnappedExtent, MapWidth, MapHeight);
+            _previousSnappedScale = MapUtil.GetScale(MapUnit, previousExtent, MapWidth, MapHeight);
 
             if (MapUtil.IsFuzzyEqual(_targetSnappedScale, _previousSnappedScale))
             {
