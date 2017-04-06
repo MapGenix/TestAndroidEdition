@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using Mapgenix.Shapes;
 using Mapgenix.Canvas;
 using Mapgenix.Styles;
 using Mapgenix.Layers;
+using Android.Content;
+using Android.Views;
+using Android.Widget;
+using Android.Graphics;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -19,16 +20,19 @@ namespace Mapgenix.GSuite.Android
     public class TrackInteractiveOverlay : BaseInteractiveOverlay
     {
         private const string InTrackingFeatureKey = "InTrackingFeature";
-        private const string TrackLayerTileName = "TrackLayerTile";
+        private const int TrackLayerId = 789456;
 
         private TrackMode _trackMode;
         private Collection<Vertex> _vertices;
         private InMemoryFeatureLayer _trackShapeLayer;
         private bool _isInTracking;
         private bool _isClicking;
-        private int _mouseDownCount;   
-        [NonSerialized]
-        private TranslateTransform _translateTransform;
+        private int _mouseDownCount;
+        private GestureDetector _gestureDetector;
+        private Map _map;
+
+        /*[NonSerialized]
+        private TranslateTransform _translateTransform;*/
 
         public event EventHandler<ShapeEventArgs> TrackEnded;
 
@@ -44,17 +48,25 @@ namespace Mapgenix.GSuite.Android
 
         public event EventHandler<VertexFeatureEventArgs> MouseMoved;
 
-        public TrackInteractiveOverlay()
+        public TrackInteractiveOverlay(Context context)
+            : base(context)
         {
             _trackMode = TrackMode.None;
-            RenderMode = RenderMode.DrawingVisual;
+            RenderMode = RenderMode.GdiPlus;
 
             _trackShapeLayer = FeatureLayerFactory.CreateInMemoryFeatureLayer();
-            _vertices = new Collection<Vertex>();
 
-            OverlayCanvas.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.TrackInteractiveOverlay);
-            _translateTransform = new TranslateTransform();
-            OverlayCanvas.RenderTransform = _translateTransform;
+            _vertices = new Collection<Vertex>();
+            OverlayCanvas.Elevation = ZIndexes.TrackInteractiveOverlay;
+
+            //OverlayCanvas.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.TrackInteractiveOverlay);
+            //_translateTransform = new TranslateTransform();
+            //OverlayCanvas.RenderTransform = _translateTransform;
+            _gestureDetector = new GestureDetector(Context, new MapSimpleGestureManager());
+
+            _gestureDetector.DoubleTap += (object sender, GestureDetector.DoubleTapEventArgs e) => {
+                //EventManagerDoubleTap(sender, e.Event);
+            };
 
             SetDefaultStyle();
         }
@@ -66,10 +78,10 @@ namespace Mapgenix.GSuite.Android
                 bool isEmpty = _trackShapeLayer.IsEmpty();
                 if (isEmpty)
                 {
-                    Tile tile = OverlayCanvas.Children.OfType<Tile>().FirstOrDefault(t => t.GetValue(System.Windows.Controls.Canvas.NameProperty).Equals(TrackLayerTileName));
+                    Tile tile = OverlayCanvas.FindViewById<Tile>(TrackLayerId);
                     if (tile != null)
                     {
-                        OverlayCanvas.Children.Remove(tile);
+                        OverlayCanvas.RemoveView(tile);
                         tile.Dispose();
                         tile = null;
                     }
@@ -103,7 +115,40 @@ namespace Mapgenix.GSuite.Android
             _isInTracking = false;
         }
 
-        protected override InteractiveResult MouseDownCore(InteractionArguments interactionArguments)
+        public bool OnTouchEvent(MotionEvent e, Map map)
+        {
+
+            _gestureDetector.OnTouchEvent(e);
+
+            _map = map;
+            PointF currentScreenPoint = new PointF(e.GetX(), e.GetY());
+            PointShape worldCoordinate = ToWorldCoordinate(e.GetX(), e.GetY());
+
+            MotionEventActions action = e.Action & MotionEventActions.Mask;
+            switch(action)
+            {
+                case MotionEventActions.Down:
+                    _vertices = new Collection<Vertex>();
+                    AddVertexWithEvents(new Vertex(worldCoordinate.X, worldCoordinate.Y));
+                    Feature newPoint = new Feature(_vertices[0]);
+
+                    _trackShapeLayer.Add(newPoint.Id, newPoint);
+                    break;
+            }
+
+            _map.Refresh(this);
+
+            return true;
+        }
+
+        public PointShape ToWorldCoordinate(double screenX, double screenY)
+        {
+            PointF worldPoint = MapUtil.ToWorldCoordinate(_map.CurrentExtent, screenX, screenY, _map.MapWidth, _map.MapHeight);
+            return new PointShape(worldPoint.X, worldPoint.Y);
+        }
+
+
+        private InteractiveResult TapDown(MapMotionEventArgs interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
 
@@ -118,7 +163,7 @@ namespace Mapgenix.GSuite.Android
                     _vertices = new Collection<Vertex>();
                 }
 
-                if (interactionArguments.MouseButton == MapMouseButton.Right) return interactiveResult;
+                //if (interactionArguments.MouseButton == MapMouseButton.Right) return interactiveResult;
                 switch (_trackMode)
                 {
                     case TrackMode.Point:
@@ -212,7 +257,57 @@ namespace Mapgenix.GSuite.Android
             return interactiveResult;
         }
 
-        protected override InteractiveResult MouseMoveCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult MotionDownCore(MapMotionEventArgs motionArgs)
+        {
+            Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
+
+            InteractiveResult interactiveResult = new InteractiveResult();
+
+            if (!_isInTracking)
+            {
+                _vertices = new Collection<Vertex>();
+            }
+
+            _isInTracking = true;
+
+            if (_trackMode != TrackMode.None)
+            {
+                interactiveResult.DrawThisOverlay = DrawType.Draw;
+                switch (_trackMode)
+                {
+                    case TrackMode.Point:
+                        AddVertexWithEvents(new Vertex(motionArgs.WorldX, motionArgs.WorldY));
+                        break;
+                    case TrackMode.Line:
+                    case TrackMode.Freehand:
+                    case TrackMode.StraightLine:
+                    case TrackMode.Polygon:
+                    case TrackMode.Rectangle:
+                    case TrackMode.Square:
+                    case TrackMode.Circle:
+                    case TrackMode.Ellipse:
+                    case TrackMode.Custom:
+                    default:
+                        interactiveResult.DrawThisOverlay = DrawType.DoNotDraw;
+                        break;
+                }
+            }
+
+            
+            interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
+
+            WriteTrackShapeLayer();
+
+            if(_trackMode == TrackMode.Point)
+            {
+                EndTracking();
+            }
+
+            return interactiveResult;
+
+        }
+
+        /*protected override InteractiveResult MotionMoveCore(MapMotionEventArgs interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
 
@@ -268,9 +363,9 @@ namespace Mapgenix.GSuite.Android
             }
 
             return interactiveResult;
-        }
+        }*/
 
-        protected override InteractiveResult MouseUpCore(InteractionArguments interactionArguments)
+        private InteractiveResult TapUp(MapMotionEventArgs interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
 
@@ -315,7 +410,7 @@ namespace Mapgenix.GSuite.Android
             return interactiveResult;
         }
 
-        protected override InteractiveResult MouseClickCore(InteractionArguments interactionArguments)
+        /*protected override InteractiveResult CLick(MapMotionEventArgs interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
 
@@ -323,11 +418,11 @@ namespace Mapgenix.GSuite.Android
 
             DrawType mouseDownResult = DrawType.DoNotDraw;
             DrawType mouseUpResult = DrawType.DoNotDraw;
-            if (this.TrackMode != TrackMode.None && interactionArguments.MouseButton != MapMouseButton.Right)
+            if (this.TrackMode != TrackMode.None)
             {
                 _isClicking = true;
-                mouseDownResult = MouseDown(interactionArguments).DrawThisOverlay;
-                mouseUpResult = MouseUp(interactionArguments).DrawThisOverlay;
+                mouseDownResult = TapDown(interactionArguments).DrawThisOverlay;
+                mouseUpResult = TapUp(interactionArguments).DrawThisOverlay;
                 if (mouseDownResult == DrawType.Draw || mouseUpResult == DrawType.Draw)
                 {
                     interactiveResult.DrawThisOverlay = DrawType.Draw;
@@ -339,9 +434,9 @@ namespace Mapgenix.GSuite.Android
             }
 
             return interactiveResult;
-        }
+        }*/
 
-        protected override InteractiveResult MouseDoubleClickCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult DoubleTapCore(MapMotionEventArgs interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
 
@@ -582,7 +677,7 @@ namespace Mapgenix.GSuite.Android
         {
             Validators.CheckParameterIsNotNull(targetExtent, "targetExtent");
            
-            if (overlayRefreshType == OverlayRefreshType.Pan)
+            /*if (overlayRefreshType == OverlayRefreshType.Pan)
             {
                 if (PreviousExtent != null)
                 {
@@ -592,24 +687,36 @@ namespace Mapgenix.GSuite.Android
                     double screenOffsetX = worldOffsetX / resolution;
                     double screenOffsetY = worldOffsetY / resolution;
 
-                    _translateTransform.X -= screenOffsetX;
-                    _translateTransform.Y += screenOffsetY;
+                    ((RelativeLayout.LayoutParams)LayoutParameters).LeftMargin -= (int)screenOffsetX;
+                    ((RelativeLayout.LayoutParams)LayoutParameters).TopMargin += (int)screenOffsetY;
+                    //_translateTransform.X -= screenOffsetX;
+                    //_translateTransform.Y += screenOffsetY;
                 }
             }
             else
-            {
-                _translateTransform.X = 0;
-                _translateTransform.Y = 0;
+            {*/
+                //_translateTransform.X = 0;
+                //_translateTransform.Y = 0;
 
-                LayerTile tile = OverlayCanvas.Children.OfType<LayerTile>().FirstOrDefault(t => t.GetValue(System.Windows.Controls.Canvas.NameProperty).Equals(TrackLayerTileName));;
+                //LayerTile tile = OverlayCanvas.Children.OfType<LayerTile>().FirstOrDefault(t => t.GetValue(System.Windows.Controls.Canvas.NameProperty).Equals(TrackLayerTileName));;
+                LayerTile tile = OverlayCanvas.FindViewById<LayerTile>(TrackLayerId);
+                /*if(tile != null)
+                {
+                    tile.Dispose();
+                    OverlayCanvas.RemoveAllViews();
+                    tile = null;
+                }*/
+
                 if (tile == null)
                 {
-                    tile = new LayerTile();
+                    tile = new LayerTile(Context);
+                    tile.Id = TrackLayerId;
                     tile.IsAsync = false;
                     tile.HasWatermark = false;
-                    tile.SetValue(System.Windows.Controls.Canvas.NameProperty, TrackLayerTileName);
-                    tile.SetValue(System.Windows.Controls.Panel.ZIndexProperty, 1);
-                    OverlayCanvas.Children.Add(tile);
+                    tile.Elevation = 1;
+                    //tile.SetValue(System.Windows.Controls.Canvas.NameProperty, TrackLayerTileName);
+                    //tile.SetValue(System.Windows.Controls.Panel.ZIndexProperty, 1);
+                    OverlayCanvas.AddView(tile);
                 }
                 else
                 {
@@ -617,13 +724,13 @@ namespace Mapgenix.GSuite.Android
                 }
 
                 tile.TargetExtent = targetExtent;
-                tile.Width = MapArguments.ActualWidth;
-                tile.Height = MapArguments.ActualHeight;
+                RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams((int)MapArguments.ActualWidth, (int)MapArguments.ActualHeight);
+                tile.LayoutParameters = p;
                 tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
                 tile.DrawingLayers.Add(_trackShapeLayer);
 
                 DrawTile(tile);
-            }
+            //}
         }
 
        
@@ -632,9 +739,9 @@ namespace Mapgenix.GSuite.Android
             base.Dispose(disposing);
             if (disposing)
             {
-                if (disposing && OverlayCanvas.Children.Count != 0)
+                if (disposing && OverlayCanvas.ChildCount != 0)
                 {
-                    Tile tile = OverlayCanvas.Children[0] as Tile;
+                    Tile tile = OverlayCanvas.GetChildAt(0) as Tile;
                     if (tile != null)
                     {
                         tile.Dispose();
@@ -750,7 +857,7 @@ namespace Mapgenix.GSuite.Android
             int tileSw = (int)MapArguments.ActualWidth;
             int tileSh = (int)MapArguments.ActualHeight;
 
-            if (RenderMode == RenderMode.DrawingVisual)
+            /*if (RenderMode == RenderMode.DrawingVisual)
             {
                 DrawingVisualGeoCanvas geoCanvas = new DrawingVisualGeoCanvas();
                 RenderTargetBitmap nativeImage = new RenderTargetBitmap(tileSw, tileSh, geoCanvas.Dpi, geoCanvas.Dpi, PixelFormats.Pbgra32);
@@ -760,21 +867,22 @@ namespace Mapgenix.GSuite.Android
                 tile.CommitDrawing(geoCanvas, nativeImage);
             }
             else
+            {*/
+            //TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.GetRandomGeoColor(RandomColorType.Pastel), 20, GeoColor.FromArgb(200, GeoColor.StandardColors.Black), 1);
+            using (Bitmap nativeImage = Bitmap.CreateBitmap(tileSw, tileSh, Bitmap.Config.Argb8888))
             {
-                using (Bitmap nativeImage = new Bitmap(tileSw, tileSh))
-                {
-                    GdiPlusGeoCanvas geoCanvas = new GdiPlusGeoCanvas();
-                    geoCanvas.BeginDrawing(nativeImage, tile.TargetExtent, MapArguments.MapUnit);
-                    DrawTileCore(geoCanvas);
-                    geoCanvas.EndDrawing();
-                    tile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
-                }
+                GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context);
+                geoCanvas.BeginDrawing(nativeImage, tile.TargetExtent, MapArguments.MapUnit);
+                DrawTileCore(geoCanvas);
+                geoCanvas.EndDrawing();
+                tile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
             }
+            //}
         }
 
-        protected virtual void DrawTileCore(GdiPlusGeoCanvas geoCanvas)
+        protected virtual void DrawTileCore(GdiPlusAndroidGeoCanvas geoCanvas)
         {
-            LayerTile layerTile = OverlayCanvas.Children[0] as LayerTile;
+            LayerTile layerTile = OverlayCanvas.GetChildAt(0) as LayerTile;
             if (layerTile != null)
             {
                 layerTile.Draw(geoCanvas);
@@ -788,32 +896,40 @@ namespace Mapgenix.GSuite.Android
                 BaseShape baseShape = GetTrackingShape();
                 if (baseShape != null)
                 {
-                    ShapeEventArgs e = new ShapeEventArgs(GetTrackingShape());
+                    ShapeEventArgs e = new ShapeEventArgs(baseShape);
                     OnTrackEnding(e);
                     if (e.Cancel) { return; }
 
                     Feature feature = new Feature(baseShape);
-                    if (this._isInTracking)
+
+                    if(_trackMode == TrackMode.Point)
                     {
-                        if (_trackShapeLayer.Contains(InTrackingFeatureKey))
-                        {
-                            _trackShapeLayer.Replace(InTrackingFeatureKey, feature);
-                        }
-                        else
-                        {
-                            _trackShapeLayer.Add(InTrackingFeatureKey, feature);
-                        }
+                        _trackShapeLayer.Add(feature.Id, feature);
                     }
                     else
                     {
-                        if (_trackShapeLayer.Contains(InTrackingFeatureKey))
+                        if (this._isInTracking)
                         {
-                            _trackShapeLayer.Remove(InTrackingFeatureKey);
-                            _trackShapeLayer.Add(feature.Id, feature);
+                            if (_trackShapeLayer.Contains(InTrackingFeatureKey))
+                            {
+                                _trackShapeLayer.Replace(InTrackingFeatureKey, feature);
+                            }
+                            else
+                            {
+                                _trackShapeLayer.Add(InTrackingFeatureKey, feature);
+                            }
                         }
+                        else
+                        {
+                            if (_trackShapeLayer.Contains(InTrackingFeatureKey))
+                            {
+                                _trackShapeLayer.Remove(InTrackingFeatureKey);
+                                _trackShapeLayer.Add(feature.Id, feature);
+                            }
 
-                        ShapeEventArgs endedEventArgs = new ShapeEventArgs(GetTrackingShape());
-                        OnTrackEnded(endedEventArgs);
+                            ShapeEventArgs endedEventArgs = new ShapeEventArgs(GetTrackingShape());
+                            OnTrackEnded(endedEventArgs);
+                        }
                     }
                 }
             }
@@ -824,7 +940,7 @@ namespace Mapgenix.GSuite.Android
 
         private void SetDefaultStyle()
         {
-            TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Green), 12, GeoColor.FromArgb(200, GeoColor.StandardColors.Black), 1);
+            TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Green), 20, GeoColor.FromArgb(200, GeoColor.StandardColors.Black), 1);
             TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultLineStyle = LineStyles.CreateSimpleLineStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Green), 3, true);
             TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultAreaStyle = AreaStyles.CreateSimpleAreaStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Green), GeoColor.FromArgb(255, GeoColor.StandardColors.Gray), 3);
             TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultLineStyle.OuterPen.LineJoin = DrawingLineJoin.Round;

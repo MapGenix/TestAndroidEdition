@@ -26,6 +26,9 @@ namespace TestApp2
 		
 		public static void UpdateIdValues()
 		{
+			global::Mapgenix.GSuite.Android.Resource.Drawable.minus_blue_square = global::TestApp2.Resource.Drawable.minus_blue_square;
+			global::Mapgenix.GSuite.Android.Resource.Drawable.plus_blue_square = global::TestApp2.Resource.Drawable.plus_blue_square;
+			global::Mapgenix.GSuite.Android.Resource.Drawable.PowerBy = global::TestApp2.Resource.Drawable.PowerBy;
 			global::Mapgenix.GSuite.Android.Resource.String.ApplicationName = global::TestApp2.Resource.String.ApplicationName;
 			global::Mapgenix.GSuite.Android.Resource.String.Hello = global::TestApp2.Resource.String.Hello;
 		}
@@ -50,22 +53,31 @@ namespace TestApp2
 			public const int Icon = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int normal61628 = 2130837505;
+			public const int minus_blue_square = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int normal61629 = 2130837506;
+			public const int normal61628 = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int normal61630 = 2130837507;
+			public const int normal61629 = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int normal61728 = 2130837508;
+			public const int normal61630 = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int normal61729 = 2130837509;
+			public const int normal61728 = 2130837509;
 			
 			// aapt resource value: 0x7f020006
-			public const int normal61730 = 2130837510;
+			public const int normal61729 = 2130837510;
+			
+			// aapt resource value: 0x7f020007
+			public const int normal61730 = 2130837511;
+			
+			// aapt resource value: 0x7f020008
+			public const int plus_blue_square = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int PowerBy = 2130837513;
 			
 			static Drawable()
 			{
@@ -80,11 +92,20 @@ namespace TestApp2
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f050001
-			public const int Image1 = 2131034113;
-			
 			// aapt resource value: 0x7f050000
 			public const int MainLayout = 2131034112;
+			
+			// aapt resource value: 0x7f050001
+			public const int MainMap = 2131034113;
+			
+			// aapt resource value: 0x7f050002
+			public const int buttons = 2131034114;
+			
+			// aapt resource value: 0x7f050003
+			public const int setTrack = 2131034115;
+			
+			// aapt resource value: 0x7f050004
+			public const int unsetTrack = 2131034116;
 			
 			static Id()
 			{
@@ -100,7 +121,10 @@ namespace TestApp2
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int layout1 = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int Main = 2130903041;
 			
 			static Layout()
 			{

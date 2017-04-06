@@ -773,8 +773,8 @@ namespace Mapgenix.GSuite.Android
             for(var i = 0; i < DrawingCanvas.ChildCount; i++)
             {
                 Tile tile = (Tile)DrawingCanvas.GetChildAt(i);
-                if(tile != null)
-                    tile.ImageSource.ImageMatrix = matrix;
+                /*if(tile != null)
+                    tile.ImageSource.ImageMatrix = matrix;*/
             }
         }
     }

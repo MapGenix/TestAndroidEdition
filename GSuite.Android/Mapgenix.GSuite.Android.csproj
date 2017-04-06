@@ -80,7 +80,9 @@
     <Compile Include="Events\PointShapeEventArgs.cs" />
     <Compile Include="Events\ScaleChangedEventArgs.cs" />
     <Compile Include="Events\ScaleChangingEventArgs.cs" />
+    <Compile Include="Events\ShapeEventArgs.cs" />
     <Compile Include="Events\VertexEditEventArgs.cs" />
+    <Compile Include="Events\VertexEventArgs.cs" />
     <Compile Include="Events\VertexFeatureEventArgs.cs" />
     <Compile Include="Factories\OverlayFactory.cs" />
     <Compile Include="GeoDrawing\GdiPlusAndroidGeoCanvas.cs">
@@ -112,6 +114,7 @@
     <Compile Include="Overlays\InteractiveOverlay\ExtentInteractiveOverlay.cs" />
     <Compile Include="Overlays\InteractiveOverlay\InteractiveResult.cs" />
     <Compile Include="Overlays\InteractiveOverlay\KeyEventInteractionArguments.cs" />
+    <Compile Include="Overlays\InteractiveOverlay\TrackInteractiveOverlay.cs" />
     <Compile Include="Overlays\LayerOverlay.cs" />
     <Compile Include="Overlays\OpenStreetMapOverlay.cs" />
     <Compile Include="Properties\ExceptionMessage.Designer.cs">
@@ -160,6 +163,7 @@
     <Compile Include="Types\RenderMode.cs" />
     <Compile Include="Types\SmoothingMode.cs" />
     <Compile Include="Types\TileType.cs" />
+    <Compile Include="Types\TrackMode.cs" />
     <Compile Include="Types\TransitionEffect.cs" />
     <Compile Include="Types\WrapDatelineMode.cs" />
   </ItemGroup>

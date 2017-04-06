@@ -78,6 +78,10 @@ namespace Mapgenix.GSuite.Android
 
         public override bool OnTouchEvent(MotionEvent ev)
         {
+            if (TrackOverlay.TrackMode != TrackMode.None)
+            {
+                return TrackOverlay.OnTouchEvent(ev, this);
+            }              
             //_scaleDetector.OnTouchEvent(ev);
             _gestureDetector.OnTouchEvent(ev);
 
@@ -96,7 +100,8 @@ namespace Mapgenix.GSuite.Android
                     _currentMousePosition = _tempMotionDownPosition;
                     //MotionEventArgs motionArgs = CollectMotionEventArguments(_tempMotionDownPosition);
 
-                    
+                    //_lastTouchX = ev.GetX();
+                    //_lastTouchY = ev.GetY();
 
                     //MapMouseButton mouseButton = ConvertToMapMouseButton(e);
                     currentScreenPoint = _tempMotionDownPosition;
@@ -417,6 +422,7 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
+                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.MotionMove(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
@@ -428,7 +434,20 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
+                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.MotionDown(motionArgs);
+                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
+            }
+        }
+
+        private void EventManagerMotionUpCore(MapMotionEventArgs motionArgs)
+        {
+            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
+            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
+            {
+                if (!overlay.IsVisible) continue;
+                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
+                InteractiveResult interactiveResult = overlay.MotionUp(motionArgs);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
             }
         }
@@ -450,6 +469,7 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
+                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.DoubleTap(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
@@ -472,6 +492,7 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
+                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.Pich(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }

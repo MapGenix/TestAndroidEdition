@@ -29,7 +29,10 @@ namespace Mapgenix.GSuite.Android
     {
         //public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(Tile));
         [NonSerialized]
-        private ImageView _imageSource;
+        private Bitmap _imageSource;
+
+        [NonSerialized]
+        private ImageView _view;
 
         public event EventHandler Opened;
 
@@ -56,6 +59,8 @@ namespace Mapgenix.GSuite.Android
             IsPartial = false;
             Focusable = false;
             InitializeBackgroundWorkder();
+            _view = new ImageView(context);
+            AddView(_view);
         }
 
         private void InitializeBackgroundWorkder()
@@ -66,7 +71,7 @@ namespace Mapgenix.GSuite.Android
             //_backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
         }
 
-        public ImageView ImageSource
+        public Bitmap ImageSource
         {
             get { return _imageSource; }
             set { _imageSource = value; }
@@ -113,17 +118,16 @@ namespace Mapgenix.GSuite.Android
 
         protected virtual void CommitDrawingCore(BaseGeoCanvas geoCanvas, object imageSource)
         {
-            ImageSource = ToImageSource(imageSource);
-            AddView(ImageSource);
+            _view.SetImageBitmap(ToImageSourceCore(imageSource));
             IsOpened = true;
         }
 
-        public ImageView ToImageSource(object nativeImage)
+        public Bitmap ToImageSource(object nativeImage)
         {
             return ToImageSourceCore(nativeImage);
         }
 
-        protected virtual ImageView ToImageSourceCore(object imageSource)
+        protected virtual Bitmap ToImageSourceCore(object imageSource)
         {            
             Stream streamSource = imageSource as Stream;
             NativeAndroid.Graphics.Bitmap renderTargetBitmap = imageSource as NativeAndroid.Graphics.Bitmap;
@@ -137,16 +141,12 @@ namespace Mapgenix.GSuite.Android
                 return bitmapSource;*/
 
                 NativeAndroid.Graphics.Bitmap bitmapSource = NativeAndroid.Graphics.BitmapFactory.DecodeStream(streamSource);
-                ImageView image = new ImageView(this.Context);
-                image.SetImageBitmap(bitmapSource);
-                return image;
+                return bitmapSource;
             }
             else if (renderTargetBitmap != null)
             {
                 //MapUtil.FreezeElement(renderTargetBitmap);
-                ImageView image = new ImageView(Context);
-                image.SetImageBitmap(renderTargetBitmap);
-                return image;
+                return renderTargetBitmap;
             }
             else
             {

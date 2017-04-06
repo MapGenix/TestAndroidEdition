@@ -146,7 +146,7 @@ namespace TestApp2
             GoogleMapsOverlay googleMapsOverlay = OverlayFactory.CreateGoogleMapsOverlay(MainMap.Context, "AIzaSyB8VXGFKgzu3CH_6lOmRze_wl1zKcneruc");
             googleMapsOverlay.CacheDirectory = cachePath;
             googleMapsOverlay.CachePictureFormat = GoogleMapsPictureFormat.Png32;
-            googleMapsOverlay.MapType = GoogleMapsMapType.Terrain;
+            googleMapsOverlay.MapType = GoogleMapsMapType.RoadMap;
 
             MainMap.Overlays.Add("GoogleOverlay", googleMapsOverlay);
 
@@ -187,6 +187,10 @@ namespace TestApp2
                 base.OnCreate(bundle);
                 SetContentView(Resource.Layout.Main);
                 MainMap = FindViewById<Map>(Resource.Id.MainMap);
+                Button button1 = FindViewById<Button>(Resource.Id.setTrack);
+                button1.Click += Button1_Click;
+                Button button2 = FindViewById<Button>(Resource.Id.unsetTrack);
+                button2.Click += Button2_Click;
                 System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, certificate, chain, errors) => true;
                 GoogleMaps();
                 LoadShapes();
@@ -199,6 +203,16 @@ namespace TestApp2
                 }
             }
                                   
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            MainMap.TrackOverlay.TrackMode = TrackMode.None;
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            MainMap.TrackOverlay.TrackMode = TrackMode.Point;
         }
 
         private void InitMapShapes()
@@ -227,8 +241,8 @@ namespace TestApp2
 
                 LayerOverlay overlay = new LayerOverlay(MainMap.Context);
                 overlay.Layers.Add("District", districtLayer);
-                overlay.Layers.Add("Road", roadLayer);
-                overlay.Layers.Add("Location", locationLayer);
+                //overlay.Layers.Add("Road", roadLayer);
+                //overlay.Layers.Add("Location", locationLayer);
 
                 //MainMap.MapUnit = GeographyUnit.DecimalDegree;
 
@@ -246,6 +260,7 @@ namespace TestApp2
 
                 MainMap.MapTools.ScaleLine.Enabled = true;
                 MainMap.MapTools.MouseCoordinate.Enabled = true;
+               // MainMap.TrackOverlay.TrackMode = TrackMode.Point;
 
                 MainMap.Refresh();
             }

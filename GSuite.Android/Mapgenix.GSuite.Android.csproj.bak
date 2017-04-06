@@ -35,64 +35,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeoAPI.1.7.4\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\GeoAPI.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="GeoAPI.Bootstrapper.NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\GeoAPI.Bootstrapper.NetTopologySuite.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Backend.Portable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Backend.Portable.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Canvas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Canvas.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.FeatureSource, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.FeatureSource.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Gdal.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Gdal.Data.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Index, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Index.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Layers, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Layers.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.RasterSource, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.RasterSource.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Shapes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Shapes.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Styles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Styles.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Symbology, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Symbology.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Mapgenix.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mapgenix.Backend.Portable.1.0.0.0\lib\dotnet\Mapgenix.Utils.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Mapgenix.Index">
+      <HintPath>..\..\GSuite1\Mapgenix.Index\bin\Debug\Mapgenix.Index.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
-    <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\NetTopologySuite.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -115,6 +62,12 @@
     <Compile Include="Cache\BaseNativeImageTileCache.cs" />
     <Compile Include="Cache\BaseTileCache.cs" />
     <Compile Include="Cache\FileBitmapTileCache.cs" />
+    <Compile Include="Drawing\Graphics.cs" />
+    <Compile Include="Drawing\GraphicsPath.cs" />
+    <Compile Include="Events\Android\MapMotionEventArgs.cs" />
+    <Compile Include="Events\Android\MapMotionEventManager.cs" />
+    <Compile Include="Events\Android\MapPinchGestureManager.cs" />
+    <Compile Include="Events\Android\MapSimpleGestureManager.cs" />
     <Compile Include="Events\CoordinateEventArgs.cs" />
     <Compile Include="Events\ExtentChangedEventArgs.cs" />
     <Compile Include="Events\ExtentChangingEventArgs.cs" />
@@ -122,7 +75,6 @@
     <Compile Include="Events\FeatureEditEventArgs.cs" />
     <Compile Include="Events\FeatureEventArgs.cs" />
     <Compile Include="Events\MapKeyEventArgs.cs" />
-    <Compile Include="Events\MapMouseEventArgs.cs" />
     <Compile Include="Events\OverlayEventArgs.cs" />
     <Compile Include="Events\OverlaysEventArgs.cs" />
     <Compile Include="Events\PointShapeEventArgs.cs" />
@@ -130,6 +82,20 @@
     <Compile Include="Events\ScaleChangingEventArgs.cs" />
     <Compile Include="Events\VertexEditEventArgs.cs" />
     <Compile Include="Events\VertexFeatureEventArgs.cs" />
+    <Compile Include="Factories\OverlayFactory.cs" />
+    <Compile Include="GeoDrawing\GdiPlusAndroidGeoCanvas.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\LayoutUnitsUtil.cs" />
+    <Compile Include="Layers\BingMapAndroidRequestBuilder.cs" />
+    <Compile Include="Layers\BingMapsAndroidLayer.cs" />
+    <Compile Include="Layers\GoogleMapsAndroidLayer.cs" />
+    <Compile Include="Layers\GoogleMaps\GoogleMapsAndroidLayerImageCache.cs" />
+    <Compile Include="Layers\HEREMapsAndroidLayer.cs" />
+    <Compile Include="Layers\HEREMapsAndroidRequestBuilder.cs" />
+    <Compile Include="Layers\HEREMaps\HEREMapsAndroidLayerImageCache.cs" />
+    <Compile Include="Layers\OpenStreetMapAndroidLayer.cs" />
+    <Compile Include="Layers\ResponseProcessor.cs" />
     <Compile Include="MapTools\DisplayZoomBarText.cs" />
     <Compile Include="MapTools\LogoMapTool.cs" />
     <Compile Include="MapTools\MapTools.cs" />
@@ -140,14 +106,19 @@
     <Compile Include="Map\Map.event.cs" />
     <Compile Include="Overlays\BackgroundOverlay.cs" />
     <Compile Include="MapTools\PanZoomBarMapTool.cs" />
-    <Compile Include="Overlays\InteractiveOverlay\InteractionArguments.cs" />
+    <Compile Include="Overlays\BingMapsOverlay.cs" />
+    <Compile Include="Overlays\GoogleMapsOverlay.cs" />
+    <Compile Include="Overlays\HEREMapsOverlay.cs" />
+    <Compile Include="Overlays\InteractiveOverlay\ExtentInteractiveOverlay.cs" />
+    <Compile Include="Overlays\InteractiveOverlay\InteractiveResult.cs" />
     <Compile Include="Overlays\InteractiveOverlay\KeyEventInteractionArguments.cs" />
+    <Compile Include="Overlays\LayerOverlay.cs" />
+    <Compile Include="Overlays\OpenStreetMapOverlay.cs" />
     <Compile Include="Properties\ExceptionMessage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionMessage.resx</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="Events\GeoCanvasEventArgs.cs" />
     <Compile Include="Events\TileEventArgs.cs" />
     <Compile Include="Events\TimedProgressEventArgs.cs" />
@@ -170,16 +141,19 @@
     <Compile Include="Tiles\BaseTile.cs" />
     <Compile Include="Tiles\BitmapTile.cs" />
     <Compile Include="Tiles\LayerTile.cs" />
+    <Compile Include="Tiles\LockLayerMode.cs" />
     <Compile Include="Tiles\NativeImageTile.cs" />
     <Compile Include="Types\ClearTilesMode.cs" />
     <Compile Include="Types\ControlPointType.cs" />
     <Compile Include="Types\DrawType.cs" />
     <Compile Include="Types\ExtentChangedType.cs" />
-    <Compile Include="Types\MapMouseButton.cs" />
+    <Compile Include="Types\MapDoubleTapMode.cs" />
+    <Compile Include="Types\MapPanMode.cs" />
     <Compile Include="Types\MouseCoordinateType.cs" />
     <Compile Include="Types\OverlayRefreshType.cs" />
     <Compile Include="Types\ProcessOtherOverlaysMode.cs" />
     <Compile Include="Types\RenderMode.cs" />
+    <Compile Include="Types\SmoothingMode.cs" />
     <Compile Include="Types\TileType.cs" />
     <Compile Include="Types\TransitionEffect.cs" />
     <Compile Include="Types\WrapDatelineMode.cs" />
@@ -194,7 +168,35 @@
   <ItemGroup>
     <Content Include="License-LGPL.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Mapgenix.Canvas\Mapgenix.Canvas.csproj">
+      <Project>{ac2e86d2-21a0-4036-bf5f-a3cb2d756a64}</Project>
+      <Name>Mapgenix.Canvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.FeatureSource\Mapgenix.FeatureSource.csproj">
+      <Project>{cfffd275-5f84-4dfa-b41c-451d0ff02ece}</Project>
+      <Name>Mapgenix.FeatureSource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Layers\Mapgenix.Layers.csproj">
+      <Project>{1a0ba404-ab14-461e-bf24-e6826b5d7021}</Project>
+      <Name>Mapgenix.Layers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Shapes\Mapgenix.Shapes.csproj">
+      <Project>{2d313724-7588-4fc4-9715-e039ab38453c}</Project>
+      <Name>Mapgenix.Shapes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Styles\Mapgenix.Styles.csproj">
+      <Project>{d65abe3c-788b-45e0-88ab-c015eb77e7c0}</Project>
+      <Name>Mapgenix.Styles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Utils\Mapgenix.Utils.csproj">
+      <Project>{e2ce16b4-bb3b-41cf-a6bb-633fad90a655}</Project>
+      <Name>Mapgenix.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Overlays\BingMapsOverlay\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

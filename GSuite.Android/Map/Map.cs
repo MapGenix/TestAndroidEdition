@@ -85,8 +85,8 @@ namespace Mapgenix.GSuite.Android
             SyncZoomLevelScales(new ZoomLevelSet().GetZoomLevels());
 
             ExtentOverlay = new ExtentInteractiveOverlay(Context);
-            /*TrackOverlay = new TrackInteractiveOverlay();
-            EditOverlay = new EditInteractiveOverlay();
+            TrackOverlay = new TrackInteractiveOverlay(Context);
+            /*EditOverlay = new EditInteractiveOverlay();
             _adornmentOverlay = new AdornmentOverlay();*/
 
             /*_overlayCanvas = new RelativeLayout(Context);
@@ -126,7 +126,7 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        //public TrackInteractiveOverlay TrackOverlay { get; set; }
+        public TrackInteractiveOverlay TrackOverlay { get; set; }
 
         public ExtentInteractiveOverlay ExtentOverlay { get; set; }
 
@@ -281,10 +281,12 @@ namespace Mapgenix.GSuite.Android
                 AddView(_toolsGrid, p);
             }
             
-            RelativeLayout.LayoutParams layoutExtent = new LayoutParams(this.LayoutParameters);
-            layoutExtent.TopMargin = 0;
-            layoutExtent.LeftMargin = 0;
-            ExtentOverlay.LayoutParameters = layoutExtent;
+            RelativeLayout.LayoutParams layout = new LayoutParams(this.LayoutParameters);
+            layout.TopMargin = 0;
+            layout.LeftMargin = 0;
+            ExtentOverlay.LayoutParameters = layout;
+
+            TrackOverlay.LayoutParameters = layout;
 
             _needsRefreshOverlayChildren = true;
             Draw(CurrentExtent);
@@ -647,9 +649,10 @@ namespace Mapgenix.GSuite.Android
                 if (interactiveOverlay != null) { currentInteractiveOverlays.Add(interactiveOverlay); }
             }
 
-            //if (EditOverlay.IsVisible) currentInteractiveOverlays.Add(EditOverlay);
-            //if (TrackOverlay.IsVisible) currentInteractiveOverlays.Add(TrackOverlay);
             if (ExtentOverlay.IsVisible) currentInteractiveOverlays.Add(ExtentOverlay);
+            //if (EditOverlay.IsVisible) currentInteractiveOverlays.Add(EditOverlay);
+            if (TrackOverlay.IsVisible) currentInteractiveOverlays.Add(TrackOverlay);
+
 
             return currentInteractiveOverlays;
         }

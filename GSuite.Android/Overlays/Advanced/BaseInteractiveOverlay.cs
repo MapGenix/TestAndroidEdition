@@ -149,9 +149,24 @@ namespace Mapgenix.GSuite.Android
         {
      
             return new InteractiveResult();
+        }*/
+
+        public InteractiveResult MotionUp(MapMotionEventArgs interactionArguments)
+        {
+            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            if (!IsOverlayInitialized) return new InteractiveResult();
+
+            //OnMapMouseUp(new MapMouseEventArgs(interactionArguments));
+            return MotionUpCore(interactionArguments);
         }
 
-        public InteractiveResult MouseClick(InteractionArguments interactionArguments)
+        protected virtual InteractiveResult MotionUpCore(MapMotionEventArgs interactionArguments)
+        {
+
+            return new InteractiveResult();
+        }
+
+        /*public InteractiveResult MouseClick(InteractionArguments interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
             if (!IsOverlayInitialized) return new InteractiveResult();
