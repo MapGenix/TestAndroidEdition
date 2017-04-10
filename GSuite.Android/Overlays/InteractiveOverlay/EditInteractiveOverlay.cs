@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.IO;
 using Mapgenix.Canvas;
 using Mapgenix.Shapes;
 using Mapgenix.Styles;
 using Mapgenix.GSuite.Android.Properties;
-using System.Drawing.Imaging;
 using Mapgenix.FeatureSource;
 using Mapgenix.Layers;
 using Android.Content;
+using Android.Graphics;
+using NativeAndroid = Android;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -69,7 +69,7 @@ namespace Mapgenix.GSuite.Android
             OverlayCanvas.Elevation = ZIndexes.EditInteractiveOverlay;
             //_translateTransform = new TranslateTransform();
             //OverlayCanvas.RenderTransform = _translateTransform;
-            RenderMode = RenderMode.DrawingVisual;
+            RenderMode = RenderMode.GdiPlus;
             
             _editShapesLayer = FeatureLayerFactory.CreateInMemoryFeatureLayer();
             _dragControlPointsLayer = FeatureLayerFactory.CreateInMemoryFeatureLayer();
@@ -261,8 +261,8 @@ namespace Mapgenix.GSuite.Android
             }
             else
             {
-                nativeImage = new Bitmap(tileSw, tileSh);
-                GdiPlusGeoCanvas geoCanvas = new GdiPlusGeoCanvas();
+                nativeImage = Bitmap.CreateBitmap(tileSw, tileSh, Bitmap.Config.Argb8888);
+                GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context);
                 geoCanvas.BeginDrawing(nativeImage, layerTile.TargetExtent, MapArguments.MapUnit);
                 DrawTileCore(geoCanvas);
                 geoCanvas.EndDrawing();
@@ -271,7 +271,7 @@ namespace Mapgenix.GSuite.Android
 
         }
 
-        protected virtual void DrawTileCore(GdiPlusGeoCanvas geoCanvas)
+        protected virtual void DrawTileCore(GdiPlusAndroidGeoCanvas geoCanvas)
         {
             LayerTile layerTile = OverlayCanvas.GetChildAt(0) as LayerTile;
             if (layerTile != null)

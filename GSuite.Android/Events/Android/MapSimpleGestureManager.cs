@@ -14,6 +14,8 @@ namespace Mapgenix.GSuite.Android
 {
     public class MapSimpleGestureManager : GestureDetector.SimpleOnGestureListener
     {
+        public event EventHandler<MotionEvent> LongPress;
+
         public override bool OnDown(MotionEvent e)
         {
             return true;
@@ -23,5 +25,15 @@ namespace Mapgenix.GSuite.Android
         {
             return true;
         }
+
+        public override void OnLongPress(MotionEvent e)
+        {
+            EventHandler<MotionEvent> handler = LongPress;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
     }
 }
