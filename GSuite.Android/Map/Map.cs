@@ -86,8 +86,8 @@ namespace Mapgenix.GSuite.Android
 
             ExtentOverlay = new ExtentInteractiveOverlay(Context);
             TrackOverlay = new TrackInteractiveOverlay(Context);
-            /*EditOverlay = new EditInteractiveOverlay();
-            _adornmentOverlay = new AdornmentOverlay();*/
+            EditOverlay = new EditInteractiveOverlay(Context);
+            //_adornmentOverlay = new AdornmentOverlay();*/
 
             /*_overlayCanvas = new RelativeLayout(Context);
             RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
@@ -131,7 +131,7 @@ namespace Mapgenix.GSuite.Android
         public ExtentInteractiveOverlay ExtentOverlay { get; set; }
 
 
-        //public EditInteractiveOverlay EditOverlay { get; set; }
+        public EditInteractiveOverlay EditOverlay { get; set; }
 
 
         /*public AdornmentOverlay AdornmentOverlay
@@ -285,8 +285,8 @@ namespace Mapgenix.GSuite.Android
             layout.TopMargin = 0;
             layout.LeftMargin = 0;
             ExtentOverlay.LayoutParameters = layout;
-
             TrackOverlay.LayoutParameters = layout;
+            EditOverlay.LayoutParameters = layout;
 
             _needsRefreshOverlayChildren = true;
             Draw(CurrentExtent);
@@ -649,11 +649,10 @@ namespace Mapgenix.GSuite.Android
                 if (interactiveOverlay != null) { currentInteractiveOverlays.Add(interactiveOverlay); }
             }
 
-            if (ExtentOverlay.IsVisible) currentInteractiveOverlays.Add(ExtentOverlay);
-            //if (EditOverlay.IsVisible) currentInteractiveOverlays.Add(EditOverlay);
+            if (EditOverlay.IsVisible) currentInteractiveOverlays.Add(EditOverlay);
             if (TrackOverlay.IsVisible) currentInteractiveOverlays.Add(TrackOverlay);
-
-
+            if (ExtentOverlay.IsVisible) currentInteractiveOverlays.Add(ExtentOverlay);
+            
             return currentInteractiveOverlays;
         }
 

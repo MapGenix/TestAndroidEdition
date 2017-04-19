@@ -187,10 +187,7 @@ namespace TestApp2
                 base.OnCreate(bundle);
                 SetContentView(Resource.Layout.Main);
                 MainMap = FindViewById<Map>(Resource.Id.MainMap);
-                Button button1 = FindViewById<Button>(Resource.Id.setTrack);
-                button1.Click += Button1_Click;
-                Button button2 = FindViewById<Button>(Resource.Id.unsetTrack);
-                button2.Click += Button2_Click;
+                InitButtonEvents();                
                 System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, certificate, chain, errors) => true;
                 GoogleMaps();
                 LoadShapes();
@@ -205,14 +202,91 @@ namespace TestApp2
                                   
         }
 
+        private void InitButtonEvents()
+        {
+            Button point = FindViewById<Button>(Resource.Id.point);
+            point.Click += Button1_Click;
+
+            Button line = FindViewById<Button>(Resource.Id.line);
+            line.Click += Button1_Click;
+
+            Button polygon = FindViewById<Button>(Resource.Id.polygon);
+            polygon.Click += Button1_Click;
+
+            Button square = FindViewById<Button>(Resource.Id.square);
+            square.Click += Button1_Click;
+
+            Button rectangle = FindViewById<Button>(Resource.Id.rectangle);
+            rectangle.Click += Button1_Click;
+
+            Button circle = FindViewById<Button>(Resource.Id.circle);
+            circle.Click += Button1_Click;
+
+            Button ellipse = FindViewById<Button>(Resource.Id.ellipse);
+            ellipse.Click += Button1_Click;
+
+            Button button2 = FindViewById<Button>(Resource.Id.unsetTrack);
+            button2.Click += Button2_Click;
+
+            Button edit = FindViewById<Button>(Resource.Id.edit);
+            edit.Click += Button1_Click;
+
+        }
+
         private void Button2_Click(object sender, EventArgs e)
         {
+            UpdateEditShapes();
             MainMap.TrackOverlay.TrackMode = TrackMode.None;
+        }
+
+        private void UpdateEditShapes()
+        {
+            foreach (Feature feature in MainMap.EditOverlay.EditShapesLayer.GetAll())
+            {
+                MainMap.TrackOverlay.TrackShapeLayer.Add(feature);
+            }
+            MainMap.EditOverlay.EditShapesLayer.Clear();
+            MainMap.Refresh(new BaseOverlay[] { MainMap.EditOverlay, MainMap.TrackOverlay });
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            MainMap.TrackOverlay.TrackMode = TrackMode.Point;
+            Button button = (Button)sender;
+            switch (button.Text)
+            {
+                case "Point":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Point;
+                    break;
+                case "Line":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Line;
+                    break;
+                case "Polygon":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Polygon;
+                    break;
+                case "Square":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Square;
+                    break;
+                case "Rectangle":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Rectangle;
+                    break;
+                case "Circle":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Circle;
+                    break;
+                case "Ellipse":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.Ellipse;
+                    break;
+                case "Edit":
+                    MainMap.TrackOverlay.TrackMode = TrackMode.None;
+                    foreach (Feature feature in MainMap.TrackOverlay.TrackShapeLayer.GetAll())
+                    {
+                        MainMap.EditOverlay.EditShapesLayer.Add(feature);
+                    }
+                    MainMap.EditOverlay.CalculateAllControlPoints();
+                    MainMap.TrackOverlay.TrackShapeLayer.Clear();
+
+                    MainMap.Refresh(new BaseOverlay[] { MainMap.EditOverlay, MainMap.TrackOverlay });
+                    break;
+            }
         }
 
         private void InitMapShapes()

@@ -360,5 +360,27 @@ namespace Mapgenix.GSuite.Android.Properties {
                 return ResourceManager.GetString("CurrentExtentNotAssigned", resourceCulture);
             }
         }
+        // <summary>
+        ///   Looks up a localized string similar to The value for the enumeration is not on of the valid values..
+        /// </summary>
+        internal static string EnumerationOutOfRange
+        {
+            get
+            {
+                return ResourceManager.GetString("EnumerationOutOfRange", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The map unit you are using is not compatable with the GoogleLayer .  Make sure you are using Meters and that your projection is 90013 to ensure compatability..
+        /// </summary>
+        internal static string GeographicUnitNotValidWithGoogle
+        {
+            get
+            {
+                return ResourceManager.GetString("GeographicUnitNotValidWithGoogle", resourceCulture);
+            }
+        }
+
     }
 }

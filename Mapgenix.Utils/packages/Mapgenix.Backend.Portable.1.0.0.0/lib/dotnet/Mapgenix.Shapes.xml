@@ -1,0 +1,1547 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.Shapes</name>
+    </assembly>
+    <members>
+        <member name="T:Mapgenix.Shapes.Feature">
+            <summary>Basic data unit with an ID for vector data made of attributes and a shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(Mapgenix.Shapes.BaseShape)">
+            <summary>Constructor of the Feature.</summary>
+            <overloads>To pass in a BaseShape to construct the Feature.</overloads>
+            <returns>None</returns>
+            <remarks>You need to specify the ID of the BaseShape.</remarks>
+            <param name="baseShape">Shape to use as the basis of the Feature.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Byte[])">
+            <summary>Constructor of the Feature.</summary>
+            <overloads>To pass a  well-known binary.</overloads>
+            <returns>None</returns>
+            <remarks>To create a feature using well-known binary. The Id for the Feature is a random GUID.</remarks>
+            <param name="wellKnownBinary">Well-known binary to create the feature.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Byte[],System.String)">
+            <summary>Constructor of the Feature.</summary>
+            <overloads>To create a feature using well-known binary and an Id.</overloads>
+            <returns>None</returns>
+            <param name="wellKnownBinary">Well-known binary to create the Feature.</param>
+            <param name="id">Id for the Feature.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.String)">
+            <overloads>To create a feature using well-known text.</overloads>
+            <returns>None</returns>
+            <remarks>The Id for the Feature is a random GUID.</remarks>
+            <param name="wellKnownText">Well-known text to create the Feature.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.String,System.String)">
+            <summary>Constructor of the Feature.</summary>
+            <overloads>To create the Feature from well-known text and an Id.</overloads>
+            <returns>None</returns>
+            <param name="wellKnownText">Well-known text to create the Feature.</param>
+            <param name="id">Id used for the Feature.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(Mapgenix.Shapes.BaseShape,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>Constructor of the Feature.</summary>
+            <overloads>To create the Feature from a baseShape and column values.</overloads>
+            <returns>None</returns>
+            <param name="baseShape">BaseShape to create the Feature.</param>
+            <param name="columnValues">ColumnValues used in the Feature.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Byte[],System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Byte[],System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(Mapgenix.Shapes.Vertex)">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(Mapgenix.Shapes.Vertex,System.String)">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(Mapgenix.Shapes.Vertex,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Double,System.Double)">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Double,System.Double,System.String)">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.#ctor(System.Double,System.Double,System.String,System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Constructor of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.GetWellKnownBinary">
+            <summary>Returns the well-known binary representing the shape of the Feature.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.Feature.Id">
+            <summary>Gets the Id of the Feature.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.Feature.Tag">
+            <summary>Tag of the Feature.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.Feature.ColumnValues">
+            <summary>Gets a dictionary of column names and values representing the column data related to the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.GetWellKnownType">
+            <summary>Returns the well known type representing the shape of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.GetShape">
+            <summary>Returns the shape representing the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.GetWellKnownText">
+            <summary>Returns the well-known text representing the shape of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.GetBoundingBox">
+            <summary>Returns the bounding box of the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.CloneDeep(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Clones the entire structure as a separate copy.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.CloneDeep(Mapgenix.Shapes.ReturningColumnsType)">
+            <summary>Clones the entire structure as a separate copy.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.IsValid">
+            <summary>Returns true if the results of some simple validity tests on the Feature has passed.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.Equals(System.Object)">
+            <summary>Compares two InternalFeatures to see if they are equal.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.GetHashCode">
+            <summary>Returns a hash code for the Feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.op_Equality(Mapgenix.Shapes.Feature,Mapgenix.Shapes.Feature)">
+            <summary>Returns true if two Features are equal.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Feature.op_Inequality(Mapgenix.Shapes.Feature,Mapgenix.Shapes.Feature)">
+            <summary>Returns true if two Features are not equal.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.BaseAreaShape">
+            <summary>Root of all area-based shapes, such as RectangleShape, EllipseShape, PolygonShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.#ctor">
+            <summary>Default constructor for BaseAreaShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetPerimeter(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the perimeter of the shape.</summary>
+            <returns>Perimeter of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">DistanceUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetPerimeterCore(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the perimeter of the shape.</summary>
+            <returns>Perimeter of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">DistanceUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetArea(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.AreaUnit)">
+            <summary>Returns the area of the shape.</summary>
+            <returns>Area of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">AreaUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetAreaCore(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.AreaUnit)">
+            <summary>Returns the area of the shape.</summary>
+            <returns>Area of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">AreaUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleUp(Mapgenix.Shapes.BaseAreaShape,System.Double)">
+            <summary>Returns a new area shape scaled up by a percentage.</summary>
+            <returns>New area shape scaled up by a percentage.</returns>
+            <param name="targetShape">Shape as the base for scaling.</param>
+            <param name="percentage">Percentage by which to increase the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleUp(Mapgenix.Shapes.Feature,System.Double)">
+            <summary>Returns a new feature scaled up by a percentage.</summary>
+            <returns>New feature scaled up by a percentage.</returns>
+            <param name="targetFeature">Feature as the base for scaling.</param>
+            <param name="percentage">Percentage by which to increase the feature shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleUp(System.Double)">
+            <summary>Increases the size of the area shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to increase the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleUpCore(System.Double)">
+            <summary>Increases the size of the area shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to increase the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleDown(Mapgenix.Shapes.BaseAreaShape,System.Double)">
+            <summary>Returns a new area shape scaled down by a percentage.</summary>
+            <returns>New area shape scaled down by a percentage.</returns>
+            <param name="targetShape">Area shape as the base for scaling.</param>
+            <param name="percentage">Percentage by which to decrease the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleDown(Mapgenix.Shapes.Feature,System.Double)">
+            <summary>Returns a new feature scaled down by a percentage.</summary>
+            <returns>New feature scaled down by a percentage.</returns>
+            <param name="targetFeature">Feature as the base for scaling.</param>
+            <param name="percentage">Percentage by which to decrease the feature shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleDown(System.Double)">
+            <summary>Decreases the size of the area shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to decrease the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.ScaleDownCore(System.Double)">
+            <summary>Decreases the size of the area shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to decrease the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetConvexHull">
+            <summary>Returns the convex hull of the shape.</summary>
+            <returns>Convex hull of the shape.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetConvexHullCore">
+            <summary>Returns the convex hull of the shape.</summary>
+            <returns>Convex hull of the shape.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetIntersection(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the intersection of the shape and a target shape.</summary>
+            <returns>MultiPolygonShape as the intersection of the shape and a target shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Shape to find the intersection with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetIntersection(Mapgenix.Shapes.Feature)">
+            <summary>Returns the intersection of the shape and a target feature.</summary>
+            <returns>MultiPolygonShape as the intersection of the shape and a target feature.</returns>
+            <remarks>None</remarks>
+            <param name="targetFeature">Feature to find the intersection with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetIntersectionCore(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the intersection of the shape and a target shape.</summary>
+            <returns>MultiPolygonShape as the intersection of the shape and a target shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Shape to find the intersection with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Union(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the union of the shape and a target shape.</summary>
+            <returns>MultiPolygonShape as the union of the shape and a target shape.</returns>
+            <param name="targetShape">Area shape to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Union(Mapgenix.Shapes.Feature)">
+            <summary>Returns the union of the feature and a target feature.</summary>
+            <returns>MultiPolygonShape as the union of the feature and a target feature.</returns>
+            <param name="targetFeature">Feature to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.UnionCore(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the union of the shape and a target shape.</summary>
+            <returns>MultiPolygonShape as the union of the shape and a target shape.</returns>
+            <param name="targetShape">Area shape to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Union(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.Feature})">
+            <summary>Returns the union of the shape and target features.</summary>
+            <returns>MultipolygonShape as the union of the shape and target features.</returns>
+            <param name="targetFeatures">Target features to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Union(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.BaseAreaShape})">
+            <summary>Returns the union of the shape and target area shapes.</summary>
+            <returns>MultipolygonShape as the union of the shape and target area shapes.</returns>
+            <param name="targetShapes">Target area shapes to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetDifference(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the difference between the shape and another shape.</summary>
+            <returns>MultiPolygonShape as the difference between the shape and another shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Area shape to find the difference with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetDifference(Mapgenix.Shapes.Feature)">
+            <summary>Returns the difference between the shape and a feature.</summary>
+            <returns>MultiPolygonShape as the difference between the shape and a feature.</returns>
+            <remarks>None</remarks>
+            <param name="targetFeature">Feature to find the difference with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetDifferenceCore(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the difference between the shape and another shape.</summary>
+            <returns>MultiPolygonShape as the difference between the shape and another shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Area shape to find the difference with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetSymmetricalDifference(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the symmetrical difference between the shape and another shape.</summary>
+            <returns>MultiPolygonShape as the symmetrical difference between the shape and another shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Area shape to find the symmetrical difference with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetSymmetricalDifference(Mapgenix.Shapes.Feature)">
+            <summary>Returns the symmetricsl difference between the shape and a feature.</summary>
+            <returns>MultiPolygonShape as the symmetrical difference between the shape and a feature.</returns>
+            <remarks>None</remarks>
+            <param name="targetFeature">Feature to find the symmetricsl difference with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.GetSymmetricalDifferenceCore(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the symmetrical difference between the shape and another shape.</summary>
+            <returns>MultiPolygonShape as the symmetrical difference between the shape and another shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Area shape to find the symmetrical difference with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Split(Mapgenix.Shapes.BaseAreaShape,Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns a collection of MultiPolygonShapes split.</summary>
+            <returns>Collection of MultiPolygonShape split.</returns>
+            <remarks>None.</remarks>
+            <param name="areaToSplit">Area shape to be split.</param>
+            <param name="areaToSplitBy">Area shape to perform the split.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Split(Mapgenix.Shapes.Feature,Mapgenix.Shapes.Feature)">
+            <summary>Returns a collection of features split.</summary>
+            <returns>Collection of features split.</returns>
+            <remarks>None.</remarks>
+            <param name="areaToSplit">Area shape to be split.</param>
+            <param name="areaToSplitBy">Area shape to perform the split.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Simplify(Mapgenix.Shapes.BaseAreaShape,Mapgenix.Shapes.GeographyUnit,System.Double,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="targetShape">Area shape to be simplified.</param>
+            <param name="targetShapeUnit">Geography unit of the shape to perform the operation on.</param>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="toleranceUnit">Distance unit of the tolerance.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multipolygonshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Simplify(Mapgenix.Shapes.BaseAreaShape,System.Double,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="targetShape">Area shape to be simplified.</param>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multipolygonshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Simplify(Mapgenix.Shapes.GeographyUnit,System.Double,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="shapeUnit">Geography unit of the shape.</param>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="toleranceUnit">Distance unit of the tolerance.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multipolygonshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.Simplify(System.Double,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="tolerance">Tolerance diatance for the simplification.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multipolygonshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseAreaShape.SimplifyCore(System.Double,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="tolerance">Tolerance diatance for the simplification.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multipolygonshape. </returns>
+        </member>
+        <member name="T:Mapgenix.Shapes.BaseShape">
+            <summary>Abstract class for all shapes.</summary>
+            <remarks>Lowest level shape in shape hierarchy. Directly
+            inherited from BaseShape are BaseAreaShape, BaseLineShape and BasePointShape.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.#ctor">
+            <summary>Default constructor for BaseShape.</summary>    
+        </member>
+        <member name="P:Mapgenix.Shapes.BaseShape.Id">
+            <summary>Id of the shape.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.BaseShape.Tag">
+            <summary>Tag of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.CreateShapeFromWellKnownData(System.String)">
+            <summary>Creates a shape from a string of well-known text.</summary>
+            <returns>Higher level shape constructed from the well-known text.
+            It is necessary to cast to the higher level class.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.LoadFromWellKnownData(System.String)">
+            <summary>Hydrates the shape with its data from well-known text.</summary>
+            <returns>None</returns>
+            <param name="wellKnownText">Well-known text to hydrate the shape.</param>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.LoadFromWellKnownDataCore(System.String)">
+            <summary>Hydrates the shape with its data from well-known text.</summary>
+            <returns>None</returns>
+            <param name="wellKnownText">Well-known text to hydrate the shape.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownText">
+            <summary>Returns the well-known text representation of the shape.</summary>
+            <returns>String representing the shape in well-known text.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownTextCore">
+            <summary>Returns the well-known text representation of the shape.</summary>
+            <returns>String representing the shape in well-known text.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.CreateShapeFromWellKnownData(System.Byte[])">
+            <summary>Creates a shape from a string of well-known binary.</summary>
+            <returns>Higher level shape constructed from the well-known binary.
+            It is necessary to cast to the higher level class.</returns>
+            <param name="wellKnownBinary">Array of bytes representing the geometry in well-known binary format.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.LoadFromWellKnownData(System.Byte[])">
+            <summary>Hydrates the shape with its data from well-known binary.</summary>
+            <returns>None</returns>
+            <param name="wellKnownBinary">Well-known binary to hydrate the shape.</param>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.LoadFromWellKnownDataCore(System.Byte[])">
+            <summary>Hydrates the shape with its data from well-known binary.</summary>
+            <returns>None</returns>
+            <param name="wellKnownBinary">Well-known binary to hydrate the shape.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownBinary">
+            <summary>Returns a byte array representing the shape in well-known binary.</summary>
+            <returns>Byte array representing the shape in well-known binary.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownBinary(Mapgenix.Shapes.WkbByteOrder)">
+            <summary>Returns a byte array representing the shape in well-known binary.</summary>
+            <returns>Byte array representing the shape in well-known binary.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+            <param name="byteOrder">Byte order to encode the well-known binary.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownBinaryCore(Mapgenix.Shapes.WkbByteOrder)">
+            <summary>Returns a byte array representing the shape in well-known binary.</summary>
+            <returns>Byte array representing the shape in well-known binary.</returns>
+            <param name="byteOrder">Byte order to encode the well-known binary.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetBoundingBox">
+            <summary>Calculates the rectangle encompassing the entire geometry.</summary>
+            <returns>Rectangle encompassing the entire geometry.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetBoundingBoxCore">
+            <summary>Calculates the rectangle encompassing the entire geometry.</summary>
+            <returns>Rectangle encompassing the entire geometry.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownType">
+            <summary>returns the well-known type for the shape.</summary>
+            <returns>Well-known type for the shape.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetWellKnownTypeCore">
+            <summary>returns the well-known type for the shape.</summary>
+            <returns>Well-known type for the shape.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.CloneDeep">
+            <summary>Returns a complete copy of the shape.</summary>
+            <returns>Complete copy of the shape.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.CloneDeepCore">
+            <summary>Returns a complete copy of the shape.</summary>
+            <returns>Complete copy of the shape.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByOffset(Mapgenix.Shapes.BaseShape,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns a shape from one location to another based on an X and Y offset distance.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks> 
+            <returns>Shape from one location to another based on an X and Y offset distance.</returns>
+            <param name="targetShape">Shape to move.</param>
+            <param name="xOffsetDistance">X offset distance.</param>
+            <param name="yOffsetDistance">Y Offset distance.</param>
+            <param name="shapeUnit">Geography unit of the shape.</param>
+            <param name="distanceUnit">Distance unit.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByOffset(Mapgenix.Shapes.Feature,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns a feature from one location to another based on an X and Y offset distance.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks> 
+            <returns>Shape from one location to another based on an X and Y offset distance.</returns>
+            <param name="targetFeature">Feature to move.</param>
+            <param name="xOffsetDistance">X offset distance.</param>
+            <param name="yOffsetDistance">Y Offset distance.</param>
+            <param name="shapeUnit">Geography unit of the feature.</param>
+            <param name="distanceUnit">Distance unit.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByOffset(System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Moves the shape from one location to another based on an X and Y offset distance.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks> 
+            <returns>Shape from one location to another based on an X and Y offset distance.</returns>
+            <param name="xOffsetDistance">X offset distance.</param>
+            <param name="yOffsetDistance">Y Offset distance.</param>
+            <param name="shapeUnit">Geography unit of the feature.</param>
+            <param name="distanceUnit">Distance unit.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByOffset(System.Double,System.Double)">
+            <summary>Moves the shape from one location to another based on an X and Y offset distance.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks> 
+            <returns>Shape from one location to another based on an X and Y offset distance.</returns>
+            <param name="xOffsetDistance">X offset distance.</param>
+            <param name="yOffsetDistance">Y Offset distance.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByOffsetCore(System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Moves the shape from one location to another based on an X and Y offset distance.</summary>
+            <param name="xOffsetDistance">X offset distance.</param>
+            <param name="yOffsetDistance">Y Offset distance.</param>
+            <param name="shapeUnit">Geography unit of the feature.</param>
+            <param name="distanceUnit">Distance unit.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByDegree(Mapgenix.Shapes.BaseShape,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns a shape from one location to another based on a distance and a direction in degrees.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks> 
+            <returns>Shape from one location to another based on a distance and a direction in degrees.</returns>
+            <param name="targetShape">Shape to move.</param>
+            <param name="distance">Distance to move.</param>
+            <param name="angleInDegrees">Direction in degrees from 0 to 360.</param>
+            <param name="shapeUnit">Geography unit of the shape.</param>
+            <param name="distanceUnit">Distance unit.</param> 
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByDegree(Mapgenix.Shapes.Feature,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns a shape from one location to another based on a distance and a direction in degrees.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByDegree(System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Moves a shape from one location to another based on a distance and a direction in degrees.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByDegree(System.Double,System.Double)">
+            <summary>Moves a shape from one location to another based on a distance and a direction in degrees.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TranslateByDegreeCore(System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Moves a shape from one location to another based on a distance and a direction in degrees.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Rotate(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.PointShape,System.Single)">
+            <summary>Returns a shape rotated by a number of degrees based on a pivot point.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Rotate(Mapgenix.Shapes.Feature,Mapgenix.Shapes.PointShape,System.Single)">
+            <summary>Returns a shape rotated by a number of degrees based on a pivot point.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Rotate(Mapgenix.Shapes.PointShape,System.Single)">
+            <summary>Rotates the shape by a number of degrees based on a pivot point.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.RotateCore(Mapgenix.Shapes.PointShape,System.Single)">
+            <summary>Rotates the shape by a number of degrees based on a pivot point.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.BaseShape.CanRotate">
+            <summary>Gets whether the shape can be rotated.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetShortestLineTo(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the shortest line between this shape and the target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetShortestLineTo(Mapgenix.Shapes.Feature,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the shortest line between the shape and the target feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetShortestLineToCore(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the shortest line between the shape and the target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetClosestPointTo(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the point on  the shape closest to the target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetClosestPointTo(Mapgenix.Shapes.Feature,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the point on  the shape closest to the target feature.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetClosestPointToCore(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the point on  the shape closest to the target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetCenterPoint">
+            <summary>Returns the center point of the shape's bounding box.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetCenterPointCore">
+            <summary>Returns the center point of the shape's bounding box.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Buffer(System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the area within a given distance from the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Buffer(System.Double,System.Int32,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the area within a given distance from the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Buffer(System.Double,System.Int32,Mapgenix.Shapes.BufferCapType,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the area within a given distance from the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.BufferCore(System.Double,System.Int32,Mapgenix.Shapes.BufferCapType,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the area within a given distance from the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetDistanceTo(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between the shape and a target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetDistanceTo(Mapgenix.Shapes.Feature,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between the shape and a target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetDistanceToCore(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between the shape and a target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Register(Mapgenix.Shapes.PointShape,Mapgenix.Shapes.PointShape,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns a shape registered from its original coordinate system to another based on two anchor points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Register(Mapgenix.Shapes.Feature,Mapgenix.Shapes.Feature,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns a shape registered from its original coordinate system to another based on two anchor points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.RegisterCore(Mapgenix.Shapes.PointShape,Mapgenix.Shapes.PointShape,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns a shape registered from its original coordinate system to another based on two anchor points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Validate(Mapgenix.Shapes.ShapeValidationMode)">
+            <summary>Returns a ShapeValidationResult based on a validation tests.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.ValidateCore(Mapgenix.Shapes.ShapeValidationMode)">
+            <summary>Returns a ShapeValidationResult based on a validation tests.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsDisjointed(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape have no points in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsDisjointed(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the shape and a target feature's shape have no points in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsDisjointedCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape have no points in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Intersects(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and the target shape have at least one point in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Intersects(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the shape and the target shape have at least one point in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IntersectsCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape have at least one point in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Touches(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape have at least one
+            boundary point in common, but no interior points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Touches(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the shape and the target feature's shape have at least one
+            boundary point in common, but no interior points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.TouchesCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape have at least one
+            boundary point in common, but no interior points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Crosses(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape share some but not
+            all interior points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Crosses(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the shape and a target feature's shape share some but not
+            all interior points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.CrossesCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape share some but not
+            all interior points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsWithin(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape lies within the interior of a
+            target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsWithin(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the shape lies within the interior of a
+            target feature's shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsWithinCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape lies within the interior of a
+            target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Contains(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if a target shape lies within the interior of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Contains(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if a target feature's shape lies within the interior of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.ContainsCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if a target shape lies within the interior of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Overlaps(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the  shape and a target shape share some but not
+            all points in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.Overlaps(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the  shape and a target feature's shape share some but not
+            all points in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.OverlapsCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the  shape and a target shape share some but not
+            all points in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsTopologicallyEqual(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape are topologically equal.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsTopologicallyEqual(Mapgenix.Shapes.Feature)">
+            <summary>Returns true if the shape and a target feature's shape are topologically equal.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.IsTopologicallyEqualCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape are topologically equal.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetFeature">
+            <summary>Gets a feature with the same Id and shape as the current shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetFeature(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>Gets a feature with the same Id and shape as the current shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetCrossing(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns the crossing points between the shape and a target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.GetCrossingCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns the crossing points between the shape and a target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.ScaleTo(Mapgenix.Shapes.BaseShape,System.Double)">
+            <summary>Returns a shape with the size increased or decreased Increases or decreases by a scale.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.ScaleTo(System.Double)">
+            <summary>Increases or decreases the size of the shape by a scale factor.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseShape.ScaleToCore(System.Double)">
+            <summary>Increases or decreases the size of the shape by a scale factor.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.DecimalDegreesHelper">
+            <summary>Static class for operation with decimal degrees (planar to angular coordinate systems).</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsFromDecimalDegree(System.Double)">
+            <summary>Returns a degrees, minutes and seconds structure from a decimal degree value.</summary>
+            <returns>Degrees, minutes and seconds structure from a decimal degree value.</returns>
+            <param name="decimalDegreesValue">Decimal degree value to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsStringFromDecimalDegree(System.Double)">
+            <summary>Returns a string representation in degrees, minutes and seconds from a decimal degree value.</summary>
+            <returns>String representation in degrees, minutes and seconds from a decimal degree value.</returns>
+            <param name="decimalDegreesValue">Decimal degrees value to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsStringFromDecimalDegree(System.Double,System.Int32)">
+            <summary>Returns a string representation in degrees, minutes and seconds from a decimal degree value.</summary>
+            <returns>String representation in degrees, minutes and seconds from a decimal degree value.</returns>
+            <param name="decimalDegreesValue">Decimal degrees value to convert.</param>
+            <param name="decimals">Number of decimals for the second.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsStringFromDecimalDegreePoint(Mapgenix.Shapes.PointShape)">
+            <summary>Returns a string representation in degrees, minutes and seconds from a decimal degree value.</summary>
+            <returns>String representation in degrees, minutes and seconds from a decimal degree value.</returns>
+            <param name="pointShape">Point to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsStringFromDecimalDegreePoint(Mapgenix.Shapes.PointShape,System.Int32)">
+            <summary>Returns a string representation in degrees, minutes and seconds from a point in decimal degree coordinates.</summary>
+            <returns>String representation in degrees, minutes and seconds from a a point decimal degree coordinates.</returns>
+            <param name="pointShape">Point to convert.</param>
+            <param name="decimals">Number of decimals for the second.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsStringFromDecimalDegreePoint(Mapgenix.Shapes.Feature,System.Int32)">
+            <summary>Returns a string representation in degrees, minutes and seconds from a feature in decimal degree coordinates.</summary>
+            <returns>String representation in degrees, minutes and seconds from a a feature decimal degree coordinates.</returns>
+            <param name="pointShape">Point to convert.</param>
+            <param name="decimals">Number of decimals for the second.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDegreesMinutesSecondsStringFromDecimalDegreePoint(Mapgenix.Shapes.Feature)">
+            <summary>Returns a string representation in degrees, minutes and seconds from a feature in decimal degree coordinates.</summary>
+            <returns>String representation in degrees, minutes and seconds from a a feature decimal degree coordinates.</returns>
+            <param name="pointShape">Point to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDecimalDegreeFromDegreesMinutesSeconds(System.String)">
+            <summary>Returns a decimal degree value based on a string containing degrees, minutes, and seconds.</summary>
+            <returns>Decimal degree value based on a string containing degrees, minutes, and seconds.</returns>
+            <param name="degreesMinutesSeconds">Degrees, minutes and seconds in a string to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDecimalDegreeFromDegreesMinutesSeconds(Mapgenix.Shapes.DegreesMinutesSeconds)">
+            <summary>Returns a decimal degree value based on a degree, minute and second structure.</summary>
+            <returns>Decimal degree value based on a degree, minute and second structure.</returns>
+            <param name="degreesMinutesSeconds">Degrees, minutes and seconds to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDecimalDegreeFromDegreesMinutesSeconds(System.Int32,System.Int32,System.Double)">
+            <summary>Returns a decimal degree value based on a set of degrees, minutes, and seconds.</summary>
+            <returns>Decimal degree value based on a set of degrees, minutes, and seconds.</returns>
+            <param name="degrees">Degree component of the degrees, minutes and seconds.</param>
+            <param name="minutes">Minute component of the degrees, minutes and seconds.</param>
+            <param name="seconds">Second component of the degrees, minutes and seconds.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDistanceFromDecimalDegrees(Mapgenix.Shapes.PointShape,Mapgenix.Shapes.PointShape,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between two points in decimal degrees.</summary>
+            <returns>Distance between two points in decimal degrees in the unit specified by the returning Unit parameter.</returns>
+            <remarks>None</remarks>
+            <param name="fromPoint">Point shape to measure from.</param>
+            <param name="toPoint">Point shape to measure to.</param>
+            <param name="returningUnit">Distance unit to get the result back in.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDistanceFromDecimalDegrees(Mapgenix.Shapes.Feature,Mapgenix.Shapes.Feature,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between two features in decimal degrees.</summary>
+            <returns>Distance between two features in decimal degrees in the unit specified by the returning Unit parameter.</returns>
+            <remarks>None</remarks>
+            <param name="fromPointFeature">Feature to measure from.</param>
+            <param name="toPointFeature">Feature to measure to.</param>
+            <param name="returningUnit">Distance unit to get the result back in.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetDistanceFromDecimalDegrees(System.Double,System.Double,System.Double,System.Double,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between two points in decimal degrees.</summary>
+            <returns>Distance between two points in decimal degrees.</returns>
+            <remarks>None</remarks>
+            <param name="fromLongitude">From longitude value.</param>
+            <param name="fromLatitude">From latitude value.</param>
+            <param name="toLongitude">To longitude value.</param>
+            <param name="toLatitude">To latitude value.</param>
+            <param name="returningUnit">Distance unit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetLongitudeDifferenceFromDistance(System.Double,Mapgenix.Shapes.DistanceUnit,System.Double)">
+            <summary>Calculates the longitude difference change given a certain distance and latitude.</summary>
+            <returns>Longitude difference.</returns>
+            <remarks>None</remarks>
+            <param name="distance">Distance to get the change in longitude.</param>
+            <param name="distanceUnit">Unit of the distance.</param>
+            <param name="latitude">Latitude the distance is measured at.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.DecimalDegreesHelper.GetLatitudeDifferenceFromDistance(System.Double,Mapgenix.Shapes.DistanceUnit,System.Double)">
+            <summary>Calculates the longitude difference change given a certain distance and longitude.</summary>
+            <returns>Double representing the distance.</returns>
+            <remarks>None</remarks>
+            <param name="distance">Distance over which to get the change in longitude.</param>
+            <param name="distanceUnit">Unit for the distance.</param>
+            <param name="longitude">Longitude the distance is measured at.</param>
+        </member>
+        <member name="T:Mapgenix.Shapes.DegreesMinutesSeconds">
+            <summary>Structure for degrees, minutes and seconds value.</summary>
+            <remarks>To represent decimal degree numbers as degrees, minutes and seconds.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.DegreesMinutesSeconds.#ctor(System.Int32,System.Int32,System.Double)">
+            <summary>To create an instance of the class by specifying the degree, minute and second values.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.DegreesMinutesSeconds.Degrees">
+            <summary>Gets or sets the degrees portion of the structure.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.DegreesMinutesSeconds.Minutes">
+            <summary>Gets or sets the minute portion of the structure.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.DegreesMinutesSeconds.Seconds">
+            <summary>Gets or sets the second portion of the structure.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.DegreesMinutesSeconds.GetHashCode">
+            <summary>Overrides the hash function for the particular type.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.DegreesMinutesSeconds.Equals(System.Object)">
+            <summary>Compares current Degrees Minutes Seconds with an object.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.DegreesMinutesSeconds.Add(Mapgenix.Shapes.DegreesMinutesSeconds)">
+            <summary>Add two Degrees Minutes Seconds values together and return back the sum of the two.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.DegreesMinutesSeconds.op_Addition(Mapgenix.Shapes.DegreesMinutesSeconds,Mapgenix.Shapes.DegreesMinutesSeconds)">
+            <summary>Operation + overloads for Degrees Minutes Seconds. Sum of two Degrees Minutes Seconds.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.BaseLineShape">
+            <summary>Root of all line-based shapes, such as LineShape and MultilineShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.#ctor">
+            <summary>Default constructor for BaseLineShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.GetLength(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the length of the shape.</summary>
+            <returns>Length of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">DistanceUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.GetLengthCore(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the length of the shape.</summary>
+            <returns>Length of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">DistanceUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleUp(Mapgenix.Shapes.BaseLineShape,System.Double)">
+            <summary>Returns a new line shape scaled up by a percentage.</summary>
+            <returns>New line shape scaled up by a percentage.</returns>
+            <param name="sourceShape">Shape as the base for scaling.</param>
+            <param name="percentage">Percentage by which to increase the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleUp(Mapgenix.Shapes.Feature,System.Double)">
+            <summary>Returns a new feature scaled up by a percentage.</summary>
+            <returns>New feature scaled up by a percentage.</returns>
+            <param name="sourceLine">Feature as the base for scaling.</param>
+            <param name="percentage">Percentage by which to increase the feature shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleUp(System.Double)">
+            <summary>Increases the size of the line shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to increase the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleUpCore(System.Double)">
+            <summary>Increases the size of the area shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to increase the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleDown(Mapgenix.Shapes.BaseLineShape,System.Double)">
+            <summary>Returns a new line shape scaled down by a percentage.</summary>
+            <returns>New line shape scaled down by a percentage.</returns>
+            <param name="sourceLineBaseShape">Line shape as the base for scaling.</param>
+            <param name="percentage">Percentage by which to decrease the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleDown(Mapgenix.Shapes.Feature,System.Double)">
+            <summary>Returns a new feature scaled down by a percentage.</summary>
+            <returns>New feature scaled down by a percentage.</returns>
+            <param name="sourceLine">Feature as the base for scaling.</param>
+            <param name="percentage">Percentage by which to decrease the feature shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleDown(System.Double)">
+            <summary>Decreases the size of the line shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to decrease the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ScaleDownCore(System.Double)">
+            <summary>Decreases the size of the line shape by a percentage.</summary>
+            <param name="percentage">Percentage by which to decrease the shape's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ConvexHull">
+            <summary>Returns the convex hull of the shape.</summary>
+            <returns>Convex hull of the shape.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.ConvexHullCore">
+            <summary>Returns the convex hull of the shape.</summary>
+            <returns>Convex hull of the shape.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Simplify(Mapgenix.Shapes.BaseLineShape,Mapgenix.Shapes.GeographyUnit,System.Double,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="targetShape">Line shape to be simplified.</param>
+            <param name="targetShapeUnit">Geography unit of the shape to perform the operation on.</param>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="toleranceUnit">Distance unit of the tolerance.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multilineshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Simplify(Mapgenix.Shapes.BaseLineShape,System.Double,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="targetShape">Line shape to be simplified.</param>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multilineshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Simplify(Mapgenix.Shapes.GeographyUnit,System.Double,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="shapeUnit">Geography unit of the shape.</param>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="toleranceUnit">Distance unit of the tolerance.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multilineshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Simplify(System.Double,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multilineshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.SimplifyCore(System.Double,Mapgenix.Shapes.SimplificationType)">
+            <summary>Performs a simplification operation.</summary>
+            <param name="tolerance">Tolerance distance for the simplification.</param>
+            <param name="simplificationType">Simplification type for the operation.</param>
+            <returns>Simplified Multilineshape. </returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Union(Mapgenix.Shapes.BaseLineShape)">
+            <summary>Returns the union of the shape and a target shape.</summary>
+            <returns>MultilineShape as the union of the shape and a target shape.</returns>
+            <param name="targetShape">Line shape to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Union(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.BaseLineShape})">
+            <summary>Returns the union of the shape and target line shapes.</summary>
+            <returns>MultilineShape as the union of the shape and target line shapes.</returns>
+            <param name="targetShapes">Target line shapes to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Union(Mapgenix.Shapes.Feature)">
+            <summary>Returns the union of the feature and a target feature.</summary>
+            <returns>MultilineShape as the union of the feature and a target feature.</returns>
+            <param name="targetFeature">Feature to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.Union(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.Feature})">
+            <summary>Returns the union of the shape and target features.</summary>
+            <returns>MultilineShape as the union of the shape and target features.</returns>
+            <param name="targetFeatures">Target features to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.UnionCore(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.BaseLineShape})">
+            <summary>Returns the union of the shape and target shapes.</summary>
+            <returns>MultilineShape as the union of the shape and target shapes.</returns>
+            <param name="lineBaseShapes">Line shapes to find the union with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.GetIntersection(Mapgenix.Shapes.Feature)">
+            <summary>Returns the intersection of the shape and a target feature.</summary>
+            <returns>MultilineShape as the intersection of the shape and a target feature.</returns>
+            <remarks>None</remarks>
+            <param name="targetFeature">Feature to find the intersection with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.GetIntersection(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the intersection of the shape and a target shape.</summary>
+            <returns>MultilineShape as the intersection of the shape and a target shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Shape to find the intersection with.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.BaseLineShape.GetIntersectionCore(Mapgenix.Shapes.BaseAreaShape)">
+            <summary>Returns the intersection of the shape and a target shape.</summary>
+            <returns>MultilineShape as the intersection of the shape and a target shape.</returns>
+            <remarks>None</remarks>
+            <param name="targetShape">Shape to find the intersection with.</param>
+        </member>
+        <member name="T:Mapgenix.Shapes.BasePoint">
+            <summary>Root of all point-based shapes, such as PointShape and MultiPointShape.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.SimplificationType">
+            <summary>Types of simplification.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.SimplificationType.TopologyPreserving">
+            <summary>Topology preserving.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.SimplificationType.DouglasPeucker">
+            <summary>Douglas-Peucker algorithm.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.AreaUnit">
+            <summary>Units of area</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.BufferCapType">
+            <summary>Cap types for buffer operations.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.Conversion">
+            <summary>Static class for conversion operations to go to and from different units.
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.Conversion.ConvertMeasureUnits(System.Double,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Converts from one unit of measure to another.</summary>
+            <returns>Length in the unit specified in the toUnit parameter.</returns>
+            <remarks>None</remarks>
+            <param name="amount">Length in the fromUnit parameter.</param>
+            <param name="fromUnit">Unit of length for the amount parameter.</param>
+            <param name="toUnit">Unit of length for the result.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Conversion.ConvertMeasureUnits(System.Double,Mapgenix.Shapes.AreaUnit,Mapgenix.Shapes.AreaUnit)">
+            <summary>Converts from one area unit of measure to another.</summary>
+            <returns>Area in the unit specified in the toUnit parameter.</returns>
+            <remarks>None</remarks>
+            <param name="amount">Area size in the unit specified in the fromUnit parameter.</param>
+            <param name="fromUnit">Unit of measure for the area in the amount parameter.</param>
+            <param name="toUnit">Unit of measure for the result.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Conversion.ConvertGeographyUnitToDistanceUnit(Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns a DistanceUnit converted from a GeographyUnit.</summary>
+            <returns>DistanceUnit converted from a GeographyUnit.</returns>
+            <remarks>None</remarks>
+            <param name="unit">GeographyUnit to convert.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.Conversion.DegreesToRadians(System.Single)">
+            <summary>Returns degrees from radians.</summary>
+            <returns>Degrees from radians.</returns>
+        </member>
+        <member name="T:Mapgenix.Shapes.DistanceUnit">
+            <summary>Units of length</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.EllipseShape">
+            <summary>
+            Ellipse defined with a center point, a height and a width.
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor">
+            <summary>Creates an ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.PointShape,System.Double)">
+            <summary>Creates an ellipse with a center and a radius.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.Feature,System.Double)">
+            <summary>Creates an ellipse with the center of a feature and a radius.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.PointShape,System.Double,System.Double)">
+            <summary>Creates an ellipse with a center, a horizontal radius and a vertical radius.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.Feature,System.Double,System.Double)">
+            <summary>Creates an ellipse with the center of a feature, a horizontal radius and a vertical radius.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(System.String)">
+            <summary>Creates an ellipse with a WKT.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(System.Byte[])">
+            <summary>Creates an ellipse with a WKB.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.PointShape,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Creates an ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.Feature,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Creates an ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.PointShape,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Creates an ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.#ctor(Mapgenix.Shapes.Feature,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Creates an ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.CloneDeepCore">
+            <summary>Returns a complete copy of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetWellKnownTypeCore">
+            <summary>Returns the well-known type of the shape.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.EllipseShape.Width">
+            <summary>Gets the width of the ellipse in the unit of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.SetWidthByUnit(System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Sets the width of the ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetWidthByUnit(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Gets the width of the ellipse.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.EllipseShape.Height">
+            <summary>Gets the height of the ellipse in the unit of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.SetHeightByUnit(System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Sets the height of the ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetHeightByUnit(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Gets the height of the ellipse.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.EllipseShape.Center">
+            <summary>Gets or sets the center PointShape of the EllipseShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.ToPolygon">
+            <summary>Returns the ellipse as a PolygonShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.ToPolygon(System.Int32)">
+            <summary>Returns the ellipse as a PolygonShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetTangents(Mapgenix.Shapes.EllipseShape)">
+            <summary>Returns the tangent points of the ellipse in relation to a target ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetPerimeterCore(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the perimeter of the ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetAreaCore(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.AreaUnit)">
+            <summary>Returns the area the ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.ScaleUpCore(System.Double)">
+            <summary>Increases the size of the ellipse by a percentage.</summary>
+            <param name="percentage">Percentage by which to increase the ellipse's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.ScaleDownCore(System.Double)">
+            <summary>Decreases the size of the ellipse by a percentage.</summary>
+            <param name="percentage">Percentage by which to decrease the ellipse's size.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetBoundingBoxCore">
+            <summary>Returns the rectangle encompassing the ellipse.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.RegisterCore(Mapgenix.Shapes.PointShape,Mapgenix.Shapes.PointShape,Mapgenix.Shapes.DistanceUnit,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns a shape registered from its original coordinate system to another based on two anchor points.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.TranslateByOffsetCore(System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Moves the shape from one location to another based on an X and Y offset distance.</summary>
+            <param name="xOffsetDistance">X offset distance.</param>
+            <param name="yOffsetDistance">Y Offset distance.</param>
+            <param name="shapeUnit">Geography unit of the feature.</param>
+            <param name="distanceUnit">Distance unit.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.TranslateByDegreeCore(System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Moves a shape from one location to another based on a distance and a direction in degrees.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.EllipseShape.CanRotate">
+            <summary>Gets whether the shape can be rotated.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.RotateCore(Mapgenix.Shapes.PointShape,System.Single)">
+            <summary>Rotates the shape by a number of degrees based on a pivot point.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetClosestPointToCore(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit)">
+            <summary>Returns the point on  the shape closest to the target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetDistanceToCore(Mapgenix.Shapes.BaseShape,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the distance between the shape and a target shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetWellKnownTextCore">
+            <summary>Returns the well-known text representation of the shape.</summary>
+            <returns>String representing the shape in well-known text.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetWellKnownTextCore(System.Int32)">
+            <summary>Returns the well-known text representation of the shape.</summary>
+            <returns>String representing the shape in well-known text.</returns>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetWellKnownBinaryCore(Mapgenix.Shapes.WkbByteOrder)">
+            <summary>Returns a byte array representing the shape in well-known binary.</summary>
+            <returns>Byte array representing the shape in well-known binary.</returns>
+            <param name="byteOrder">Byte order to encode the well-known binary.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetWellKnownBinaryCore(Mapgenix.Shapes.WkbByteOrder,System.Int32)">
+            <summary>Returns a byte array representing the shape in well-known binary.</summary>
+            <returns>Byte array representing the shape in well-known binary.</returns>
+            <param name="byteOrder">Byte order to encode the well-known binary.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.LoadFromWellKnownDataCore(System.String)">
+            <summary>Hydrates the shape with its data from well-known text.</summary>
+            <returns>None</returns>
+            <param name="wellKnownText">Well-known text to hydrate the shape.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.LoadFromWellKnownDataCore(System.Byte[])">
+            <summary>Hydrates the shape with its data from well-known text.</summary>
+            <returns>None</returns>
+            <param name="wellKnownText">Well-known text to hydrate the shape.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.ValidateCore(Mapgenix.Shapes.ShapeValidationMode)">
+            <summary>Returns a ShapeValidationResult based on a validation tests.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.ContainsCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if a target shape lies within the interior of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.IntersectsCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns true if the shape and a target shape have at least one point in common.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.EllipseShape.GetCrossingCore(Mapgenix.Shapes.BaseShape)">
+            <summary>Returns the crossing points between the shape and a target shape.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.GeographyUnit">
+            <summary>Units of the map</summary>
+            <remarks>The geography unit represents how the map data is stored. It means that, for example, data stored in a geographic unit of meter, an increase of 100
+            on the x-axis means moving 100 meters in the X axis. 
+            If the data is projected it is in either meters or feet. If it is unprojected it is in decimal degrees.</remarks>
+        </member>
+        <member name="F:Mapgenix.Shapes.GeographyUnit.Unknown">
+            <summary>Unknown</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.GeographyUnit.DecimalDegree">
+            <summary>Decimal Degrees</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.GeographyUnit.Feet">
+            <summary>Feet</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.GeographyUnit.Meter">
+            <summary>Meters </summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.GeometryCollectionShape">
+            <summary>collection of shapes.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.GeometryCollectionShape.#ctor">
+            <summary>Creates the GeometryCollectionShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.GeometryCollectionShape.#ctor(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.BaseShape})">
+            <summary>Creates the GeometryCollectionShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.GeometryCollectionShape.#ctor(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.Feature})">
+            <summary>Creates the GeometryCollectionShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.GeometryCollectionShape.#ctor(System.String)">
+            <summary>Creates the GeometryCollectionShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.GeometryCollectionShape.#ctor(System.Byte[])">
+            <summary>Creates the GeometryCollectionShape.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.GeometryCollectionShape.Shapes">
+            <summary>Gets the collection of shapes.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.LineShape">
+            <summary>Line defined as a single line with two or more vertices.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.#ctor">
+            <summary>To create the LineShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.#ctor(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.Vertex})">
+            <summary>To create the LineShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.#ctor(System.String)">
+            <summary>To create the LineShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.#ctor(System.Byte[])">
+            <summary>To create the LineShape.</summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.LineShape.Vertices">
+            <summary>Gets the collection of points making up the LineShape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.ReversePoints">
+            <summary>Reverses the order of the points in the line.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.ReversePointsCore">
+            <summary>Reverses the order of the points in the line.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.CloneDeepCore">
+            <summary>Returns a complete copy of the shape.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.IsClosed">
+            <summary>Returns true if the line is closed, meaning the last point and
+            first point have the same X and Y values.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.IsClosedCore">
+            <summary>Returns true if the line is closed, meaning the last point and
+            first point have the same X and Y values.</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLengthCore(Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Returns the length of the shape.</summary>
+            <returns>Length of the shape.</returns>
+            <param name="shapeUnit">GeographyUnit of the shape.</param>
+            <param name="returningUnit">DistanceUnit for the return value.</param>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetPointOnALine(Mapgenix.Shapes.StartingPoint,System.Single)">
+            <summary>Returns a PointShape on the line, based on a percentage of the
+                length of the line from the first or last vertex (Dynamic segmentation).
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetPointOnALineCore(Mapgenix.Shapes.StartingPoint,System.Single)">
+            <summary>Returns a PointShape on the line, based on a percentage of the
+                length of the line from the first or last vertex (Dynamic segmentation).
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetPointOnALine(Mapgenix.Shapes.StartingPoint,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetPointOnALineCore(Mapgenix.Shapes.StartingPoint,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALine(Mapgenix.Shapes.StartingPoint,System.Single,System.Single)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALine(Mapgenix.Shapes.StartingPoint,System.Single)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALineCore(Mapgenix.Shapes.StartingPoint,System.Single)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALine(Mapgenix.Shapes.StartingPoint,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALineCore(Mapgenix.Shapes.StartingPoint,System.Double,System.Double,Mapgenix.Shapes.GeographyUnit,Mapgenix.Shapes.DistanceUnit)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALine(Mapgenix.Shapes.StartingPoint,Mapgenix.Shapes.PointShape)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALineCore(Mapgenix.Shapes.StartingPoint,Mapgenix.Shapes.PointShape)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALine(Mapgenix.Shapes.PointShape,Mapgenix.Shapes.PointShape)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="M:Mapgenix.Shapes.LineShape.GetLineOnALineCore(Mapgenix.Shapes.PointShape,Mapgenix.Shapes.PointShape)">
+            <summary>Dynamic segmentation</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.MultilineShape">
+            <summary>Shape defined as one or more lines, each with two or more points.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.MultipointShape">
+            <summary>Shape made of one or more points.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.MultipolygonShape">
+            <summary>Shape made of one or more polygons.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.PointShape">
+            <summary>Shape made of a single point.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.PolygonShape">
+            <summary>Shape defined as a polygon with a single outer ring with zero-to-many inner rings.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.ExceptionDescription">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.DecimalDegreeLatitudeOutOfRange">
+            <summary>
+              Looks up a localized string similar to The decimal degree latitude value you provided was out of range..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.DecimalDegreeLongitudeOutOfRange">
+            <summary>
+              Looks up a localized string similar to The decimal degree longitude value you provided was out of range..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.DecimalDegreeSecondsStringNull">
+            <summary>
+              Looks up a localized string similar to The degreesMinutesSeconds string may not be null or empty..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.DegreesMinutesSecondsInputError">
+            <summary>
+              Looks up a localized string similar to The DegreesMinutesSeconds value is invalid..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.DoubleOutOfRange">
+            <summary>
+              Looks up a localized string similar to The input double value is out of range..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.EnumerationOutOfRange">
+            <summary>
+              Looks up a localized string similar to The value for the enumeration is not on of the valid values..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.FeatureColumnValueDoesNotContainColon">
+            <summary>
+              Looks up a localized string similar to The feature column values should be entered as string[] {&quot;Key1:Value1&quot;, &quot;Key2:Value2&quot;}.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.FeatureIsNotValid">
+            <summary>
+              Looks up a localized string similar to The Feature you provided is not valid..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.InputGeometryTypeIsNotValid">
+            <summary>
+              Looks up a localized string similar to Input Geometry Type Is Not Valid.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.MultiLineCannotReorderForInputParams">
+            <summary>
+              Looks up a localized string similar to Can&apos;t Reorder for the multi-line because it does not satisfy the reorder condition based on the given startPoint and given tolerance..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.MultiLineInvalidForReorder">
+            <summary>
+              Looks up a localized string similar to Can&apos;t Reorder for the multi-line because it does not satisfy the reorder condition based on the given tolerance..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ParameterIsEmpty">
+            <summary>
+              Looks up a localized string similar to The parameter you supplied may not be empty..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ParameterIsInvalid">
+            <summary>
+              Looks up a localized string similar to The shape you provided does not pass our simple validation..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ParameterIsNull">
+            <summary>
+              Looks up a localized string similar to The parameter you supplied may not be null..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ReturnTypeNotCorrect">
+            <summary>
+              Looks up a localized string similar to This operation&apos;s return type is not correct..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.RingShapeIsInvalidForOperationVertexCountLessThan4">
+            <summary>
+              Looks up a localized string similar to This ring is not closed.  To close a ring the last point must be the same as the first point.  All rings must have at least four points..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.RotateNotSupported">
+            <summary>
+              Looks up a localized string similar to Rotation is not supported on this class..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ShapeIsInvalidForOperation">
+            <summary>
+              Looks up a localized string similar to The shape you provided does not pass our simple validation..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.ShapeIsInvalidForValidation">
+            <summary>
+              Looks up a localized string similar to There are no points in the shape..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.TargetShapeIsNotValidType">
+            <summary>
+              Looks up a localized string similar to Target Shape Is Not Valid Type..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.TheValueShouldBeGreaterThanZero">
+            <summary>
+              Looks up a localized string similar to The value should be greater than zero..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.WkbIsInvalid">
+            <summary>
+              Looks up a localized string similar to The format of the well known binary is incorrect..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.WkbTypeError">
+            <summary>
+              Looks up a localized string similar to The well known binary type is incorrect..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Shapes.ExceptionDescription.WktFormatIsWrong">
+            <summary>
+              Looks up a localized string similar to The format of the well known text is incorrect..
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.RectangleShape">
+            <summary>
+            Shape represented as a rectangle, which is defined as an upper left point and a
+            lower right point.
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.ReturningColumnsType">
+            <summary>Types of returned columns.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.RingShape">
+            <summary>A closed ring of points to make up polygon.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.ShapeValidationMode">
+            <summary>Types of validation test to run on a geometric shape.</summary>
+            <remarks>Simple tests are done internally before any method call to a shape in order to have a minimum
+            level of confidence for a successfull operation. 
+            It is recommended to do an advanced validation on shape from an unconfirmed source.</remarks>
+        </member>
+        <member name="T:Mapgenix.Shapes.ShapeValidationResult">
+            <summary>Result of the validation method performed on a geometric shape.</summary>
+            <remarks>To determine if a validation rule is violated by a shape with the description of the violation.</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.ShapeValidationResult.#ctor(System.Boolean,System.String)">
+            <summary>Sets the IsValid and ValidationErrors properties.</summary>
+            <remarks>None</remarks>
+            <param name="isValid">Whether the object has passed its validation method.</param>
+            <param name="validationErrors">List of errors if the object did not pass the validation method. Errors separated by semicolons.</param>
+        </member>
+        <member name="P:Mapgenix.Shapes.ShapeValidationResult.IsValid">
+            <summary>Whether the object has passed its validation method.</summary>
+            <value>Either true or false, depending on whether the object has passed its validation method.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.Shapes.ShapeValidationResult.ValidationErrors">
+            <summary>Gets the list of errors if the object did not pass the validation method.</summary>
+            <remarks>If errors,  separated by semicolons. Empty string if valid.</remarks>
+            <value>List of errors if the object did not pass the validation method.</value>
+        </member>
+        <member name="M:Mapgenix.Shapes.ShapeValidationResult.op_Equality(Mapgenix.Shapes.ShapeValidationResult,Mapgenix.Shapes.ShapeValidationResult)">
+            <summary>Override of == operator.</summary>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.ShapeValidationResult.op_Inequality(Mapgenix.Shapes.ShapeValidationResult,Mapgenix.Shapes.ShapeValidationResult)">
+            <summary>Override of != operator.</summary>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.ShapeValidationResult.Equals(System.Object)">
+            <summary>Override of Equals function.</summary>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.Shapes.ShapeValidationResult.GetHashCode">
+            <summary>Override of GetHashCode method.</summary>
+            <remarks>None</remarks>
+        </member>
+        <member name="T:Mapgenix.Shapes.StartingPoint">
+            <summary>Nodes of a line to start for dynamic segmentation.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.StartingPoint.FirstPoint">
+            <summary>First point of the line.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.StartingPoint.LastPoint">
+            <summary>Last point of the line.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.Vertex">
+            <summary>Vertex (point) making up a shape such as a polygon or a line.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.WellKnownType">
+            <summary>Valid types of geometries.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Invalid">
+            <summary>Invalid shape type.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Point">
+            <summary>Geometry representing a single location in coordinate space.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Line">
+            <summary>Curve with linear interpolation between points.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Polygon">
+            <summary>Planar surface representing a polygon with a single inner ring and zero to multiple inner rings (holes).</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Multipoint">
+            <summary>Geometry collection composed of Point elements.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Multiline">
+            <summary>Geometry collection composed of Line elements.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.Multipolygon">
+            <summary>Geometry composed of one or more Polygon elements.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WellKnownType.GeometryCollection">
+            <summary>Collection composed of one or more Shape elements.</summary>
+        </member>
+        <member name="T:Mapgenix.Shapes.WkbByteOrder">
+            <summary>Byte orders a well-known binary is written in.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WkbByteOrder.LittleEndian">
+            <summary>Least significant byte value is at the lowest address.</summary>
+        </member>
+        <member name="F:Mapgenix.Shapes.WkbByteOrder.BigEndian">
+            <summary>Most significant byte value is at the lowest address.</summary>
+        </member>
+    </members>
+</doc>

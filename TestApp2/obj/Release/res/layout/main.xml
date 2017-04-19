@@ -1,0 +1,21 @@
+<LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:id="@+id/MainLayout" android:minWidth="25px" android:minHeight="25px" android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android"><!--<Mapgenix.GSuite.Android.Map
+        android:id="@+id/MainMap"
+        android:layout_height="200dp"
+        android:layout_width="200dp"/>--><Mapgenix.GSuite.Android.Map android:layout_height="400dp" android:layout_width="match_parent" android:id="@+id/MainMap" /><!--<ImageView
+        android:id="@+id/Image1"
+        android:layout_width="256dp"
+        android:layout_height="256dp" />--><!--<RelativeLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/relativeLayout1">
+        <TextView
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp" />
+    </RelativeLayout>--><LinearLayout android:id="@+id/buttons" android:layout_width="match_parent" android:layout_height="50dp" android:orientation="horizontal"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/point" android:text="Point" /><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/polygon" android:text="Polygon" /><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/line" android:text="Line" /><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/square" android:text="Square" /></LinearLayout><LinearLayout android:id="@+id/buttons" android:layout_width="match_parent" android:layout_height="50dp" android:orientation="horizontal"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/rectangle" android:text="Rectangle" /><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/circle" android:text="Circle" /><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/ellipse" android:text="Ellipse" /><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/unsetTrack" android:text="None" /></LinearLayout><LinearLayout android:id="@+id/buttons" android:layout_width="match_parent" android:layout_height="50dp" android:orientation="horizontal"><Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/edit" android:text="Edit" /></LinearLayout></LinearLayout>

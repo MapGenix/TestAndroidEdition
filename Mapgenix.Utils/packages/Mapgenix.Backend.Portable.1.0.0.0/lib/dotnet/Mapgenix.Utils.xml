@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.Utils</name>
+    </assembly>
+    <members>
+        <member name="T:Mapgenix.Utils.StreamLoadingEventArgs">
+            <summary>Event arguments for the StreamLoading event in place of concrete files on the file system.</summary>
+        </member>
+        <member name="T:Mapgenix.Utils.FilePathHelper">
+            <summary>
+            Helper for resolve abosulte path from relative path
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Utils.FilePathHelper.GetFileAbsolutePath(System.String)">
+             <summary>
+             Return absolute path based on the <paramref name="path"/> parameter
+             </summary>
+             <param name="path">Absolute or relative path</param>
+             <returns>
+                 if path start with "..\" then get absolute physical path
+                 if path start with ".\" then get absolute physical path
+                 if path start with "../" then get absolute web path
+                 if path start with "./" then get absolute web path
+                 if path start with "/" then get absolute web path
+                 if path start with "~" then get absolute web path
+                 if path not contain root and contains Path.GetDirectoryName(path) + "\" then get absolute physical path
+                 if path not contain root and contains Path.GetDirectoryName(path) + "/" then get absolute web path
+                 else get path
+             </returns>
+            
+        </member>
+        <member name="M:Mapgenix.Utils.FilePathHelper.GetPathFromAppSettings(System.String)">
+             <summary>
+             Return absolute path from method GetFileAbsolutePath
+             </summary>
+             <param name="key">AppSetting key for get path</param>
+             <returns>
+                 return GetFileAbsolutePath()
+             </returns>
+            
+        </member>
+        <member name="M:Mapgenix.Utils.FilePathHelper.GetPathFromConnectionString(System.String)">
+             <summary>
+             Resolve relative path in connection string
+             </summary>
+             <param name="nameOrConnectionString">Name connection string in app|web.config or full connection string</param>
+             <returns>
+             if <paramref name="nameOrConnectionString"/> is name of connection string then refresh app|web.config runtime references and return <paramref name="nameOrConnectionString"/>
+             if <paramref name="nameOrConnectionString"/> is a full connection string then return connection string with resolve absolutes path
+             </returns>
+            
+        </member>
+        <member name="M:Mapgenix.Utils.FilePathHelper.AbsolutePhysicalPath(System.String,System.Boolean)">
+            <summary>
+            Return absolute physical path based on the <paramref name="path"/> parameter
+            <param name="path">Absolute or relative physical path</param>
+            <param name="relativeToRoot">true when path is relative to root, false when is relative to current path</param>
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Utils.FilePathHelper.AbsoluteWebPath(System.String,System.Boolean)">
+            <summary>
+            Return absolute web path based on the <paramref name="path"/> parameter
+            <param name="path">Absolute or relative physical path</param>
+            <param name="serverPath">true when use current server mapPath, false when use current url</param>
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Utils.FilePathHelper.HandleSpecialCharacters(System.String)">
+            <summary>
+            Replace Url Encode Characters for Decode Characters base on <paramref name="path"/> parameter
+            <param name="path">Absolute or relative physical path</param>
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Utils.LicenseValidationFailure">
+            <summary>
+            Implements IValidationFailure to handle personalized license validations
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Utils.LicenseFailureException">
+            <summary>
+            Custom exception to comunicate license validations exceptions
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Utils.LicenseValidation">
+            <summary>
+            Contains the methods needed to validate the license
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Utils.CollectionExceptions">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.CollectionExceptions.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.CollectionExceptions.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.CollectionExceptions.DoubleOutOfRange">
+            <summary>
+              Looks up a localized string similar to The input double value is out of range..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.CollectionExceptions.IEnumerableIsEmptyOrNull">
+            <summary>
+              Looks up a localized string similar to The collection may not be empty or null..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.CollectionExceptions.ParameterIsNull">
+            <summary>
+              Looks up a localized string similar to The parameter you supplied may not be null..
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Utils.ExceptionDescription">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.ExceptionDescription.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.ExceptionDescription.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Utils.ExceptionDescription.WkbIsInvalid">
+            <summary>
+              Looks up a localized string similar to The format of the well known binary is incorrect..
+            </summary>
+        </member>
+    </members>
+</doc>

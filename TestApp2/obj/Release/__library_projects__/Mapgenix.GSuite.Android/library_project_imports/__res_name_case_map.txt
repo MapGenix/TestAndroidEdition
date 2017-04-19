@@ -1,0 +1,7 @@
+Values/Strings.xml;values/strings.xml
+drawable/minus_blue_square.png;drawable/minus_blue_square.png
+drawable/plus_blue_square.png;drawable/plus_blue_square.png
+drawable/PowerBy.png;drawable/powerby.png
+drawable/Shape_move.png;drawable/shape_move.png
+drawable/Shape_resize.png;drawable/shape_resize.png
+drawable/Shape_rotate.png;drawable/shape_rotate.png

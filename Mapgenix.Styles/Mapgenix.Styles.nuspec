@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Mapgenix.Styles</id>
+    <version>1.0.0.0</version>
+    <title>Mapgenix.Styles</title>
+    <authors>Mapgenix</authors>
+    <owners>Mapgenix</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This package contains the core runtime assembly for styling layers.</description>
+    <copyright>Copyright ©  Mapgenix 2016</copyright>
+	<iconUrl>http://www.mapgenix.com/nuget-icons/gsuite_backend.png</iconUrl>
+    <dependencies>
+      <dependency id="NetTopologySuite" version="1.14" />
+      <dependency id="PDFsharp" version="1.32.3057.0" />
+      <dependency id="Trove.FLEE" version="0.9.26.0" />
+      <dependency id="ZedGraph" version="5.1.7" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Mapgenix.Styles.dll" target="lib\net45" />
+    <file src="bin\Release\Mapgenix.Styles.XML" target="lib\net45" />
+  </files>
+</package>

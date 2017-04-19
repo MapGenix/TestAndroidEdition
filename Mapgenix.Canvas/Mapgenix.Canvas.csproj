@@ -1,0 +1,257 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AC2E86D2-21A0-4036-BF5F-A3CB2D756A64}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapgenix.Canvas</RootNamespace>
+    <AssemblyName>Mapgenix.Canvas</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>false</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Mapgenix.Canvas.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Mapgenix.Canvas.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'francois|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\francois\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'val|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\val\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\val\Mapgenix.Canvas.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KayVeramende|AnyCPU'">
+    <OutputPath>bin\KayVeramende\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Raul|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Raul\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoAPI.1.7.4\lib\net45\GeoAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mapgenix.Projection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\ManagedProj4j\bin\Debug\Mapgenix.Projection.dll</HintPath>
+    </Reference>
+    <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\net45\NetTopologySuite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PowerCollections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2573bf8a1bdddcd5, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\net45\PowerCollections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\BaseBitmapTileCache.cs" />
+    <Compile Include="Cache\BaseMatrix.cs" />
+    <Compile Include="Cache\BaseNativeImageTileCache.cs" />
+    <Compile Include="Cache\BaseTileCache.cs" />
+    <Compile Include="Cache\BingMapsPictureFormat.cs" />
+    <Compile Include="Cache\FeatureCache.cs" />
+    <Compile Include="Cache\FileBitmapTileCache.cs" />
+    <Compile Include="Cache\FileNativeImageTileCache.cs" />
+    <Compile Include="Cache\HEREMapsPictureFormat.cs" />
+    <Compile Include="Cache\InMemoryBitmapTileCache.cs" />
+    <Compile Include="Cache\MatrixReferenceCorner.cs" />
+    <Compile Include="Cache\OpenStreetMapLayerPictureFormat.cs" />
+    <Compile Include="Cache\RowColumnRange.cs" />
+    <Compile Include="Cache\SessionFileBitmapTileCache.cs" />
+    <Compile Include="Cache\TileAccessMode.cs" />
+    <Compile Include="Cache\TileMatrix.cs" />
+    <Compile Include="Cache\TileMatrixCell.cs" />
+    <Compile Include="Cache\WmsPictureFormat.cs" />
+    <Compile Include="Canvas\GdiPlusGeoCanvas.cs" />
+    <Compile Include="Canvas\PageGeoCanvas.cs" />
+    <Compile Include="Gdal\CSVCompareCriteria.cs" />
+    <Compile Include="Gdal\CSVFileHelper.cs" />
+    <Compile Include="Gdal\ManagedMiniGdal.cs" />
+    <Compile Include="Gdal\OGRFromEPSG.cs" />
+    <Compile Include="Gdal\OGRSpatialReference.cs" />
+    <Compile Include="Gdal\OGRSRSEsri.cs" />
+    <Compile Include="Gdal\OGRSRSProj4.cs" />
+    <Compile Include="ScaleResolutionConverter.cs" />
+    <Compile Include="Canvas\PrinterGeoCanvas.cs" />
+    <Compile Include="Gdal\CSVTable.cs" />
+    <Compile Include="Gdal\OGRAxisOrientation.cs" />
+    <Compile Include="Gdal\OGRCoreDefinitiaons.cs" />
+    <Compile Include="Gdal\OGRSRSNode.cs" />
+    <Compile Include="Tiles\NativeImageTile.cs" />
+    <Compile Include="Projection\Proj4Projection.cs" />
+    <Compile Include="Projection\BaseProjection.cs" />
+    <Compile Include="Projection\RotationProjection.cs" />
+    <Compile Include="Styles\AreaStyle.cs" />
+    <Compile Include="Styles\AreaStyleCustom.cs" />
+    <Compile Include="Tiles\BitmapTile.cs" />
+    <Compile Include="Styles\LabelStyleGridCell.cs" />
+    <Compile Include="Tiles\BaseTile.cs" />
+    <Compile Include="Types\DrawingQuality.cs" />
+    <Compile Include="ExtentHelper.cs" />
+    <Compile Include="Drawing\BaseGeoBrush.cs" />
+    <Compile Include="Canvas\BaseGeoCanvas.cs" />
+    <Compile Include="Types\ColorType.cs" />
+    <Compile Include="Types\ColorWheelDirection.cs" />
+    <Compile Include="Types\DrawingFontStyle.cs" />
+    <Compile Include="Types\DrawingLevel.cs" />
+    <Compile Include="Types\DrawingLineCap.cs" />
+    <Compile Include="Types\DrawingLineJoin.cs" />
+    <Compile Include="Drawing\DrawingRectangleF.cs" />
+    <Compile Include="Drawing\GeoColor.cs" />
+    <Compile Include="Types\GeoDashCap.cs" />
+    <Compile Include="Drawing\GeoFont.cs" />
+    <Compile Include="Styles\GeoHatchStyle.cs" />
+    <Compile Include="Drawing\GeoLinearGradientBrush.cs" />
+    <Compile Include="Types\GeoLinearGradientDirection.cs" />
+    <Compile Include="Types\GeoWrapMode.cs" />
+    <Compile Include="Types\LineDashStyle.cs" />
+    <Compile Include="Types\PenBrushDrawingOrder.cs" />
+    <Compile Include="Types\RandomColorType.cs" />
+    <Compile Include="Drawing\ScreenPointF.cs" />
+    <Compile Include="Drawing\GeoHatchBrush.cs" />
+    <Compile Include="GeoImage.cs" />
+    <Compile Include="Drawing\GeoPen.cs" />
+    <Compile Include="Drawing\GeoSolidBrush.cs" />
+    <Compile Include="Drawing\GeoTextureBrush.cs" />
+    <Compile Include="Labels\LabelDuplicateRule.cs" />
+    <Compile Include="Labels\LabelInformation.cs" />
+    <Compile Include="Labels\LabelingCandidate.cs" />
+    <Compile Include="Types\LabelOverlappingRule.cs" />
+    <Compile Include="Labels\LineLabelAdjuster.cs" />
+    <Compile Include="Styles\LineStyle.cs" />
+    <Compile Include="Canvas\PdfGeoCanvas.cs" />
+    <Compile Include="Types\ApplyZoomLevelSet.cs" />
+    <Compile Include="Types\PanDirection.cs" />
+    <Compile Include="Types\PointPlacement.cs" />
+    <Compile Include="Styles\PointStyle.cs" />
+    <Compile Include="Styles\PointStyleCustom.cs" />
+    <Compile Include="Types\PointSymbolType.cs" />
+    <Compile Include="Types\PointType.cs" />
+    <Compile Include="Types\PolygonLabelingLocationMode.cs" />
+    <Compile Include="Styles\BaseLabelStyle.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ExceptionDescription.Designer.cs">
+      <DependentUpon>ExceptionDescription.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Labels\SimpleCandidate.cs" />
+    <Compile Include="Types\ResizeType.cs" />
+    <Compile Include="Types\SplineType.cs" />
+    <Compile Include="Drawing\StandardColors.cs" />
+    <Compile Include="Styles\BaseStyle.cs" />
+    <Compile Include="Styles\LabelStyle.cs" />
+    <Compile Include="Styles\LabelStyleCustom.cs" />
+    <Compile Include="Types\TileImageFormat.cs" />
+    <Compile Include="Projection\UnsafeHelper.cs" />
+    <Compile Include="Projection\UnsafeNativeMethods.cs" />
+    <Compile Include="Validators.cs" />
+    <Compile Include="Labels\WorldLabelingCandidate.cs" />
+    <Compile Include="Zoom\ZoomLevel.cs" />
+    <Compile Include="Zoom\ZoomLevelSet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\ExceptionDescription.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionDescription.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\ESPG" />
+    <None Include="Resources\ESRI" />
+    <None Include="Resources\ESRIExtra" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mapgenix.Shapes\Mapgenix.Shapes.csproj">
+      <Project>{2d313724-7588-4fc4-9715-e039ab38453c}</Project>
+      <Name>Mapgenix.Shapes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Utils\Mapgenix.Utils.csproj">
+      <Project>{e2ce16b4-bb3b-41cf-a6bb-633fad90a655}</Project>
+      <Name>Mapgenix.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

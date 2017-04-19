@@ -80,7 +80,7 @@ namespace Mapgenix.GSuite.Android
             else return interactiveResult;
 
             _originPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
-            interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
+            //interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
             return interactiveResult;
         }
 
@@ -91,7 +91,7 @@ namespace Mapgenix.GSuite.Android
             PointF currentPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             _tapPosition = currentPosition;
 
-            ExtentChangedType = ExtentChangedType.Pan;
+            //ExtentChangedType = ExtentChangedType.Pan;
 
             if (ExtentChangedType == ExtentChangedType.Pan)
             {

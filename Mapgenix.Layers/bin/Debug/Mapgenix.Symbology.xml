@@ -1,0 +1,587 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.Symbology</name>
+    </assembly>
+    <members>
+        <member name="T:Mapgenix.Symbology.ColorAdapter">
+            <summary> Factory for creating colors</summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.ExtentExt.SetLocation(DotSpatial.Data.Extent,System.Drawing.PointF)">
+            summary
+            Move the top left corner of the extent to this location
+        </member>
+        <member name="M:DotSpatial.Symbology.ExtentExt.SetLocation(DotSpatial.Data.Extent,DotSpatial.Topology.Coordinate)">
+            summary
+            Move the top left corner of the extent to this location
+        </member>
+        <member name="T:DotSpatial.Symbology.Range">
+            <summary>
+            Numeric range using doubles
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.Range._maxIsInclusive">
+            <summary>
+            Boolean, true if the upper bounds includes the maximum value.
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.Range._maximum">
+            <summary>
+            The maximum value.  If this is null, the upper range is unbounded.
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.Range._minIsInclusive">
+            <summary>
+            Boolean, true if the the lower bounds includes the minimum value.
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.Range._minimum">
+            <summary>
+            The minimum value.  If this is null, the lower range is unbounded.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.#ctor">
+            <summary>
+            Creates a new instance of Range (with undefined interval)
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.#ctor(System.Nullable{System.Double},System.Nullable{System.Double})">
+            <summary>
+            Creates a new instance of Range
+            </summary>
+            <param name="value1">Either bound of the range</param>
+            <param name="value2">The other bound of the range</param>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.#ctor(System.Double)">
+            <summary>
+            Creates an equality type range where both the minimum and maximum are the
+            same value and both are inclusive.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.#ctor(System.String)">
+            <summary>
+            A string expression that can be two separate numbers separated by a dash,
+            </summary>
+            <param name="expression"></param>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.ToString">
+            <summary>
+            Expresses this range in string form.  By default, ranges include the maximum,
+            and exclude the minimum.  A null value for one expression will result in a
+            a semi-unbounded range using the greater than or less than symbols.  A null
+            expression for both values is completely unbounded and will result in a string
+            that reads like [All Values].
+            </summary>
+            <returns>A string representing the range.</returns>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.ToString(DotSpatial.Symbology.IntervalSnapMethod,System.Int32)">
+            <summary>
+            This is a slightly more complex specification where the numeric formatting
+            controls how the generated string will appear.
+            </summary>
+            <param name="method">The interval snap method</param>
+            <param name="digits">This is only used for rounding or significant figures, but controls those options</param>
+            <returns>A string equivalent of this range, but using a number format.</returns>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.ToExpression(System.String)">
+            <summary>
+            Generates a valid SQL query expression for this range, using the field string
+            as the member being compared.  The field string should already be bound in
+            brackets, or put together as a normal composit like "[males]/[pop1990]"
+            </summary>
+            <param name="field">The field name to build into an expression.  This should already be wrapped in square brackets.</param>
+            <returns>The string SQL query expression.</returns>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.Contains(System.Double)">
+            <summary>
+            Tests to determine if this range contains the specified double value.
+            </summary>
+            <param name="value">the double value to test</param>
+            <returns>Boolean, true if the value is within the current bounds.</returns>
+        </member>
+        <member name="P:DotSpatial.Symbology.Range.Minimum">
+            <summary>
+            Gets or sets teh Minimum value.  If this is null, the lower range is unbounded.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.Range.Maximum">
+            <summary>
+            The maximum value.  If this is null, the upper range is unbounded.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.Range.MinIsInclusive">
+            <summary>
+            Boolean, true if the the lower bounds includes the minimum value.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.Range.MaxIsInclusive">
+            <summary>
+            Boolean, true if the upper bounds includes the maximum value.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.Range.FixOrder">
+            <summary>
+            If the minimum and maximum are out of order, this reverses them.
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Symbology.ElevationScenario">
+            <summary>
+            Some of the more common relationships between elevation and geographic coordinates
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationCentiMeters_ProjectionDegrees">
+            <summary>
+            The elevation values are in centimeters, but the geographic projection uses decimal degrees
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationCentiMeters_ProjectionMeters">
+            <summary>
+            The elevation values are in centimeters, but the geographic projection uses Meters
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationCentiMeters_ProjectionFeet">
+            <summary>
+            The elevation values are in centimeters, but the geographic projection uses Feet
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationFeet_ProjectionDegrees">
+            <summary>
+            The elevation values are in feet, but the geographic projection uses decimal degrees
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationFeet_ProjectionMeters">
+            <summary>
+            The elevation values are in feet, but the geographic projection uses meters
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationFeet_ProjectionFeet">
+            <summary>
+            The elevation values are in feet, but the geographic projection uses feet
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationMeters_ProjectionDegrees">
+            <summary>
+            The elevation values are in meters, but the geographic projection uses decimal degrees
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationMeters_ProjectionMeters">
+            <summary>
+            The elevation values are in meters, but the geographic projection uses meters
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.ElevationScenario.ElevationMeters_ProjectionFeet">
+            <summary>
+            The elevation values are in meters, but the geographic projection uses feet
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Symbology.ShadedRelief">
+            <summary>
+            ShadedRelief
+            </summary>
+        </member>
+        <member name="E:DotSpatial.Symbology.ShadedRelief.ShadingChanged">
+            <summary>
+            Occurs when the shading for this object has been altered.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.ShadedRelief.#ctor">
+            <summary>
+            Creates a new instance of the ShadedRelief preset for elevation in feet and coordinates in decimal degrees
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.ShadedRelief.#ctor(DotSpatial.Symbology.ElevationScenario)">
+            <summary>
+            Creates a new instance of ShadedRelief based on some more common
+            elevation to goegraphic coordinate sysetem scenarios
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.ShadedRelief.GetLightDirection">
+            <summary>
+            Returns a normalized vector in 3 dimensions representing the angle
+            of the light source.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.AmbientIntensity">
+            <summary>
+            Gets or sets a float specifying how strong the ambient directional light is.  This should probably be about 1.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.ElevationFactor">
+            <summary>
+            This is kept separate from extrusion to reduce confusion.  This is a conversion factor that will
+            convert the units of elevation into the same units that the latitude and longitude are stored in.
+            To convert feet to decimal degrees is around a factor of .00000274
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.Extrusion">
+            <summary>
+            A float value expression that modifies the "height" of the apparent shaded relief.  A value
+            of 1 should show the mountains at their true elevations, presuming the ElevationFactor is
+            correct.  A value of 0 would be totally flat, while 2 would be twice the value.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.IsUsed">
+            <summary>
+            Gets or sets a boolean value indicating whether the ShadedRelief should be used or not.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.ZenithAngle">
+            <summary>
+            Gets or sets the zenith angle for the light direction in degrees from 0 (at the horizon) to 90 (straight up).
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.LightDirection">
+            <summary>
+            Gets or sets a double that represents the light direction in degrees clockwise from North
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.LightIntensity">
+            <summary>
+            This specifies a float that should probably be around 1, which controls the light intensity.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Symbology.ShadedRelief.HasChanged">
+            <summary>
+            Gets whether or not the values have been changed on this ShadedRelief more recently than
+            a HillShade map has been calculated from it.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Symbology.ShadedRelief.OnShadingChanged">
+            <summary>
+            Fires the ShadingChanged event
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Symbology.CharacterSubset">
+            <summary>
+            CharacterSubsets
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Basic_Latin">
+            <summary>
+            Basic Latin
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Latin1_Supplement">
+            <summary>
+            Latin-1 Supplement
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Latin_Extended_A">
+            <summary>
+            Latin Extended-A
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Latin_Extended_B">
+            <summary>
+            Latin Extended-B
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.IPA_Extensions">
+            <summary>
+            IPA Extensions
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Spacing_Modifier_Letters">
+            <summary>
+            Spacing Modifier Letters
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Combining_Diacritical_Marks">
+            <summary>
+            Combining Diacritical Marks
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Greek_and_Coptic">
+            <summary>
+            Greek and Coptic
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Cyrillic">
+            <summary>
+            Cyrillic
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Armenian">
+            <summary>
+            Armenian
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Hebrew">
+            <summary>
+            Hebrew
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Arabic">
+            <summary>
+            Arabic
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Devanagari">
+            <summary>
+            Devanagari
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Bengali">
+            <summary>
+            Bengali
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Gumukhi">
+            <summary>
+            Gumukhi
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Gujarati">
+            <summary>
+            Gujarati
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Oriya">
+            <summary>
+            Oriya
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Tamil">
+            <summary>
+            Tamil
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Teluga">
+            <summary>
+            Teluga
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Kannada">
+            <summary>
+            Kanada
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Malayalam">
+            <summary>
+            Malayalam
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Thai">
+            <summary>
+            Thai
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Lao">
+            <summary>
+            Lao
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Tibetan">
+            <summary>
+            Tibetan
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Georgian">
+            <summary>
+            Georgian
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Hangul_Jamo">
+            <summary>
+            Hangul Jamo 4352
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Latin_Extended_Additional">
+            <summary>
+            Latin Extended Additional
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Greek_Extended">
+            <summary>
+            Greek Extended
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.General_Punctuation">
+            <summary>
+            General Punctuation
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Superscripts_and_Subscripts">
+            <summary>
+            Superscripts and Subscripts
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Currency_Symbols">
+            <summary>
+            Currency Symbols
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Combining_Diacritical_Marks_for_Symbols">
+            <summary>
+            Combining Diacritical Marks for Symbols
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Letterlike_Symbols">
+            <summary>
+            Letterlike Symbols
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Number_Forms">
+            <summary>
+            Number Forms
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Arrows">
+            <summary>
+            Arrows
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Mathematical_Operators">
+            <summary>
+            Mathematical Operators
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Miscellaneous_Technical">
+            <summary>
+            Miscellaneous Technical
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Control_Pictures">
+            <summary>
+            Control Pictures
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Optical_Character_Recognition">
+            <summary>
+            Optical Character Recognition
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Enclosed_Alphanumerics">
+            <summary>
+            Enclosed Alphanumerics
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Box_Drawing">
+            <summary>
+            Box Drawing
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Block_Elements">
+            <summary>
+            Block Elements
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Geometric_Shapes">
+            <summary>
+            Geometric Shapes
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Miscellaneous_Symbols">
+            <summary>
+            Miscellaneous Symbols
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Dingbats">
+            <summary>
+            Dingbats
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.CJK_Symbols_and_Puctuation">
+            <summary>
+            CJK Symbols and Punctuation
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Hiragana">
+            <summary>
+            Hiragana
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Katakana">
+            <summary>
+            Katakana
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Bopomofo">
+            <summary>
+            Bopomofo
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Hangul_Compatibility">
+            <summary>
+            Hangul Compatibility
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Kanbun">
+            <summary>
+            Kanbun
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Enclosed_CJK_Letters_and_Months">
+            <summary>
+            Enclosed CJK Letters and Months
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.CJK_Compatibility">
+            <summary>
+            CJK Compatibility
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.CJK_Unified_Ideographs">
+            <summary>
+            CJK Unified Ideographs
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Hangul_Syllables">
+            <summary>
+            Hangul Syllables
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Private_Use_Area">
+            <summary>
+            Private Use Area
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.CJK_Compatibility_Ideographs">
+            <summary>
+            CJK Compatibility Ideographs
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Alphabetic_Presentation_Forms">
+            <summary>
+            Alphabetic Presentation Forms
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Arabic_Presentation_Forms">
+            <summary>
+            Arabic Presentation Forms
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Combining_Half_Marks">
+            <summary>
+            Combining Half Marks
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.CJK_Compatibility_Forms">
+            <summary>
+            CJK Compatibility Forms
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Small_Form_Variants">
+            <summary>
+            Small Form Variants
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Arabic_Presentation_Forms_B">
+            <summary>
+            Arabic Presentation Forms-B
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Halfwidth_and_fullwidth_Forms">
+            <summary>
+            Halfwidth and fullwidth Forms
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Symbology.CharacterSubset.Specials">
+            <summary>
+            Specials
+            </summary>
+        </member>
+    </members>
+</doc>

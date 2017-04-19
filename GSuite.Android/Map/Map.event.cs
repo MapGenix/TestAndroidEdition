@@ -177,6 +177,13 @@ namespace Mapgenix.GSuite.Android
                     break;
 
                 case MotionEventActions.Up:
+
+                    PointF upPosition = new PointF(ev.GetX(), ev.GetY());
+                    motionArgs = CollectMotionEventArguments(upPosition);
+                    motionArgs.MotionAction = action;
+                    EventManagerMotionUpCore(motionArgs);
+
+                    break;
                 case MotionEventActions.Cancel:
                     // This events occur when something cancels the gesture (for example the
                     // activity going in the background) or when the pointer has been lifted up.

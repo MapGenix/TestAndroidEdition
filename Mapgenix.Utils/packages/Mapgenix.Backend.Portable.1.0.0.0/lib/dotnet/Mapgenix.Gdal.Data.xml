@@ -1,0 +1,857 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.Gdal.Data</name>
+    </assembly>
+    <members>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.Close">
+            <summary>
+            Closes the reader.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.Depth">
+            <summary>
+            Gets the integer depth, which is always 0.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.GetSchemaTable">
+            <summary>
+            Gets the DataTable with the schema.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.IsClosed">
+            <summary>
+            Gets a value indicating whether this reader is closed.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.NextResult">
+            <summary>
+            Gets a value indicating the next result?  This is always false for some reason.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.Read">
+            <summary>
+            This method tries to read another value and returns false if it fails.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.RecordsAffected">
+            <summary>
+            The integer number of records affected.  (This always returns -1)
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.Dispose">
+            <summary>
+            This disposes the underlying data source.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.FieldCount">
+            <summary>
+            Gets the integer number of fields in the table.  In this case the number of attribute fields plus 2.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.GetBoolean(System.Int32)">
+            <summary>
+            Returns the i'th field cast to a boolean value.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvDataReader.GetDateTime(System.Int32)">
+            <summary>
+            Returns the i'th field cast to a DateTime.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvVectorProvider.Description">
+            <summary>
+            Description of the Vector Provider
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvVectorProvider.DialogReadFilter">
+            <summary>
+            The dialog filter to use when opening a file
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvVectorProvider.DialogWriteFilter">
+            <summary>
+            The dialog filter to use when saving to a file
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvVectorProvider.ProgressHandler">
+            <summary>
+            Updated with progress information
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.CsvVectorProvider.Name">
+            <summary>
+            The name of the provider
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.CsvVectorProvider.Open(System.String)">
+            <summary>
+            Opens the specified file
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.DataBase.SpatiaLiteWkbReader.Read(System.Byte[])">
+            <summary>
+            Convert a byte array to a DotSpatial.Topology geometry object
+            </summary>
+            <param name="data">the data from the BLOB column</param>
+            <returns>the geometry object</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.DataBase.PostGisVectorProvider.GetPostGISVersion">
+            <summary>
+            Reads the postgis version installed on the server
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:DotSpatial.Data.Rasters.GdalExtension.DataBase.PostGisSpatialObjectType">
+            <summary>
+            Possible spatial objects when working with PostGIS data sources
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Data.Rasters.GdalExtension.DataBase.PostGisSpatialObjectType.Geometry">
+            <summary>
+            Spatial object stored in cartesian coordinate system, that is defined by a spatial reference system id.
+            <para>This is the standard way</para>
+            </summary>
+        </member>
+        <member name="F:DotSpatial.Data.Rasters.GdalExtension.DataBase.PostGisSpatialObjectType.Geography">
+            <summary>
+            Spatial object stored in WGS84, calculations performed on the sphere.
+            </summary>
+            <see href="http://workshops.opengeo.org/postgis-intro/geography.html"/>
+        </member>
+        <member name="T:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource">
+            <summary>
+            gdalImage
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.#ctor(System.String)">
+            <summary>
+            Creates a new instance of gdalImage, and gets much of the header information without actually
+            reading any values from the file.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.#ctor">
+            <summary>
+            Creates a new instance of gdalImage
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.Bounds">
+            <summary>
+            Gets or sets the bounds
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.NumRows">
+            <summary>
+            Gets the number of rows
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.NumColumns">
+            <summary>
+            Gets the total number of columns
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.NumOverviews">
+            <summary>
+            Gets the number of overviews, not counting the original image.
+            </summary>
+            <returns>The number of overviews.</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.ReadWindow(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+             Returns the data from the file in the form of ARGB bytes, regardless of how the image
+             data is actually stored in the file.
+            </summary>
+            <param name="startRow">The zero based integer index of the first row (Y)</param>
+            <param name="startColumn">The zero based integer index of the first column (X)</param>
+            <param name="numRows">The number of rows to read</param>
+            <param name="numColumns">The number of columns to read</param>
+            <param name="overview">The integer overview.  0 for the original image.  Each successive index divides the length and height in half.  </param>
+            <returns>A Byte of values in ARGB order and in row-major raster-scan sequence</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.GetBitmap(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            This returns the window of data as a bitmap.
+            </summary>
+            <param name="startRow">The zero based integer index of the first row (Y).</param>
+            <param name="startColumn">The zero based integer index of the first column (X).</param>
+            <param name="numRows">The number of rows to read.</param>
+            <param name="numColumns">The number of columns to read.</param>
+            <param name="overview">The integer overview.  0 for the original image.  Each successive index divides the length and height in half.  </param>
+            <returns>The bitmap representation for the specified portion of the raster.</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.ReadHeader">
+            <summary>
+            Gets the size of the whole image, but doesn't keep the image open unless it was already open.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.Close">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.GetSizes">
+            <summary>
+            Gets the dimensions of the original (0) plus any overlays.
+            The overlays get smaller as the index gets larger..
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.Dispose">
+            <summary>
+            Disposes the dataset
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.Filename">
+            <summary>
+            Gets or sets the fileName of the image source
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImageSource.ReadPaletteBuffered(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns ARGB 32 bpp regardless of the fact that the original is palette buffered.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalTiledImage.#ctor(System.String)">
+            <summary>
+            Creates a new instance of gdalImage
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalTiledImage.Close">
+            <summary>
+            Closes the image
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalTiledImage.Open">
+            <summary>
+            Attempts to open the specified file.
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Data.Rasters.GdalExtension.GdalException">
+            <summary>
+            GDalException
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalException.#ctor">
+            <summary>
+            Creates a new Exception using Gdal.GetLastErrorMsg
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalException.#ctor(System.String)">
+            <summary>
+            Creates a new instance of GDalException
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalException.#ctor(System.String,System.Exception)">
+            <summary>
+             Creates a new instance of GDalException with inner exception
+            </summary>
+            <param name="message"></param>
+            <param name="innerException"></param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.#ctor(System.String)">
+            <summary>
+            Creates a new instance of gdalImage, and gets much of the header
+            information without actually reading any values from the file.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.#ctor">
+            <summary>
+            Creates a new instance of gdalImage
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.ReadHeader">
+            <summary>
+            Gets the size of the whole image, but doesn't keep the image open
+            unless it was already open.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.Close">
+            <inheritdoc />
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.Open">
+            <summary>
+            Attempts to open the specified file into memory.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalImage.IsOpened">
+            <summary>
+            Open or close file. This is a simliar to calling Open/Close methods.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.GetBitmap(DotSpatial.Data.Extent,System.Drawing.Rectangle)">
+            <summary>
+            This needs to return the actual image and override the base
+            behavior that handles the internal variables only.
+            </summary>
+            <param name="envelope">The envelope to grab image data for.</param>
+            <param name="window">A Rectangle</param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.GetColorPalette">
+            <summary>
+            This is only used in the palette indexed band type.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.SetColorPalette(System.Collections.Generic.IEnumerable{System.Drawing.Color})">
+            <summary>
+            This should update the palette cached and in the file.
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.MatchColor(System.Byte[],System.Int32,System.Byte[][])">
+            <summary>
+            Finds the closest color in the table based on the hamming distance.
+            </summary>
+            <param name="vals"></param>
+            <param name="offset"></param>
+            <param name="colorTable"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.CopyBitmapToValues">
+            <summary>
+            Reads the actual image values from the image file into the array
+            of Values, which can be accessed by the Color property.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.CopyValuesToBitmap">
+            <summary>
+            Writes the byte values stored in the Bytes array into the bitmap
+            image.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.ReadBlock(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Gets a block of data directly, converted into a bitmap.  This always writes
+            to the base layer, not the overviews.
+            </summary>
+            <param name="xOffset">The zero based integer column offset from the left</param>
+            <param name="yOffset">The zero based integer row offset from the top</param>
+            <param name="xSize">The integer number of pixel columns in the block. </param>
+            <param name="ySize">The integer number of pixel rows in the block.</param>
+            <returns>A Bitmap that is xSize, ySize.</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.WriteBlock(System.Drawing.Bitmap,System.Int32,System.Int32)">
+            <summary>
+            Saves a bitmap of data as a continuous block into the specified location.
+            This always writes to the base image, and not the overviews.
+            </summary>
+            <param name="value">The bitmap value to save.</param>
+            <param name="xOffset">The zero based integer column offset from the left</param>
+            <param name="yOffset">The zero based integer row offset from the top</param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalImage.Dispose(System.Boolean)">
+            <inheritdocs/>
+        </member>
+        <member name="T:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.#ctor(System.String,OSGeo.GDAL.Dataset)">
+            <summary>
+            This can be a raster with multiple bands.
+            </summary>
+            <param name="name"></param>
+            <param name="fromDataset"></param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.#ctor(System.String,OSGeo.GDAL.Dataset,OSGeo.GDAL.Band)">
+            <summary>
+            creates a new raster from the specified band
+            </summary>
+            <param name="fileName">The string path of the file if any.</param>
+            <param name="fromDataset"></param>
+            <param name="fromBand"></param>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.GdalDataType">
+            <summary>
+            This is the GDAL data type
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.ReadRaster(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Reads values from the raster to the jagged array of values
+            </summary>
+            <param name="xOff">The horizontal offset from the left to start reading from</param>
+            <param name="yOff">The vertical offset from the top to start reading from</param>
+            <param name="sizeX">The number of cells to read horizontally</param>
+            <param name="sizeY">The number of cells ot read vertically</param>
+            <returns>A jagged array of values from the raster</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.GetValuesT(System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Most reading is optimized to read in a block at a time and process it.  This method is designed
+            for seeking through the file.  It should work faster than the buffered methods in cases where
+            an unusually arranged collection of values are required.  Sorting the list before calling
+            this should significantly improve performance.
+            </summary>
+            <param name="indices">A list or array of long values that are (Row * NumRowsInFile + Column)</param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.WriteRaster(`0[][],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Writes values from the jagged array to the raster at the specified location
+            </summary>
+            <param name="buffer">A jagged array of values to write to the raster</param>
+            <param name="xOff">The horizontal offset from the left to start reading from</param>
+            <param name="yOff">The vertical offset from the top to start reading from</param>
+            <param name="xSize">The number of cells to write horizontally</param>
+            <param name="ySize">The number of cells ot write vertically</param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.Copy(System.String,System.Boolean)">
+            <summary>
+            Copies the fileName
+            </summary>
+            <param name="fileName"></param>
+            <param name="copyValues"></param>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.GdalProgressFunc(System.Double,System.IntPtr,System.IntPtr)">
+            <summary>
+            Handles the callback progress content
+            </summary>
+            <param name="complete"></param>
+            <param name="message"></param>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.GetStatistics">
+            <summary>
+            Gets the mean, standard deviation, minimum and maximum
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRaster`1.UpdateHeader">
+            <summary>
+            Updates the header information about the projection and the affine coefficients
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider">
+            <summary>
+            GdalRasterProvider
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.#ctor">
+            <summary>
+            Creates a new instance of GdalRasterProvider
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.Create(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Type,System.String[])">
+            <summary>
+            This create new method implies that this provider has the priority for creating a new file.
+            An instance of the dataset should be created and then returned.  By this time, the fileName
+            will already be checked to see if it exists, and deleted if the user wants to overwrite it.
+            </summary>
+            <param name="name">The string fileName for the new instance.</param>
+            <param name="driverCode">The string short name of the driver for creating the raster.</param>
+            <param name="xSize">The number of columns in the raster.</param>
+            <param name="ySize">The number of rows in the raster.</param>
+            <param name="numBands">The number of bands to create in the raster.</param>
+            <param name="dataType">The data type to use for the raster.</param>
+            <param name="options">The options to be used.</param>
+            <returns>An IRaster</returns>
+        </member>
+        <member name="M:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.Open(System.String)">
+            <summary>
+            Opens the specified file
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.Description">
+            <summary>
+            Description of the raster
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.DialogReadFilter">
+            <summary>
+            The dialog filter to use when opening a file
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.DialogWriteFilter">
+            <summary>
+            The dialog filter to use when saving to a file
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.ProgressHandler">
+            <summary>
+            Updated with progress information
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.Rasters.GdalExtension.GdalRasterProvider.Name">
+            <summary>
+            The name of the provider
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Data.SpatialPredicate">
+            <summary>
+            Spatial operations
+            </summary>
+        </member>
+        <member name="T:DotSpatial.Data.OgrDataReader">
+            <summary>
+             OgrDatareader provide readonly forward only access to OsGeo data sources accessible though the OGR project
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.Close">
+            <summary>
+            Closes the reader.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrDataReader.Depth">
+            <summary>
+            Gets the integer depth, which is always 0.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.GetSchemaTable">
+            <summary>
+            Gets the DataTable with the schema.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DotSpatial.Data.OgrDataReader.IsClosed">
+            <summary>
+            Gets a value indicating whether this reader is closed.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.NextResult">
+            <summary>
+            Gets a value indicating the next result?  This is always false for some reason.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.Read">
+            <summary>
+            This method tries to read another value and returns false if it fails.
+            </summary>
+            <returns>Boolean</returns>
+        </member>
+        <member name="P:DotSpatial.Data.OgrDataReader.RecordsAffected">
+            <summary>
+            The integer number of records affected.  (This always returns -1)
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.Dispose">
+            <summary>
+            This disposes the underlying data source.
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrDataReader.FieldCount">
+            <summary>
+            Gets the integer number of fields in the table.  In this case the number of attribute fields plus 2.
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.GetBoolean(System.Int32)">
+            <summary>
+            Returns the i'th field cast to a boolean value.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Data.OgrDataReader.GetDateTime(System.Int32)">
+            <summary>
+            Returns the i'th field cast to a DateTime.
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DotSpatial.Data.OgrExtension.OgrVectorProvider">
+            <summary>
+            OgrVectorProvider
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrExtension.OgrVectorProvider.Description">
+            <summary>
+            Description of the Vector Provider
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrExtension.OgrVectorProvider.DialogReadFilter">
+            <summary>
+            The dialog filter to use when opening a file
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrExtension.OgrVectorProvider.DialogWriteFilter">
+            <summary>
+            The dialog filter to use when saving to a file
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrExtension.OgrVectorProvider.ProgressHandler">
+            <summary>
+            Updated with progress information
+            </summary>
+        </member>
+        <member name="P:DotSpatial.Data.OgrExtension.OgrVectorProvider.Name">
+            <summary>
+            The name of the provider
+            </summary>
+        </member>
+        <member name="M:DotSpatial.Data.OgrExtension.OgrVectorProvider.Open(System.String)">
+            <summary>
+            Opens the specified file
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IGeometry,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IGeometry"/> to a <see cref="T:GeoAPI.Geometries.IGeometry"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IGeometry"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IGeometry"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IPoint,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IPoint"/> to a <see cref="T:GeoAPI.Geometries.IPoint"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IPoint"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IPoint"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.ILineString,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.ILineString"/> to a <see cref="T:GeoAPI.Geometries.ILineString"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.ILineString"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.ILineString"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.ILinearRing,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.ILinearRing"/> to a <see cref="T:GeoAPI.Geometries.ILinearRing"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.ILinearRing"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.ILinearRing"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IPolygon,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IPolygon"/> to a <see cref="T:GeoAPI.Geometries.IPolygon"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IPolygon"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IPolygon"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IMultiPoint,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IMultiPoint"/> to a <see cref="T:GeoAPI.Geometries.IMultiPoint"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IMultiPoint"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IMultiPoint"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IMultiLineString,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IMultiLineString"/> to a <see cref="T:GeoAPI.Geometries.IMultiLineString"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IMultiLineString"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IMultiLineString"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IMultiPolygon,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IMultiLineString"/> to a <see cref="T:GeoAPI.Geometries.IMultiLineString"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IMultiLineString"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IMultiLineString"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.ToGeoAPI(DotSpatial.Topology.IGeometryCollection,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:DotSpatial.Topology.IGeometryCollection"/> to a <see cref="T:GeoAPI.Geometries.IGeometryCollection"/>
+            </summary>
+            <param name="self">The <see cref="T:DotSpatial.Topology.IGeometryCollection"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:GeoAPI.Geometries.IGeometryCollection"/></param>
+            <param name="setUserData">Sets the <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> to <paramref name="self"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.FromPointShape(DotSpatial.Data.Shape,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Get the point for this shape if this is a point shape.
+            </summary>
+            <param name="shape">The shape to convert</param>
+            <param name="factory">The geometry factory to use.</param>
+            <param name="copyAttributes">A value indicating whether or not to copy the <see cref="P:DotSpatial.Data.Shape.Attributes"/> to <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/></param>
+            <returns>The geometry representing the converted shape.</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.FromMultiPointShape(DotSpatial.Data.Shape,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Creates a new MultiPoint geometry from a MultiPoint shape
+            </summary>
+            <param name="shape">The shape to convert</param>
+            <param name="factory">The geometry factory to use.</param>
+            <param name="copyAttributes">A value indicating whether or not to copy the <see cref="P:DotSpatial.Data.Shape.Attributes"/> to <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/></param>
+            <returns>The geometry representing the converted shape.</returns>
+            <returns></returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.FromLineShape(DotSpatial.Data.Shape,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Gets the line for the specified index
+            </summary>
+            <param name="shape">The shape to convert</param>
+            <param name="factory">The geometry factory to use.</param>
+            <param name="copyAttributes">A value indicating whether or not to copy the <see cref="P:DotSpatial.Data.Shape.Attributes"/> to <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/></param>
+            <returns>The geometry representing the converted shape.</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.FromPolygonShape(DotSpatial.Data.Shape,GeoAPI.Geometries.IGeometryFactory,System.Boolean)">
+            <summary>
+            Creates a Polygon or MultiPolygon from this Polygon shape.
+            </summary>
+            <param name="shape">The shape to convert</param>
+            <param name="factory">The geometry factory to use.</param>
+            <param name="copyAttributes">A value indicating whether or not to copy the <see cref="P:DotSpatial.Data.Shape.Attributes"/> to <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/></param>
+            <returns>The geometry representing the converted shape.</returns>
+        </member>
+        <member name="M:DotSpatial.Topology.GeometryConverter.PointInList(GeoAPI.Geometries.Coordinate,System.Collections.Generic.IEnumerable{GeoAPI.Geometries.Coordinate})">
+            <summary>
+            Test if a point is in a list of coordinates.
+            </summary>
+            <param name="testPoint">The point to test for.</param>
+            <param name="pointList">The list of points to look through.</param>
+            <returns>true if <paramref name="testPoint"/> is a point in the <paramref name="pointList"/> list.</returns>
+        </member>
+        <member name="M:Mapgenix.Gdal.Data.GdalConfiguration.GetPlatform">
+            <summary>
+            Function to determine which platform we're on
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Gdal.Data.GdalConfiguration.#cctor">
+            <summary>
+            Construction of Gdal/Ogr
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Gdal.Data.GdalConfiguration.ConfigureOgr">
+            <summary>
+            Method to ensure the static constructor is being called.
+            </summary>
+            <remarks>Be sure to call this function before using Gdal/Ogr/Osr</remarks>
+        </member>
+        <member name="M:Mapgenix.Gdal.Data.GdalConfiguration.ConfigureGdal">
+            <summary>
+            Method to ensure the static constructor is being called.
+            </summary>
+            <remarks>Be sure to call this function before using Gdal/Ogr/Osr</remarks>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IGeometry,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IGeometry"/> to a <see cref="T:DotSpatial.Topology.IGeometry"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IGeometry"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IGeometry"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IPoint,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IPoint"/> to a <see cref="T:DotSpatial.Topology.IPoint"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IPoint"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IPoint"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.ILineString,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.ILineString"/> to a <see cref="T:DotSpatial.Topology.ILineString"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.ILineString"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.ILineString"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.ILinearRing,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.ILinearRing"/> to a <see cref="T:DotSpatial.Topology.ILinearRing"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.ILinearRing"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.ILinearRing"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IPolygon,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IPolygon"/> to a <see cref="T:DotSpatial.Topology.IPolygon"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IPolygon"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IPolygon"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IMultiPoint,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IMultiPoint"/> to a <see cref="T:DotSpatial.Topology.IMultiPoint"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IMultiPoint"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IMultiPoint"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IMultiLineString,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IMultiLineString"/> to a <see cref="T:DotSpatial.Topology.IMultiLineString"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IMultiLineString"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IMultiLineString"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IMultiPolygon,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IMultiPolygon"/> to a <see cref="T:DotSpatial.Topology.IMultiPolygon"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IMultiPolygon"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IMultiPolygon"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(GeoAPI.Geometries.IGeometryCollection,DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:GeoAPI.Geometries.IGeometryCollection"/> to a <see cref="T:DotSpatial.Topology.IGeometryCollection"/>
+            </summary>
+            <param name="geometry">The <see cref="T:GeoAPI.Geometries.IGeometryCollection"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:DotSpatial.Topology.IGeometryCollection"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometry"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatial(System.Collections.Generic.IList{GeoAPI.Geometries.IGeometry},DotSpatial.Topology.IGeometryFactory,System.Boolean)">
+            <summary>
+            Converts a <see cref="T:System.Collections.Generic.IList`1"/> to a <see cref="T:System.Collections.Generic.IList`1"/>
+            </summary>
+            <param name="geometries">The <see cref="T:System.Collections.Generic.IList`1"/> to convert</param>
+            <param name="factory">The factory to create the <see cref="T:System.Collections.Generic.IList`1"/></param>
+            <param name="setUserData">Sets the <see cref="P:DotSpatial.Topology.IGeometry.UserData"/> to <paramref name="geometries"/>.UserData</param>
+            <returns>The converted geometry</returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ToDotSpatialShape(GeoAPI.Geometries.IGeometry,System.Boolean)">
+            <summary>
+            Creates a shape based on the specified geometry.  This shape will be standing alone,
+            all by itself.
+            </summary>
+            <param name="geometry">The geometry to create a shape from.</param>
+            <param name="copyAttributes">The <see cref="P:GeoAPI.Geometries.IGeometry.UserData"/> will be copied to the <see cref="P:DotSpatial.Data.Shape.Attributes"/>.</param>
+            <returns>A <see cref="T:DotSpatial.Data.Shape"/> representing the <paramref name="geometry"/></returns>
+        </member>
+        <member name="M:GeoAPI.Geometries.GeometryConverter.ShapeRangeFromGeometry(GeoAPI.Geometries.IGeometry,System.Double[],System.Int32)">
+            <summary>
+            Create a ShapeRange from a Geometry to use in constructing a Shape
+            </summary>
+            <param name="geometry"></param>
+            <param name="vertices"></param>
+            <param name="offset">offset into vertices array where this feature starts</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -577,20 +577,18 @@ namespace Mapgenix.GSuite.Android
                         interactiveResult.DrawThisOverlay = DrawType.DoNotDraw;
                         break;
                 }
-            }
 
-            
-            interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
+                interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
 
-            WriteTrackShapeLayer();
+                WriteTrackShapeLayer();
 
-            if(_trackMode == TrackMode.Point)
-            {
-                EndTracking();
+                if (_trackMode == TrackMode.Point)
+                {
+                    EndTracking();
+                }
             }
 
             return interactiveResult;
-
         }
 
         /*protected override InteractiveResult MotionMoveCore(MapMotionEventArgs interactionArguments)
@@ -999,18 +997,6 @@ namespace Mapgenix.GSuite.Android
             int tileSw = (int)MapArguments.ActualWidth;
             int tileSh = (int)MapArguments.ActualHeight;
 
-            /*if (RenderMode == RenderMode.DrawingVisual)
-            {
-                DrawingVisualGeoCanvas geoCanvas = new DrawingVisualGeoCanvas();
-                RenderTargetBitmap nativeImage = new RenderTargetBitmap(tileSw, tileSh, geoCanvas.Dpi, geoCanvas.Dpi, PixelFormats.Pbgra32);
-                geoCanvas.BeginDrawing(nativeImage, tile.TargetExtent, MapArguments.MapUnit);
-                tile.Draw(geoCanvas);
-                geoCanvas.EndDrawing();
-                tile.CommitDrawing(geoCanvas, nativeImage);
-            }
-            else
-            {*/
-            //TrackShapeLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.GetRandomGeoColor(RandomColorType.Pastel), 20, GeoColor.FromArgb(200, GeoColor.StandardColors.Black), 1);
             using (Bitmap nativeImage = Bitmap.CreateBitmap(tileSw, tileSh, Bitmap.Config.Argb8888))
             {
                 GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context);
@@ -1019,7 +1005,7 @@ namespace Mapgenix.GSuite.Android
                 geoCanvas.EndDrawing();
                 tile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
             }
-            //}
+
         }
 
         protected virtual void DrawTileCore(GdiPlusAndroidGeoCanvas geoCanvas)

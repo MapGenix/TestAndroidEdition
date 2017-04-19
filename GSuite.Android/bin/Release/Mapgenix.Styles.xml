@@ -1,0 +1,776 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.Styles</name>
+    </assembly>
+    <members>
+        <member name="T:Mapgenix.Styles.AreaStyles">
+            <summary>
+            Factory for creating different types of AreaStyles.
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+            <param name="outlinePenColor">Outline pen color of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+            <param name="outlinePenColor">Outline pen color of the area.</param>
+            <param name="outlinePenWidth">Outline pen width of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32,Mapgenix.Canvas.LineDashStyle)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+            <param name="outlinePenColor">Outline pen color of the area.</param>
+            <param name="outlinePenWidth">Outline pen width of the area.</param>
+            <param name="borderStyle">BorderStyle of the area style.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,System.Single,System.Single)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+            <param name="xOffsetInPixel">X pixels offset of the area.</param>
+            <param name="yOffsetInPixel">Y pixels offset of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+            <param name="outlinePenColor">Outline color of the area.</param>
+            <param name="xOffsetInPixel">X pixels offset of the area.</param>
+            <param name="yOffsetInPixel">Y pixels offset of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32,System.Single,System.Single)">
+            <summary>Creates a simple area style.</summary>
+            <returns>Simple area style.</returns>
+            <remarks>None</remarks>
+            <param name="fillBrushColor">Fill color of the area.</param>
+            <param name="outlinePenColor">Outline pen color of the area.</param>
+            <param name="outlinePenWidth">Outline pen width of the area.</param>
+            <param name="xOffsetInPixel">X pixels offset of the area.</param>
+            <param name="yOffsetInPixel">Y pixels offset of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateSimpleAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32,Mapgenix.Canvas.LineDashStyle,System.Single,System.Single)">
+             <summary>Creates a simple area style.</summary>
+             <returns>Simple area style.</returns>
+             <remarks>None</remarks>
+             <param name="fillBrushColor">Fill color of the area.</param>
+             <param name="outlinePenColor">Outline pen color of the area.</param>
+             <param name="outlinePenWidth">Outline pen width of the area.</param>
+            <param name="borderStyle">BorderStyle of the area.</param>
+             <param name="xOffsetInPixel">X pixels offset of the area.</param>
+             <param name="yOffsetInPixel">Y pixels offset of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateHatchStyle(Mapgenix.Canvas.GeoHatchStyle,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor)">
+            <summary>Creates an AreaStyle with a hatch pattern.</summary>
+            <returns>AreaStyle with hatch pattern.</returns>
+            <remarks>None</remarks>
+            <param name="hatchStyle">Hatch pattern to be used.</param>
+            <param name="foregroundBrushColor">Color of the foreground of the hatch pattern.</param>
+            <param name="backgroundBrushColor">Color of the background of the hatch pattern.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateHatchStyle(Mapgenix.Canvas.GeoHatchStyle,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor)">
+            <summary>Creates an AreaStyle with a hatch pattern.</summary>
+            <returns>AreaStyle with a hatch pattern.</returns>
+            <remarks>None</remarks>
+            <param name="hatchStyle">Hatch pattern to be used.</param>
+            <param name="foregroundBrushColor">Color of the foreground of the hatch pattern.</param>
+            <param name="backgroundBrushColor">Color of the background of the hatch pattern.</param>
+            <param name="outlinePenColor">Border color of the area.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateHatchStyle(Mapgenix.Canvas.GeoHatchStyle,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32,Mapgenix.Canvas.LineDashStyle,System.Single,System.Single)">
+            <summary>Creates a GeoHatchStyle.</summary>
+            <requirements>None</requirements>
+            <returns>AreaStyle with a hatch pattern.</returns>
+            <param name="hatchStyle">Hatch pattern.</param>
+            <param name="foregroundBrushColor">Color of the foreground of the hatch pattern.</param>
+            <param name="backgroundColor">Color of the background of the hatch pattern.</param>
+            <param name="outlinePenColor">Border color of the area.</param>
+            <param name="outlinePenWidth">Border width of the area.</param>
+            <param name="outlineDashStyle">Dash style of the border.</param>
+            <param name="xOffsetInPixel">Pixel offset for X.</param>
+            <param name="yOffsetInPixel">Pixel offset for Y.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateLinearGradientStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Creates a linear gradient AreaStyle.</summary>
+            <returns>Linear gradient AreaStyle.</returns>
+            <remarks>None</remarks>
+            <param name="fromColor">
+            Starting <strong>GeoColor</strong> of the
+            gradient.
+            </param>
+            <param name="toColor">
+             Ending <strong>GeoColor</strong> of the
+            gradient.
+            </param>
+            <param name="angle">
+             Angle of the color changing from start to
+            end.
+            </param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateLinearGradientStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor)">
+            <summary>Creates a linear gradient AreaStyle.</summary>
+            <returns>Linear gradient AreaStyle.</returns>
+            <remarks>None</remarks>
+            <param name="fromColor">
+             Starting <strong>GeoColor</strong> of the
+            gradient.
+            </param>
+            <param name="toColor">
+             Ending <strong>GeoColor</strong> of the
+            gradient.
+            </param>
+            <param name="angle">
+             Angle of the color changing from start to
+            end.
+            </param>
+            <param name="outlinePenColor">Outline pen color of the area style.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateHueFamilyAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32)">
+            <summary>Creates an AreaStyle.</summary>
+            <returns>AreaStyle.</returns>
+            <remarks>None.</remarks>
+            <param name="outlinePenColor">GeoPen on the outline of the area style.</param>
+            <param name="baseColor">Base <strong>GeoColor</strong> of the hue family colors.</param>
+            <param name="numberOfColors">Number of GeoColors in hue family to construct the areastyle.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateHueFamilyLinearGradientAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Creates an AreaStyle in a family of hue-related colors drawn with a linear gradient.</summary>
+            <returns>AreaStyle in a family of hue-related colors drawn with a linear gradient.</returns>
+            <remarks>None.</remarks>
+            <param name="outlinePenColor">GeoPen on the outline of the AreaStyle.
+            </param>
+            <param name="baseColor">Base <strong>GeoColor</strong> of the hue family of colors.</param>
+            <param name="numberOfColors">Number of GeoColors in the hue family to construct the
+            AreaStyle.</param>
+            <param name="fromColor">
+            Starting <strong>GeoColor</strong> of the
+            gradient.
+            </param>
+            <param name="toColor">
+             Ending <strong>GeoColor</strong> of the gradient.</param>
+            <param name="angle">Angle of the gradient.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateQualityFamilyAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32)">
+            <summary>Creates an AreaStyle in a family of quality-realted colors.</summary>
+            <returns>AreaStyle in a family of quality-realted colors.</returns>
+            <param name="outlinePenColor">GeoPen on the outline of the AreaStyle.</param>
+            <param name="baseColor">Base <strong>GeoColor</strong> of the quality family of colors.</param>
+            <param name="numberOfColors">Number of GeoColors in the quality-based family to construct the AreaStyle.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.AreaStyles.CreateQualityFamilyLinearGradientAreaStyle(Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Int32,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Creates an AreaStyle in a family of quality-related colors drawn with a linear gradient.</summary>
+            <returns>AreaStyle in a family of quality-related colors drawn with a linear gradient.</returns>
+            <remarks>None.</remarks>
+            <param name="outlinePenColor">GeoPen on the outline of the AreaStyle.</param>
+            <param name="baseColor">Base <strong>GeoColor</strong> of the quality family of colors.</param>
+            <param name="numberOfColors">Number of GeoColors in quality-based family to construct the AreaStyle.</param>
+            <param name="fromColor">Starting <strong>GeoColor</strong> of the gradient. </param>
+            <param name="toColor">Ending <strong>GeoColor</strong> of the gradient.</param>
+            <param name="angle">Angle of the gradient.</param>
+        </member>
+        <member name="T:Mapgenix.Styles.BreakValueInclusion">
+            <summary>Type of break.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.ClassBreak">
+            <summary>A single class break used in ClassBreakStyle</summary>
+            <remarks>To display data depending on ranges of data in a column.</remarks>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreak.#ctor">
+            <summary>Class constructor.</summary>
+            <overloads>Default constructor</overloads>
+            <remarks>You need to set the properties manually.</remarks>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreak.#ctor(System.Double,Mapgenix.Canvas.AreaStyle)">
+            <summary>Class constructor.</summary>
+            <overloads>To pass in a break value and an AreaStyle.</overloads>
+            <returns>None</returns>
+            <remarks>To pass in a break value and an AreaStyle.</remarks>
+            <param name="value">Break value.</param>
+            <param name="areaStyle">AreaStyle to represent the break.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreak.#ctor(System.Double,Mapgenix.Canvas.PointStyle)">
+            <summary>Class constructor.</summary>
+            <overloads>To pass in a break value and a Point </overloads>
+            <returns>None</returns>
+            <remarks>To pass in a break value and a Point </remarks>
+            <param name="value">Break value.</param>
+            <param name="pointStyle">PointStyle to represent the break.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreak.#ctor(System.Double,Mapgenix.Canvas.LineStyle)">
+            <summary>Class constructor.</summary>
+            <overloads>To pass in a break value and a LineStyle </overloads>
+            <returns>None</returns>
+            <remarks>To pass in a break value and a LineStyle </remarks>
+            <param name="value">Break value.</param>
+            <param name="lineStyle">LineStyle to represent the break.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreak.#ctor(System.Double,Mapgenix.Canvas.LabelStyle)">
+            <summary>Class constructor.</summary>
+            <overloads>To pass in a break value and a TextStyle </overloads>
+            <returns>None</returns>
+            <remarks>To pass in a break value and a TextStyle </remarks>
+            <param name="value">Break value.</param>
+            <param name="textStyle">TextStyle to represent the break.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreak.#ctor(System.Double,System.Collections.ObjectModel.Collection{Mapgenix.Canvas.BaseStyle})">
+            <summary>Class constructor.</summary>
+            <overloads>To pass in a break value and a collection of TextStyles </overloads>
+            <returns>None</returns>
+            <remarks>To pass in a break value and a collection of TextStyles </remarks>
+            <param name="value">Break value.</param>
+            <param name="customStyles">TextStyles to represent the break.</param>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreak.Value">
+            <summary>Gets and sets the break value.</summary>
+            <value>Break value.</value>
+            <remarks>To determine where the break is in the ClassBreakStyle.</remarks>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreak.DefaultAreaStyle">
+            <summary>Gets and sets the default AreaStyle to draw the class break.</summary>
+            <value>Default AreaStyle to draw the class break.</value>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreak.DefaultLineStyle">
+            <summary>Gets and sets the default LineStyle to draw the class break.</summary>
+            <value>Default LineStyle to draw the class break.</value>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreak.DefaultPointStyle">
+            <summary>Gets and sets the default PointStyle to draw the class break.</summary>
+            <value>Default PointStyle to draw the class break.</value>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreak.DefaultTextStyle">
+            <summary>Gets and sets the default TextStyle to draw the class break.</summary>
+            <value>Default TextStyle to draw the class break.</value>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreak.CustomStyles">
+            <summary>Gets a collection of custom styles to draw the class break.</summary>
+            <value>Collection of custom styles to draw the class break.</value>
+        </member>
+        <member name="T:Mapgenix.Styles.ClassBreakStyle">
+            <summary>A style based on class break values.</summary>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreakStyle.#ctor">
+            <summary>Constructor of the class.</summary>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreakStyle.#ctor(System.String)">
+            <summary>Constructor of the class.</summary>
+            <overloads>To pass the column name of the column used for the break values.</overloads>
+            <returns>None</returns>
+            <param name="columnName">Column name of the column used for the break values.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreakStyle.#ctor(System.String,Mapgenix.Styles.BreakValueInclusion)">
+            <summary>Constructor of the class.</summary>
+            <returns>None</returns>
+            <param name="columnName">Column name of the column used for the break values.</param>
+            <param name="breakValueInclusion">Whether the break value is included in the class break
+            calculation.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreakStyle.#ctor(System.String,Mapgenix.Styles.BreakValueInclusion,System.Collections.ObjectModel.Collection{Mapgenix.Styles.ClassBreak})">
+            <summary>Constructor of the class.</summary>
+            <returns>None</returns>
+            <param name="columnName">Column name of the column used for the break values.</param>
+            <param name="breakValueInclusion">Whether the break value is included in the class break
+            calculation.</param>
+            <param name="classBreaks">Class break determining which style to use on the break values.</param>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreakStyle.ColumnName">
+            <summary>Gets and sets the column name in the FeatureSource where the data
+            is found for each feature.</summary>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreakStyle.BreakValueInclusion">
+            <summary>Gets and sets the value of if the break values are included in the
+            break calculation.</summary>
+        </member>
+        <member name="P:Mapgenix.Styles.ClassBreakStyle.ClassBreaks">
+            <summary>Gets the collection of class breaks.</summary>
+        </member>
+        <member name="M:Mapgenix.Styles.ClassBreakStyle.DrawCore(System.Collections.Generic.IEnumerable{Mapgenix.Shapes.Feature},Mapgenix.Canvas.BaseGeoCanvas,System.Collections.ObjectModel.Collection{Mapgenix.Canvas.SimpleCandidate},System.Collections.ObjectModel.Collection{Mapgenix.Canvas.SimpleCandidate})">
+            <summary>Draws the features on the canvas.</summary>
+            <param name="features">Features to draw on the canvas.</param>
+            <param name="canvas">Canvas to draw the features on.</param>
+            <param name="labelsInThisLayer">Labels in the current layer only.</param>
+            <param name="labelsInAllLayers">Labels in all layers.</param>
+        </member>
+        <member name="T:Mapgenix.Styles.ClusterPointStyle">
+            <summary>A style based on clustering point data into a single point</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.GoogleMapZoomLevelSet">
+            <summary>Zoom levels used by Google Maps.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.OpenStreetMapsZoomLevelSet">
+            <summary>Zoom levels used by OpenStreetMaps.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.VirtualEarthZoomLevelSet">
+            <summary>Zoom levels used by VirtualEarth.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.HEREMapsMapZoomLevelSet">
+            <summary>Zoom levels used by HEREMaps.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.DotDensityStyle">
+            <summary>Style using dot symbol to show the presence of a phenomena.
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Styles.GradientStyle">
+            <summary>Style using GradientBrush specifying LowerValue and UpperValue and its color.
+            The color of each feature is based on a column value using linear interpolation.
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Styles.HeatStyle">
+            <summary>
+            Style for visualizing dense point data to easily identify clusters of high concentration of an activity. 
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Styles.HueFamilyAreaStyle">
+            <summary>Style to draw area features.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.IconStyle">
+            <summary>Style for an icon with text from the data of the feature.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.IconValueItem">
+            <summary>Single item in an IconValueStyle.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.LineStyles">
+            <summary>
+            Factory for creating different types of LineStyles.
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Styles.LineStyles.CreateSimpleLineStyle(Mapgenix.Canvas.GeoColor,System.Single,System.Boolean)">
+            <summary>Returns a LineStyle.</summary>
+            <returns>LineStyle.</returns>
+            <remarks>None</remarks>
+            <overloads>Simple line with an optional round cap.</overloads>
+        </member>
+        <member name="M:Mapgenix.Styles.LineStyles.CreateSimpleLineStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.LineDashStyle,System.Boolean)">
+            <summary>Returns a LineStyle.</summary>
+            <returns>LineStyle.</returns>
+            <remarks>None</remarks>
+            <overloads>Dashed line with an optional round cap.</overloads>
+            <param name="centerlineColor">Center line color.</param>
+            <param name="centerlineWidth">Center line width.</param>
+            <param name="centerlineDashStyle">Dash style for the center line.</param>
+            <param name="roundCap">Optional rounded end cap.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.LineStyles.CreateSimpleLineStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single,System.Boolean)">
+            <summary>Returns a LineStyle.</summary>
+            <returns>LineStyle.</returns>
+            <remarks>None</remarks>
+            <overloads>Line with an inner and outer area and optional round cap.</overloads>
+            <param name="innerLineColor">Inner line color.</param>
+            <param name="innerLineWidth">Inner line width.</param>
+            <param name="outerLineColor">Outer line color.</param>
+            <param name="outerLineWidth">Outer line width.</param>
+            <param name="roundCap">Rounded end cap.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.LineStyles.CreateSimpleLineStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.LineDashStyle,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.LineDashStyle,System.Boolean)">
+            <summary>Returns a LineStyle.</summary>
+            <returns>LineStyle.</returns>
+            <remarks>None</remarks>
+            <param name="innerLineColor">Inner line color.</param>
+            <param name="innerLineWidth">Inner line width.</param>
+            <param name="innerLineDashStyle">Inner line dash style.</param>
+            <param name="outerLineColor">Outer line color.</param>
+            <param name="outerLineWidth">Outer line width.</param>
+            <param name="outerLineDashStyle">Outer line dash style.</param>
+            <param name="roundCap">Optional rounded end cap.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.LineStyles.CreateSimpleLineStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single,System.Boolean)">
+            <summary>Returns a LineStyle.</summary>
+            <returns>LineStyle.</returns>
+            <remarks>None</remarks>
+            <overloads>Line with a solid centerline.</overloads>
+            <param name="centerlineColor">Center line color.</param>
+            <param name="centerlineWidth">Center line width.</param>
+            <param name="innerLineColor">Inner line color.</param>
+            <param name="innerLineWidth">Inner line width.</param>
+            <param name="outerLineColor">Outer line color.</param>
+            <param name="outerLineWidth">Outer line width.</param>
+            <param name="roundCap">Optional rounded end cap.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.LineStyles.CreateSimpleLineStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.LineDashStyle,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.LineDashStyle,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.LineDashStyle,System.Boolean)">
+            <summary>Returns a LineStyle.</summary>
+            <returns>LineStyle.</returns>
+            <remarks>None</remarks>
+            <overloads>Line with a dashed centerline.</overloads>
+            <param name="centerlineColor">Center line color.</param>
+            <param name="centerlineWidth">Center line width.</param>
+            <param name="centerlineDashStyle">Center line dash style.</param>
+            <param name="innerLineColor">Inner line color.</param>
+            <param name="innerLineWidth">Inner line width.</param>
+            <param name="innerLineDashStyle">Inner line dash style.</param>
+            <param name="outerLineColor">Outer line color.</param>
+            <param name="outerLineWidth">Outer line width.</param>
+            <param name="outerLineDashStyle">Outer line dash style.</param>
+            <param name="roundCap">Optional rounded end cap.</param>
+        </member>
+        <member name="T:Mapgenix.Styles.PointStyles">
+            <summary>
+            Factory for creating different types of PointStyles.
+            </summary>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimplePointStyle(Mapgenix.Canvas.PointSymbolType,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a simple point style.</summary>
+            <param name="pointStyle">PointStyle symbol type.</param>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimplePointStyle(Mapgenix.Canvas.PointSymbolType,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single)">
+            <summary>Returns a simple point style.</summary>
+            <param name="pointStyle">PointStyle symbol type.</param>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <param name="outlineWidth">PointStyle outline width.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimplePointStyle(Mapgenix.Canvas.PointSymbolType,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a simple point style.</summary>
+            <param name="pointStyle">PointStyle symbol type.</param>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleCircleStyle(Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a circle point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleCircleStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a circle point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <param name="outlineWidth">PointStyle outline width.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleCircleStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor)">
+            <summary>Returns a circle point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleSquareStyle(Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a square point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleSquareStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor)">
+            <summary>Returns a square point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleSquareStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a square point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <param name="outlineWidth">PointStyle outline width.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleStarStyle(Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a star point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleStarStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor)">
+            <summary>Returns a star point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleStarStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <param name="outlineWidth">PointStyle outline width.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleTriangleStyle(Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a triangle point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleTriangleStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor)">
+            <summary>Returns a triangle point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateSimpleTriangleStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a point style.</summary>
+            <param name="fillColor">PointStyle fill color.</param>
+            <param name="size">PointStyle size.</param>
+            <param name="outlineColor">PointStyle outline color.</param>
+            <param name="outlineWidth">PointStyle outline width.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateCompoundCircleStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a compound circle point style.</summary>
+            <param name="fillColor1">Outer circle's PointStyle fill color.</param>
+            <param name="size1">Outer circle's PointStyle size.</param>
+            <param name="outlineColor1">Outer circle's PointStyle outline color.</param>
+            <param name="outlineWidth1">Outer circle's PointStyle outline width.</param>
+            <param name="fillColor2">Inner circle's PointStyle fill color.</param>
+            <param name="size2">Inner circle's PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateCompoundCircleStyle(Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns a compound circle point style.</summary>
+            <param name="fillColor1">Outer circle's PointStyle fill color.</param>
+            <param name="size1">Outer circle's PointStyle size.</param>
+            <param name="outlineColor1">Outer circle's PointStyle outline color.</param>
+            <param name="outlineWidth1">Outer circle's PointStyle outline width.</param>
+            <param name="fillColor2">Inner circle's PointStyle fill color.</param>
+            <param name="outlineColor2">Inner circle's PointStyle outline color.</param>
+            <param name="outlineWidth2">Inner circle's PointStyle outline width.</param>
+            <param name="size2">Inner circle's PointStyle size.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="M:Mapgenix.Styles.PointStyles.CreateCompoundPointStyle(Mapgenix.Canvas.PointSymbolType,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single,Mapgenix.Canvas.PointSymbolType,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single)">
+            <summary>Returns a compound point style.</summary>
+            <param name="pointStyle1">Outer circle's pointstyle symbol type.</param>
+            <param name="fillColor1">Outer circle's PointStyle fill color.</param>
+            <param name="size1">Outer circle's PointStyle size.</param>
+            <param name="outlineColor1">Outer circle's PointStyle outline color.</param>
+            <param name="outlineWidth1">Outer circle's PointStyle outline width.</param>
+            <param name="pointStyle2">Inner circle's pointstyle symbol type.</param>
+            <param name="fillColor2">Inner circle's PointStyle fill color.</param>
+            <param name="size2">Inner circle PointStyle size.</param>
+            <param name="outlineColor2">Inner circle's PointStyle outline color.</param>
+            <param name="outlineWidth2">Inner circle's PointStyle outline width.</param>
+            <returns>Point style.</returns>
+        </member>
+        <member name="T:Mapgenix.Styles.DrawingGraphicsUnit">
+            <summary>Graphic units.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.DrawingPenAlignment">
+            <summary>Alignments of the GeoPen in relation to a zero-width line.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.Properties.ExceptionDescription">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.ClassBreaksIsValid">
+            <summary>
+              Looks up a localized string similar to The class breaks you have provided are invalid..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.DoubleOutOfRange">
+            <summary>
+              Looks up a localized string similar to The input double value is out of range..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.EnumerationOutOfRange">
+            <summary>
+              Looks up a localized string similar to The value for the enumeration is not on of the valid values..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.FeatureIsInvalidInThisStyle">
+            <summary>
+              Looks up a localized string similar to The feature is invalid in in this style..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.FieldNameIsNotInFeature">
+            <summary>
+              Looks up a localized string similar to The requested column name is not in the Feature..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.GeocanvasIsNotInDrawing">
+            <summary>
+              Looks up a localized string similar to The GeoCanvas is currently not drawing.  Please call the BeginDraw method before calling this method..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.ImageScaleShouldBiggerThanZero">
+            <summary>
+              Looks up a localized string similar to The ImageScaled property must be larger than 0..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.ParameterIsEmpty">
+            <summary>
+              Looks up a localized string similar to The parameter you supplied may not be empty..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.ParameterIsNull">
+            <summary>
+              Looks up a localized string similar to The parameter you supplied may not be null..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.TheFieldTtypeShouldBeNumeric">
+            <summary>
+              Looks up a localized string similar to The field type should be numeric..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Styles.Properties.ExceptionDescription.TheValueShouldBeGreaterThanZero">
+            <summary>
+              Looks up a localized string similar to The value should be greater than zero..
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Styles.QualityFamilyAreaStyle">
+            <summary>Style to draw area features.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.RegexItem">
+            <summary>Style for a single Regex Match statement and styles to draw.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.RegexMatching">
+            <summary>
+            Enumeration for the matching criteria of a regular expression
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Styles.RegexStyle">
+            <summary>
+            Style for the use of regular expression matching.
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Styles.TextStyles">
+            <summary>Factory for creating different types of LabelStyles.</summary>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateSimpleTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor)">
+            <summary>Returns simple LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateSimpleTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,System.Single,System.Single)">
+            <summary>Returns simple LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="xOffset">XOffset of the font  in pixel</param>
+             <param name="yOffset">YOffset of the font  in pixel</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateSimpleTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns simple LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="haloPenColor">GeoColor to set the halopen color.</param>
+             <param name="haloPenWidth">Halopen width.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateSimpleTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single,System.Single)">
+            <summary>Returns simple LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="haloPenColor">GeoColor to set the halopen color.</param>
+             <param name="haloPenWidth">Halopen width.</param>
+             <param name="xOffset">XOffset of the font  in pixel</param>
+             <param name="yOffset">YOffset of the font  in pixel</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateMaskTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor)">
+            <summary>Returns mask LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="maskFillColor">GeoColor to set the mask fill color.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateMaskTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single)">
+            <summary>Returns mask LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="maskFillColor">GeoColor to set the mask fill color.</param>
+             <param name="xOffset">XOffset of the font  in pixel</param>
+             <param name="yOffset">YOffset of the font  in pixel</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateMaskTextStyle(System.String,Mapgenix.Canvas.GeoFont,Mapgenix.Canvas.GeoSolidBrush,Mapgenix.Canvas.AreaStyle,System.Single,System.Single)">
+            <summary>Returns mask LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="textFont">GeoFont to set the font of the text.</param>
+             <param name="textBrush">GeoSolidBrush to set the brush of the text.</param>
+             <param name="areaStyle">areaStyle as mask of of the TextStyle.</param>
+             <param name="xOffset">XOffset of the font  in pixel</param>
+             <param name="yOffset">YOffset of the font  in pixel</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateMaskTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single)">
+            <summary>Returns mask LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="maskPenColor">GeoColor to set the mask pen color.</param>
+             <param name="maskPenSize">Mask pen size.</param>
+        </member>
+        <member name="M:Mapgenix.Styles.TextStyles.CreateMaskTextStyle(System.String,System.String,System.Single,Mapgenix.Canvas.DrawingFontStyles,Mapgenix.Canvas.GeoColor,Mapgenix.Canvas.GeoColor,System.Single,System.Single,System.Single)">
+            <summary>Returns mask LabelStyle.</summary>
+            <returns>LabelStyle.</returns>
+             <param name="textColumnName">Column name.</param>
+             <param name="fontFamilyName">Font family name.</param>
+             <param name="fontSize">Font size.</param>
+             <param name="drawingFontStyle">DrawingFontStyles to set the style of the font.</param>
+             <param name="fontColor">GeoColor to set the font color.</param>
+             <param name="maskPenColor">GeoColor to set the mask pen color.</param>
+             <param name="maskPenSize">float value to set the mask pen size.</param>
+             <param name="xOffset">XOffset of the font in pixel</param>
+             <param name="yOffset">YOffset of the font in pixel</param>
+        </member>
+        <member name="T:Mapgenix.Styles.ValueItem">
+            <summary>A single value with Style for ValueStyle.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.ValueStyle">
+            <summary>Style for a single value to match.</summary>
+        </member>
+        <member name="T:Mapgenix.Styles.ZedGraphStyle">
+            <summary>Style for bar charts, line charts and pie charts</summary>
+        </member>
+    </members>
+</doc>

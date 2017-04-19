@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.Index</name>
+    </assembly>
+    <members>
+        <member name="T:Mapgenix.Index.ExceptionDescription">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Index.ExceptionDescription.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Index.ExceptionDescription.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Index.ExceptionDescription.IndexFileIsInvalid">
+            <summary>
+              Looks up a localized string similar to The format of your index file is not valid, please check. Or you can use BuildIndexFile function to build a new one..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Index.ExceptionDescription.RtreeSpatialIndexIsNotOpen">
+            <summary>
+              Looks up a localized string similar to The RtreeSpatialIndex is not open.   Please call the Open method before calling this method..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.Index.ExceptionDescription.SpatialIndexIsNotRemovable">
+            <summary>
+              Looks up a localized string similar to The features in SpatialIndex are not removable..
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Index.RtreeSpatialIndex">
+            <summary>
+            Spatial index for improving spatial access using minimum bounding rectangle
+            </summary>
+        </member>
+        <member name="T:Mapgenix.Index.SpatialIndex">
+            <summary>
+            Abstract class for spatial indices
+            </summary>
+        </member>
+    </members>
+</doc>

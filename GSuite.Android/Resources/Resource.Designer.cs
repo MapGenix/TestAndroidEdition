@@ -49,6 +49,15 @@ namespace Mapgenix.GSuite.Android
 			// aapt resource value: 0x7f020002
 			public static int PowerBy = 2130837506;
 			
+			// aapt resource value: 0x7f020003
+			public static int Shape_move = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public static int Shape_resize = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public static int Shape_rotate = 2130837509;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

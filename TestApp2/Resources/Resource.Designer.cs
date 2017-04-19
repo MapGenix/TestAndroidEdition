@@ -29,6 +29,9 @@ namespace TestApp2
 			global::Mapgenix.GSuite.Android.Resource.Drawable.minus_blue_square = global::TestApp2.Resource.Drawable.minus_blue_square;
 			global::Mapgenix.GSuite.Android.Resource.Drawable.plus_blue_square = global::TestApp2.Resource.Drawable.plus_blue_square;
 			global::Mapgenix.GSuite.Android.Resource.Drawable.PowerBy = global::TestApp2.Resource.Drawable.PowerBy;
+			global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_move = global::TestApp2.Resource.Drawable.Shape_move;
+			global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_resize = global::TestApp2.Resource.Drawable.Shape_resize;
+			global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_rotate = global::TestApp2.Resource.Drawable.Shape_rotate;
 			global::Mapgenix.GSuite.Android.Resource.String.ApplicationName = global::TestApp2.Resource.String.ApplicationName;
 			global::Mapgenix.GSuite.Android.Resource.String.Hello = global::TestApp2.Resource.String.Hello;
 		}
@@ -79,6 +82,15 @@ namespace TestApp2
 			// aapt resource value: 0x7f020009
 			public const int PowerBy = 2130837513;
 			
+			// aapt resource value: 0x7f02000a
+			public const int Shape_move = 2130837514;
+			
+			// aapt resource value: 0x7f02000b
+			public const int Shape_resize = 2130837515;
+			
+			// aapt resource value: 0x7f02000c
+			public const int Shape_rotate = 2130837516;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -101,11 +113,32 @@ namespace TestApp2
 			// aapt resource value: 0x7f050002
 			public const int buttons = 2131034114;
 			
+			// aapt resource value: 0x7f050008
+			public const int circle = 2131034120;
+			
+			// aapt resource value: 0x7f05000b
+			public const int edit = 2131034123;
+			
+			// aapt resource value: 0x7f050009
+			public const int ellipse = 2131034121;
+			
+			// aapt resource value: 0x7f050005
+			public const int line = 2131034117;
+			
 			// aapt resource value: 0x7f050003
-			public const int setTrack = 2131034115;
+			public const int point = 2131034115;
 			
 			// aapt resource value: 0x7f050004
-			public const int unsetTrack = 2131034116;
+			public const int polygon = 2131034116;
+			
+			// aapt resource value: 0x7f050007
+			public const int rectangle = 2131034119;
+			
+			// aapt resource value: 0x7f050006
+			public const int square = 2131034118;
+			
+			// aapt resource value: 0x7f05000a
+			public const int unsetTrack = 2131034122;
 			
 			static Id()
 			{

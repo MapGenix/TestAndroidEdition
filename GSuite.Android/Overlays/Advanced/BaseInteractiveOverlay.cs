@@ -162,7 +162,6 @@ namespace Mapgenix.GSuite.Android
 
         protected virtual InteractiveResult MotionUpCore(MapMotionEventArgs interactionArguments)
         {
-
             return new InteractiveResult();
         }
 

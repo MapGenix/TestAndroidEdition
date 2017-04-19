@@ -1,0 +1,588 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DecimalDegreeSecondsStringNull" xml:space="preserve">
+    <value>The degreesMinutesSeconds string may not be null or empty.</value>
+  </data>
+  <data name="DegreesMinutesSecondsInputError" xml:space="preserve">
+    <value>The DegreesMinutesSeconds value is invalid.</value>
+  </data>
+  <data name="DoubleOutOfRange" xml:space="preserve">
+    <value>The input double value is out of range.</value>
+  </data>
+  <data name="EllipseIsNotValid" xml:space="preserve">
+    <value>The ellipse is not valid.</value>
+  </data>
+  <data name="EnumerationOutOfRange" xml:space="preserve">
+    <value>The value for the enumeration is not on of the valid values.</value>
+  </data>
+  <data name="GeocanvasIsNotInDrawing" xml:space="preserve">
+    <value>The GeoCanvas is currently not drawing.  Please call the BeginDraw method before calling this method.</value>
+  </data>
+  <data name="GeoImageIsNotValid" xml:space="preserve">
+    <value>The input GeoImage object is not a valid GeoImage type.</value>
+  </data>
+  <data name="GeometrytypeIsWrong" xml:space="preserve">
+    <value>Geometry type not recognized. </value>
+  </data>
+  <data name="InputGeometryTypeIsNotValid" xml:space="preserve">
+    <value>Input Geometry Type Is Not Valid</value>
+  </data>
+  <data name="MultiLineCannotReorderForInputParams" xml:space="preserve">
+    <value>Can't Reorder for the multi-line because it does not satisfy the reorder condition based on the given startPoint and given tolerance.</value>
+  </data>
+  <data name="MultiLineInvalidForReorder" xml:space="preserve">
+    <value>Can't Reorder for the multi-line because it does not satisfy the reorder condition based on the given tolerance.</value>
+  </data>
+  <data name="ParameterCanNotConvert" xml:space="preserve">
+    <value>We cannot get the AreaUnit from input unit.</value>
+  </data>
+  <data name="ParameterIsInvalid" xml:space="preserve">
+    <value>The shape you provided does not pass our simple validation.</value>
+  </data>
+  <data name="ParameterIsNull" xml:space="preserve">
+    <value>The parameter you supplied may not be null.</value>
+  </data>
+  <data name="ReturnTypeNotCorrect" xml:space="preserve">
+    <value>This operation's return type is not correct.</value>
+  </data>
+  <data name="RotateNotSupported" xml:space="preserve">
+    <value>Rotation is not supported on this class.</value>
+  </data>
+  <data name="ShapeIsInvalidForOperation" xml:space="preserve">
+    <value>The shape you provided does not pass our simple validation.</value>
+  </data>
+  <data name="ShapeIsInvalidForValidation" xml:space="preserve">
+    <value>There are no points in the shape.</value>
+  </data>
+  <data name="StringIsNotBlank" xml:space="preserve">
+    <value>The input string value is not blank.</value>
+  </data>
+  <data name="WkbIsInvalid" xml:space="preserve">
+    <value>The format of the well known binary is incorrect.</value>
+  </data>
+  <data name="WkbTypeError" xml:space="preserve">
+    <value>The well known binary type is incorrect.</value>
+  </data>
+  <data name="WktFormatIsWrong" xml:space="preserve">
+    <value>The format of the well known text is incorrect.</value>
+  </data>
+  <data name="HtmlColorIsInvalid" xml:space="preserve">
+    <value>The input string HtmlColor is invalid.</value>
+  </data>
+  <data name="TheFormatOfImageIsNotSupported" xml:space="preserve">
+    <value>The format of the image is not supported.</value>
+  </data>
+  <data name="WkbIsNotValidForDrawing" xml:space="preserve">
+    <value>The well known binary is not valid for drawing.</value>
+  </data>
+  <data name="FileIsNotExist" xml:space="preserve">
+    <value>The file specified does not exist.</value>
+  </data>
+  <data name="FeatureSourceIsNotOpen" xml:space="preserve">
+    <value>The FeatureSource is not open.   Please call the Open method before calling this method.</value>
+  </data>
+  <data name="FeatureSourceIsNotEditable" xml:space="preserve">
+    <value>The FeatureSource is not editable.</value>
+  </data>
+  <data name="FeatureSourceIsAlreadyOpen" xml:space="preserve">
+    <value>The FeatureSource is already opened.</value>
+  </data>
+  <data name="FeatureSourceIsNotInTransaction" xml:space="preserve">
+    <value>The FeatureSource is not in a transaction.</value>
+  </data>
+  <data name="FeatureSourceIsAlreadyInTransaction" xml:space="preserve">
+    <value>The FeatureSource is already in a transaction.</value>
+  </data>
+  <data name="ConnectionStringCannotBeNull" xml:space="preserve">
+    <value>The connection string can not be null.</value>
+  </data>
+  <data name="WpfCommonGeoImageSourceIsNotOpen" xml:space="preserve">
+    <value>The ImageSource is not opened.  Please open it before calling this method.</value>
+  </data>
+  <data name="WpfCommonGeoImageSourceIsAlreadyOpen" xml:space="preserve">
+    <value>The ImageSource is already open.</value>
+  </data>
+  <data name="IdColumnCannotBeNullOrEmpty" xml:space="preserve">
+    <value>Id column can't be null or empty.</value>
+  </data>
+  <data name="ShapeTypeNotImplement" xml:space="preserve">
+    <value>This shape has not been implemented yet.</value>
+  </data>
+  <data name="MrSidGeoImageSourceIsAlreadyOpen" xml:space="preserve">
+    <value>The MrSidGeoImageSource is already open.</value>
+  </data>
+  <data name="MrSidGeoImageSourceIsNotOpen" xml:space="preserve">
+    <value>The MrSidGeoImageSource is not open.  Please open it before calling this method.</value>
+  </data>
+  <data name="NotSupportedFileType" xml:space="preserve">
+    <value>The file type you provided is currently not supported.</value>
+  </data>
+  <data name="IndexFileAlreadyExists" xml:space="preserve">
+    <value>Index File already exist, please change the BuildIndexMode if you want to rebuild this index.</value>
+  </data>
+  <data name="RebuildIdxFailed" xml:space="preserve">
+    <value>The spatial index generation failed for an unknown reason.    Please see the inner exception.</value>
+  </data>
+  <data name="RebuildShapeFileFailed" xml:space="preserve">
+    <value>the rebuilding of the shape file failed for an unknown reason.    Please see the inner exception.</value>
+  </data>
+  <data name="FileAccessError" xml:space="preserve">
+    <value>File access error, you should open the shape file with ReadWrite mode.</value>
+  </data>
+  <data name="FileNotSupportedForSql" xml:space="preserve">
+    <value>One of the fields in the database is not supported by SQL. The first character of this field name must be an alphabetic letter.</value>
+  </data>
+  <data name="NotSupportedSqlQueryMode" xml:space="preserve">
+    <value>The SQL Query mode is not supported.</value>
+  </data>
+  <data name="AddTransactionError" xml:space="preserve">
+    <value>The add transaction failed for an unknown reason.</value>
+  </data>
+  <data name="DeleteTransactionError" xml:space="preserve">
+    <value>The delete transaction failed for an unknown reason.</value>
+  </data>
+  <data name="UpdateTansactionError" xml:space="preserve">
+    <value>The update transaction failed for an unknown reason.</value>
+  </data>
+  <data name="ShxFileIsNotOpen" xml:space="preserve">
+    <value>The shape file index is not open.</value>
+  </data>
+  <data name="FeatureIsNotValid" xml:space="preserve">
+    <value>The Feature you provided is not valid.</value>
+  </data>
+  <data name="ImageSourceIsNotOpen" xml:space="preserve">
+    <value>The ImageSource is not open.  Please call the Open method before calling this method.</value>
+  </data>
+  <data name="CommonImageSourceIsAlreadyOpen" xml:space="preserve">
+    <value>The ImageSource is already open.</value>
+  </data>
+  <data name="ParameterIsTransparent" xml:space="preserve">
+    <value>The parameter is transparent.</value>
+  </data>
+  <data name="ImageInPointStyleCanNotBeNull" xml:space="preserve">
+    <value>The image property can't be null.</value>
+  </data>
+  <data name="ImageScaleShouldBiggerThanZero" xml:space="preserve">
+    <value>The ImageScaled property must be larger than 0.</value>
+  </data>
+  <data name="ClassBreaksIsValid" xml:space="preserve">
+    <value>The class breaks you have provided are invalid.</value>
+  </data>
+  <data name="ParameterIsEmpty" xml:space="preserve">
+    <value>The parameter you supplied may not be empty.</value>
+  </data>
+  <data name="FieldNameIsNotInFeature" xml:space="preserve">
+    <value>The requested column name is not in the Feature.</value>
+  </data>
+  <data name="TheFieldTtypeShouldBeNumeric" xml:space="preserve">
+    <value>The field type should be numeric.</value>
+  </data>
+  <data name="TheValueShouldBeGreaterThanZero" xml:space="preserve">
+    <value>The value should be greater than zero.</value>
+  </data>
+  <data name="RebuildDbfFailed" xml:space="preserve">
+    <value>The rebuild of the DBF failed for an unknown reason.  Please see the inner exception.</value>
+  </data>
+  <data name="ImageSourceIsAlreadyOpen" xml:space="preserve">
+    <value>The ImageSource is already open.</value>
+  </data>
+  <data name="FileIsSupportedByCommonImageSource" xml:space="preserve">
+    <value>This file type is not supported.</value>
+  </data>
+  <data name="NotAllValidLayersAreOpen" xml:space="preserve">
+    <value>Not all valid layers are open.</value>
+  </data>
+  <data name="UseGeoTiffRasterInstead" xml:space="preserve">
+    <value>The TIFF files(.tif or .tiff) are not supported in GdiPlusRasterSource any longer, please use the GeoTiffRasterSource instead.</value>
+  </data>
+  <data name="WorldExtentIsNotValid" xml:space="preserve">
+    <value>The world extent is not valid.</value>
+  </data>
+  <data name="CheckLayerIsOpened" xml:space="preserve">
+    <value>The Layer must be opened before you can perform this method.</value>
+  </data>
+  <data name="MapEngineCurrentExtentIsNull" xml:space="preserve">
+    <value>The current extent you have provided may not be null.</value>
+  </data>
+  <data name="CheckMapEngineCurrentExtentIsNotValid" xml:space="preserve">
+    <value>The current extent provided is not valid.</value>
+  </data>
+  <data name="MapEngineCurrentExtentIsNotValid" xml:space="preserve">
+    <value>The current extent you have provided is not valid.</value>
+  </data>
+  <data name="NotSupported" xml:space="preserve">
+    <value>This feature is currently not supported.</value>
+  </data>
+  <data name="EvaluationExpired" xml:space="preserve">
+    <value>The evaluation has expired.  Please contact Mapgenix for purchasing option or an extension to the trial.</value>
+  </data>
+  <data name="DefaultAndCustomStyleDuplicate" xml:space="preserve">
+    <value>You are trying to use both a default style and the custom styles collection.  You may only use one or the other.</value>
+  </data>
+  <data name="LayersTypeIsOutOfRange" xml:space="preserve">
+    <value>The layer type you have provided is not valid.</value>
+  </data>
+  <data name="BothIconFilePathAndIconImageAreInvalid" xml:space="preserve">
+    <value>You can provide a path and file name to an icon or an image but not both.</value>
+  </data>
+  <data name="ColorDoesNotExist" xml:space="preserve">
+    <value>The color you have provided does not exist.</value>
+  </data>
+  <data name="EvalNotInstall" xml:space="preserve">
+    <value>The evaluation edition has not been installed.</value>
+  </data>
+  <data name="FeatureCollectionIsEmpty" xml:space="preserve">
+    <value>The collection of Features may not be empty.</value>
+  </data>
+  <data name="ProjectionIsNotOpen" xml:space="preserve">
+    <value>The projection is not open.  Please open it before calling this method.</value>
+  </data>
+  <data name="ProjectionInitializationError" xml:space="preserve">
+    <value>Projection initialization failed.</value>
+  </data>
+  <data name="SridIsInvalid" xml:space="preserve">
+    <value>Input srid is not valid.</value>
+  </data>
+  <data name="MultiFieldNamesNotSupportedError" xml:space="preserve">
+    <value>The format of Multi-FieldNames isn't correct.</value>
+  </data>
+  <data name="WmsServerNotSupportFormat" xml:space="preserve">
+    <value>This image format is not supported in the Wms server: </value>
+  </data>
+  <data name="WmsServerNotSupportLayer" xml:space="preserve">
+    <value>This layer is not supported in the Wms server: </value>
+  </data>
+  <data name="WmsCRSNotSet" xml:space="preserve">
+    <value>Coordinate Reference System not set.</value>
+  </data>
+  <data name="WmsCRSNotSupport" xml:space="preserve">
+    <value>This CRS is not supported in the Wms server: </value>
+  </data>
+  <data name="WmsGetMapTimeOut" xml:space="preserve">
+    <value>The Wms server has timed out.</value>
+  </data>
+  <data name="WmsNoLayerExists" xml:space="preserve">
+    <value>No layers exist in the Service Description.</value>
+  </data>
+  <data name="WmsRequestParaNotExists" xml:space="preserve">
+    <value>The requested parameter does not exists in this Service Description.</value>
+  </data>
+  <data name="WmsServerNotSupportStyle" xml:space="preserve">
+    <value>This style is not supported in the Wms server: </value>
+  </data>
+  <data name="FeatureSourceColumnCollectionIsEmpty" xml:space="preserve">
+    <value>The collection of FeatureSourceColumns may not be empty.</value>
+  </data>
+  <data name="FeatureIsInvalidInThisStyle" xml:space="preserve">
+    <value>The feature is invalid in in this style.</value>
+  </data>
+  <data name="ClassBreakNumberShouldBeGreaterThanOne" xml:space="preserve">
+    <value>The ClassBreak Number should be greater than one.</value>
+  </data>
+  <data name="FirstClassBreakValueError" xml:space="preserve">
+    <value>The first ClassBreak value should be double.MinValue.</value>
+  </data>
+  <data name="GettingSridNotSupported" xml:space="preserve">
+    <value>The current GeoImage implementation does not support the GetSrid operation.</value>
+  </data>
+  <data name="GeoCacheIsNotOpen" xml:space="preserve">
+    <value>The GeoCache is not open.  Please call the Open method before calling this method.</value>
+  </data>
+  <data name="WmsLayerDoesNotExists" xml:space="preserve">
+    <value>The Wms request LAYERS parameter is missing.</value>
+  </data>
+  <data name="ReturnValueIsNull" xml:space="preserve">
+    <value>Return value is null.</value>
+  </data>
+  <data name="IEnumerableIsEmptyOrNull" xml:space="preserve">
+    <value>The collection may not be empty or null.</value>
+  </data>
+  <data name="FeatureSourceCollectionIsEmpty" xml:space="preserve">
+    <value>There are no FeatureSources.</value>
+  </data>
+  <data name="GroupLayerIsEmpty" xml:space="preserve">
+    <value>You must have at least one layer.</value>
+  </data>
+  <data name="CurrentExtentNotAssigned" xml:space="preserve">
+    <value>The CurrentExtent property must be set before calling this method. If you want to use a custom extent, please use the static method</value>
+  </data>
+  <data name="DefaultAndCustomStyleDuplicateForRestrictedLayer" xml:space="preserve">
+    <value>You are trying to use both a default style and the custom styles collection. If you want to add custom styles, please set RestrictionStyle as RestrictionStyle.UseCustomStyles.</value>
+  </data>
+  <data name="LayerDoesNotHaveBoundingBox" xml:space="preserve">
+    <value>This Layer doesn't have a boundingBox.</value>
+  </data>
+  <data name="DecimalDegreeLatitudeOutOfRange" xml:space="preserve">
+    <value>The decimal degree latitude value you provided was out of range.</value>
+  </data>
+  <data name="DecimalDegreeLongitudeOutOfRange" xml:space="preserve">
+    <value>The decimal degree longitude value you provided was out of range.</value>
+  </data>
+  <data name="FileAlreadyExists" xml:space="preserve">
+    <value>The file already exists.</value>
+  </data>
+  <data name="TargetShapeIsNotValidType" xml:space="preserve">
+    <value>Target Shape Is Not Valid Type.</value>
+  </data>
+  <data name="ShapeFileNameIsInvalid" xml:space="preserve">
+    <value>The shape file name is invalid.</value>
+  </data>
+  <data name="ShapeFileBoundingBoxIsValid" xml:space="preserve">
+    <value>The shape file bounding box is invalid.</value>
+  </data>
+  <data name="IndexFileNotExisted" xml:space="preserve">
+    <value>You don't have the corresponding idx file for your shape file. You can use the static method ShapeFileFeatureSource.BuildIndexFile() or ShapeFileFeatureLayer.BuildIndexFile()  to build an idx file for the shape file, or you can set the RequireIndex property to false.</value>
+  </data>
+  <data name="IndexFileIsInvalid" xml:space="preserve">
+    <value>The format of your index file is not valid, please check. Or you can use BuildIndexFile function to build a new one.</value>
+  </data>
+  <data name="CheckIsOpenedWhenCloneDeep" xml:space="preserve">
+    <value>You can not CloneDeep because the object is open or drawing, please close or end drawing first.</value>
+  </data>
+  <data name="CreateShapeFileFailed" xml:space="preserve">
+    <value>The creation of the shape file has failed.</value>
+  </data>
+  <data name="InvalidOperationExceptionError" xml:space="preserve">
+    <value>Invalid Operation Exception.</value>
+  </data>
+  <data name="EditingNotSupported" xml:space="preserve">
+    <value>You have set IsEditable to true but have not overridden the CommitTransactionCore method.  Please override this the CommitTransactionCore method to prevent this exception.</value>
+  </data>
+  <data name="ParameterIdsIsNotIntegers" xml:space="preserve">
+    <value>Parameter Ids should be from 1 to the record number in ShapeFileFeatureSource</value>
+  </data>
+  <data name="FeatureColumnValueDoesNotContainColon" xml:space="preserve">
+    <value>The feature column values should be entered as string[] {"Key1:Value1", "Key2:Value2"}</value>
+  </data>
+  <data name="DbfColumnsIsEmpty" xml:space="preserve">
+    <value>The DbfColumns collection is empty, you should add at least one DbfColumn when you create a new shape file.</value>
+  </data>
+  <data name="Unlicensed" xml:space="preserve">
+    <value>Unlicensed.</value>
+  </data>
+  <data name="RingShapeIsInvalidForOperationVertexCountLessThan4" xml:space="preserve">
+    <value>This ring is not closed.  To close a ring the last point must be the same as the first point.  All rings must have at least four points.</value>
+  </data>
+  <data name="FeatureSourceCanNotExecuteSqlQuery" xml:space="preserve">
+    <value>Executing sql queries is not supported and the user should always check the CanExecuteSqlQueries to ensure the FeatureSource support it before calling.</value>
+  </data>
+  <data name="RasterSourceNotContainsProjectionInformation" xml:space="preserve">
+    <value>This RasterSource does not have projection information embedded in it.  If you wish to avoid this exception you can first check the HasProjectionTextProperty.</value>
+  </data>
+  <data name="RasterLayerDoesNotHaveProjectionInformation" xml:space="preserve">
+    <value>This RasterLayer does not have projection information embedded in it.  If you wish to avoid this exception you can first check the HasProjectionTextProperty.</value>
+  </data>
+  <data name="GdipLoadImageFromFileError" xml:space="preserve">
+    <value>GDI+ threw a status error code.</value>
+  </data>
+  <data name="WorldFileShould6Lines" xml:space="preserve">
+    <value>World file should has 6 lines.</value>
+  </data>
+  <data name="GeographicUnitNotValidWithGoogle" xml:space="preserve">
+    <value>The map unit you are using is not compatable with the GoogleLayer .  Make sure you are using Meters and that your projection is 90013 to ensure compatability.</value>
+  </data>
+  <data name="InvalidGeometryInMsSqlForSpatialQuery" xml:space="preserve">
+    <value>There're some invalid geometry instance in table not valid. About invalid geometry please have a look at http://msdn.microsoft.com/en-us/library/bb933890.aspx website. To solve this problem, we provide MakeAllGeometryValid function to make the invalid geometry to be valid, because of the function updating your data, you need to backup your data before using this function.</value>
+  </data>
+  <data name="DecimalLengthInValidForStringColumnType" xml:space="preserve">
+    <value>DecimalLength is Invalid(it should be 0) for StringColumnType, it only make sense for DoubleColumnType.</value>
+  </data>
+  <data name="RecordIsInvalid" xml:space="preserve">
+    <value>The record is invalid, please call Validate method to check the failed reason.</value>
+  </data>
+  <data name="GeometriesInvalidExist" xml:space="preserve">
+    <value>We have found geometries that are invalid according to the SQL Server STIsValid() Function. To automaticly fix these you can call the MakeAllGeometriesValid method. The SQL To Determine which records are invalid:</value>
+  </data>
+  <data name="JpegImageCompressionShouldBeBetweenZeroAndOneHundred" xml:space="preserve">
+    <value>The value should be between zero and one hundred.</value>
+  </data>
+  <data name="CellWidthLessThanZero" xml:space="preserve">
+    <value>The cellWidth needs to be greater than zero.</value>
+  </data>
+  <data name="CellHeightLessThanZero" xml:space="preserve">
+    <value>The cellHeight needs to be greater than zero.</value>
+  </data>
+  <data name="ExtentNotIntersectsWithBoundingBox" xml:space="preserve">
+    <value>The passed extent needs to intersect with the bounding box of the gid.</value>
+  </data>
+  <data name="RowNumberExceedTotalRowCount" xml:space="preserve">
+    <value>The parameter row exceeds the total row count.</value>
+  </data>
+  <data name="ColumnNumberExceedTotalRowCount" xml:space="preserve">
+    <value>The parameter column exceeds the total column count.</value>
+  </data>
+  <data name="UnsupportedEditingShapeType" xml:space="preserve">
+    <value>Currently we do not support editing this kind of shape type. Shape type:</value>
+  </data>
+  <data name="KeyColorIsNotSupported" xml:space="preserve">
+    <value>Do not support KeyColor in the specify GeoCanvas.</value>
+  </data>
+  <data name="NumberShouldBeByte" xml:space="preserve">
+    <value>The number should be between 0 and 255</value>
+  </data>
+  <data name="UriNotValid" xml:space="preserve">
+    <value>The input Uri is not valid</value>
+  </data>
+  <data name="ItemNotFoundInGeoCollectionByItem" xml:space="preserve">
+    <value>The GeoCollection does not contain the item you specified.</value>
+  </data>
+  <data name="ItemNotFoundInGeoCollectionByKey" xml:space="preserve">
+    <value>The GeoCollection does not contain the item you specified.</value>
+  </data>
+  <data name="WmsStyleDoesNotExists" xml:space="preserve">
+    <value>The Wms request STYLES parameter is missing.</value>
+  </data>
+  <data name="SpatialIndexIsNotRemovable" xml:space="preserve">
+    <value>The features in SpatialIndex are not removable.</value>
+  </data>
+  <data name="ShapefileFeatureSourceIdNotFromZero" xml:space="preserve">
+    <value>The Shapefile Id is one based, zero is an invalid Id.</value>
+  </data>
+  <data name="GeographicUnitNotValidWithOpenStreetMap" xml:space="preserve">
+    <value>The map unit you are using is not compatable with the OpenStreetMap .  Make sure you are using Meters to ensure compatability with OpenStreetMap service.</value>
+  </data>
+  <data name="MGRSInvalid" xml:space="preserve">
+    <value>The input MGRS string is invalid.</value>
+  </data>
+  <data name="RtreeSpatialIndexIsNotOpen" xml:space="preserve">
+    <value>The RtreeSpatialIndex is not open.   Please call the Open method before calling this method.</value>
+  </data>
+  <data name="ProjectionInternalGeographyIsUnknown" xml:space="preserve">
+    <value>Cannot get the projection’s InternalGeographyUnit, please provide it by overriding the Projection’s GetInternalGeographyUnitCore() method.</value>
+  </data>
+  <data name="IsNotSupportedNowForProjection" xml:space="preserve">
+    <value> is not supported now for projection.</value>
+  </data>
+  <data name="CustomImageSizeIsNull" xml:space="preserve">
+    <value>You already choose resize the image by custom size, please set the custom width and height.</value>
+  </data>
+  <data name="StreamIsNotWritable" xml:space="preserve">
+    <value>Stream is not writable.</value>
+  </data>
+  <data name="TabIndexFileNotExisted" xml:space="preserve">
+    <value>The corresponding idx/ids file cannot be found. Please use the static method TabFeatureSource.BuildIndexFile() or TabFeatureLayer.BuildIndexFile() to build the idx/ids file, which can greatly improve the querying performance. If the RequireIndex Property is set to false, the idx/ids files will not be checked and an internal spatial index will be created instead.</value>
+  </data>
+  <data name="PrinterLayerGeographyUnitDoesNotSupported" xml:space="preserve">
+    <value>Printer layer supports Feet or Meter only</value>
+  </data>
+  <data name="ShapeFileInnerRingNotContainedInOuterRing" xml:space="preserve">
+    <value>An InnerRing doesn't contained in any OuterRing. </value>
+  </data>
+</root>

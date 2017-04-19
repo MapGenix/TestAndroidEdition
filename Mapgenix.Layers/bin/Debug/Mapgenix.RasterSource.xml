@@ -1,0 +1,522 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mapgenix.RasterSource</name>
+    </assembly>
+    <members>
+        <member name="T:Mapgenix.RasterSource.RasterSourceFactory">
+            <summary>Factory method for raster source.</summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.Properties.ExceptionDescription">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.DoubleOutOfRange">
+            <summary>
+              Looks up a localized string similar to The input double value is out of range..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.FileIsNotExist">
+            <summary>
+              Looks up a localized string similar to The file specified does not exist..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.FileIsSupportedByCommonImageSource">
+            <summary>
+              Looks up a localized string similar to This file type is not supported..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.ImageSourceIsNotOpen">
+            <summary>
+              Looks up a localized string similar to The ImageSource is not open.  Please call the Open method before calling this method..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.ParameterIsInvalid">
+            <summary>
+              Looks up a localized string similar to The shape you provided does not pass our simple validation..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.ParameterIsNull">
+            <summary>
+              Looks up a localized string similar to The parameter you supplied may not be null..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.RasterSourceNotContainsProjectionInformation">
+            <summary>
+              Looks up a localized string similar to This RasterSource does not have projection information embedded in it.  If you wish to avoid this exception you can first check the HasProjectionTextProperty..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.UseGeoTiffRasterInstead">
+            <summary>
+              Looks up a localized string similar to The TIFF files(.tif or .tiff) are not supported in GdiPlusRasterSource any longer, please use the GeoTiffRasterSource instead..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsCRSNotSupport">
+            <summary>
+              Looks up a localized string similar to This CRS is not supported in the Wms server: .
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsLayerDoesNotExists">
+            <summary>
+              Looks up a localized string similar to The Wms request LAYERS parameter is missing..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsNoLayerExists">
+            <summary>
+              Looks up a localized string similar to No layers exist in the Service Description..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsRequestParaNotExists">
+            <summary>
+              Looks up a localized string similar to The requested parameter does not exists in this Service Description..
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsServerNotSupportFormat">
+            <summary>
+              Looks up a localized string similar to This image format is not supported in the Wms server: .
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsServerNotSupportLayer">
+            <summary>
+              Looks up a localized string similar to This layer is not supported in the Wms server: .
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WmsServerNotSupportStyle">
+            <summary>
+              Looks up a localized string similar to This style is not supported in the Wms server: .
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.Properties.ExceptionDescription.WorldFileShould6Lines">
+            <summary>
+              Looks up a localized string similar to World file should has 6 lines..
+            </summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.BaseRasterSource">
+            <summary>Abstract class for raster sources.</summary>
+        </member>
+        <member name="E:Mapgenix.RasterSource.BaseRasterSource.OpeningRasterSource">
+            <summary>Raised before the opening of the raster source.</summary>
+            <remarks>Raised after the calling of the Open method, but before the
+            protected OpenCore method.</remarks>
+        </member>
+        <member name="E:Mapgenix.RasterSource.BaseRasterSource.OpenedRasterSource">
+            <summary>Raised after the opening of the raster source.</summary>
+            <remarks>Raised after the calling of the Open method and after the
+            protected OpenCore method is called.</remarks>
+        </member>
+        <member name="E:Mapgenix.RasterSource.BaseRasterSource.ClosingRasterSource">
+            <summary>Raised before the closing of the raster source.</summary>
+            <remarks>Raised after the calling of the Close method, but before the
+            protected CloseCore method.</remarks>
+        </member>
+        <member name="E:Mapgenix.RasterSource.BaseRasterSource.ClosedRasterSource">
+            <summary>Raised after the closing of the raster source.</summary>
+            <remarks>Raised after the calling of the Close method and after the
+            protected CloseCore method.</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.Transparency">
+            <summary>Gets and sets the transparency value to apply to the image.</summary>
+            <value>Transparency value to apply to the image.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.BlueTranslation">
+            <summary>Gets and sets the blue value to apply to the image.</summary>
+            <value>Blue value to apply to the image.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.RedTranslation">
+            <summary>Gets and sets the red value to apply to the image.</summary>
+            <value>Red value to apply to the image.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.GreenTranslation">
+            <summary>Gets and sets the green value to apply to the image.</summary>
+            <value>Green value to apply to the image.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.IsNegative">
+            <summary>Gets and sets whether image is converted to negative (inverse colors).</summary>
+            <value>Whether image is converted to negative (inverse colors).</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.IsGrayscale">
+            <summary>Gets and sets whether the image is converted to grayscale.</summary>
+            <value>Whether the image is converted to grayscale.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.OnOpeningRasterSource(System.EventArgs)">
+            <returns>None</returns>
+            <summary>To raise the OpeningRasterSource event from a derived class.</summary>
+            <param name="e">Event arguments defining the parameters passed to the recipient of the event.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.OnOpenedRasterSource(System.EventArgs)">
+            <returns>None</returns>
+            <summary>To raise the OpenedRasterSource event from a derived class.</summary>
+            <param name="e">Event arguments defining the parameters passed to the recipient of the event.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.OnClosingRasterSource(System.EventArgs)">
+            <returns>None</returns>
+            <summary>To raise the ClosingRasterSource event from a derived class.</summary>
+            <param name="e">Event arguments defining the parameters passed to the
+            recipient of the event.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.OnClosedRasterSource(System.EventArgs)">
+            <returns>None</returns>
+            <summary>To raise the ClosedRasterSource event from a derived class.</summary>
+            <param name="e">Event arguments defining the parameters passed to the
+            recipient of the event.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetWorldFileText">
+            <summary>Returns a string representing the image's world file.</summary>
+            <returns>String representing the image's world file.</returns>
+            <remarks>Wraps the Core version of this method.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GenerateWorldFileText(Mapgenix.Shapes.RectangleShape,System.Int32,System.Int32)">
+            <summary>Returns a string representing the image's world file based on the
+            parameters passed in.</summary>
+            <returns>String representing the image's world file based on the
+            parameters passed in.</returns>
+            <param name="worldExtent">WorldExtent of the image in world coordinates.</param>
+            <param name="imageWidth">Width of the image in screen coordinates.</param>
+            <param name="imageHeight">Height of the image in screen coordinates.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetImageWidth">
+            <summary>Returns the width of the raster image in screen coordinates.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version
+            of the method.</remarks>
+            <returns>Width of the image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetImageWidthCore">
+            <summary>Returns the width of the raster image in screen coordinates.</summary>
+            <returns>Width of the raster image in screen coordinates.</returns>
+            <remarks>Abstract method called from the concrete method GetImageWidth.
+            Override it if you inherit from BaseRasterSource to return the width of the image.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetImageHeight">
+            <summary>Returns the height of the raster image in screen coordinates.</summary>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version
+            of the method.</remarks>
+            <returns>Height of the image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetImageHeightCore">
+            <summary>Returns the height of the raster image in screen coordinates.</summary>
+            <returns>Height of the raster image in screen coordinates.</returns>
+            <remarks>Abstract method called from the concrete method GetImageHeight.
+            Override it if you inherit from BaseRasterSource to return the height of the image.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetHorizontalResolution">
+            <summary>Returns the horizontal resolution of the raster image.</summary>
+            <returns>Horizontal resolution of the raster image.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetVerticalResolution">
+            <summary>Returns the vertical resolution of the raster image.</summary>
+            <returns>Vertical resolution of the raster image.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetBoundingBox">
+            <summary>Returns the bounding box of the raster source.</summary>
+            <returns>Bounding box of the raster source.</returns>
+            <remarks>As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version
+            of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetBoundingBoxCore">
+            <summary>Returns the bounding box of the raster source.</summary>
+            <returns>Bounding box of the raster source.</returns>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.IsOpen">
+            <summary>Returns true if the raster source is open and false if it is not.</summary>
+            <returns>True if the raster source is open and false if it is not.</returns>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.HasProjectionText">
+            <summary>Returns true if the raster source has projection text, false if not.</summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.BaseRasterSource.HasProjectionTextCore">
+            <summary>Returns true if the RasterSource has projection text, false if not.</summary>
+            <remarks>Called from the concrete public property HasProjectionText.</remarks>
+            <returns>None</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetProjectionText">
+            <summary>Returns the projection text in proj4 format.</summary>
+            <returns>Projection text in proj4 format.</returns>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetProjectionTextCore">
+            <summary>Returns the projection text in proj4 format.</summary>
+            <returns>Projection text string.</returns>
+            <remarks>Called from the concrete public method GetProjectionText.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.Open">
+            <summary>Opens the raster source to have it ready to use.</summary>
+            <returns>None</returns>
+            <remarks>Concrete wrapper for the abstract method OpenCore.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.OpenCore">
+            <summary>Opens the raster source to have it ready to use.</summary>
+            <remarks>Protected virtual method called from the concrete public method Open.</remarks>
+            <returns>None</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.Close">
+            <remarks>Concrete wrapper of the abstract method CloseCore.</remarks>
+            <summary>Closes the raster source and releases any resources used.</summary>
+            <returns>None</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.CloseCore">
+            <summary>Opens the raster source to have it ready to use.</summary>
+            <returns>None</returns>
+            <remarks>Called from the concrete public method Close.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetImage(Mapgenix.Shapes.RectangleShape,System.Int32,System.Int32)">
+            <summary>Returns an image based on a world extent, image width and height.</summary>
+            <returns>Image based on a world extent, image width and height.</returns>
+            <param name="worldExtent">World extent to draw.</param>
+            <param name="canvasWidth">Width of the image to draw.</param>
+            <param name="canvasHeight">Height of the image to draw.</param>
+            <remarks>As the core version of this method is abstract, you need to override it when
+            creating your own RasterSource.<br/>
+            	<br/>
+            	<br/>
+            As a concrete public method that wraps a Core method, Mapgenix reserves the right
+            to add events and other logic returned by the Core version of the method.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.BaseRasterSource.GetImageCore(Mapgenix.Shapes.RectangleShape,System.Int32,System.Int32)">
+            <remarks>As the core version of this method is abstract, you need to override it when
+            creating our own raster source.</remarks>
+            <summary>Returns an image based on a world extent, an image width and height.</summary>
+            <returns>Image based on a world extent, an image width and height.</returns>
+            <param name="worldExtent">World extent to draw.</param>
+            <param name="canvasWidth">Width of the image to draw.</param>
+            <param name="canvasHeight">Height of the image to draw.</param>
+        </member>
+        <member name="T:Mapgenix.RasterSource.GdalImageRasterSource">
+            <summary>GDAL image raster source.</summary>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalImageRasterSource.#ctor(System.String)">
+            <summary>Constructor with path of the image raster file.</summary>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalImageRasterSource.GetBoundingBoxCore">
+            <summary>Returns the bounding box of the raster source.</summary>
+            <returns>Bounding box of the raster source.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalImageRasterSource.GetImageCore(Mapgenix.Shapes.RectangleShape,System.Int32,System.Int32)">
+            <summary>Returns an image based on a world extent, an image width and height.</summary>
+            <returns>Image based on a world extent, an image width and height.</returns>
+            <param name="worldExtent">World extent to draw.</param>
+            <param name="canvasWidth">Width of the image to draw.</param>
+            <param name="canvasHeight">Height of the image to draw.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalImageRasterSource.GetImageHeightCore">
+            <summary>Returns the height of the raster image in screen coordinates.</summary>
+            <returns>Height of the raster image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalImageRasterSource.GetImageWidthCore">
+            <summary>Returns the width of the raster image in screen coordinates.</summary>
+            <returns>Height of the width image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalImageRasterSource.OpenCore">
+            <summary>Opens the raster source to have it ready to use.</summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.GdalRasterSource">
+            <summary>GDAL raster source.</summary>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalRasterSource.#ctor(System.String)">
+            <summary>Constructor with path of the raster file.</summary>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalRasterSource.GetBoundingBoxCore">
+            <summary>Returns the bounding box of the raster source.</summary>
+            <returns>Bounding box of the raster source.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalRasterSource.GetImageCore(Mapgenix.Shapes.RectangleShape,System.Int32,System.Int32)">
+            <summary>Returns an image based on a world extent, an image width and height.</summary>
+            <returns>Image based on a world extent, an image width and height.</returns>
+            <param name="worldExtent">World extent to draw.</param>
+            <param name="canvasWidth">Width of the image to draw.</param>
+            <param name="canvasHeight">Height of the image to draw.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalRasterSource.GetImageHeightCore">
+            <summary>Returns the height of the raster image in screen coordinates.</summary>
+            <returns>Height of the raster image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalRasterSource.GetImageWidthCore">
+            <summary>Returns the width of the raster image in screen coordinates.</summary>
+            <returns>Height of the width image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdalRasterSource.OpenCore">
+            <summary>Opens the raster source to have it ready to use.</summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.GdiPlusRasterSource">
+            <summary>
+            Raster source for .NET GDI+ image types such as BMP, TIF, JPG, and PNG.
+            </summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.GdiPlusRasterSource.FileName">
+            <summary>Gets the name of the raster file.</summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.GdiPlusRasterSource.FilePath">
+            <summary>Gets the path of the raster file.</summary>
+        </member>
+        <member name="P:Mapgenix.RasterSource.GdiPlusRasterSource.PathFilename">
+            <summary>Gets or sets the path and name of the raster file.</summary>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.GetImageWidthCore">
+            <summary>Returns the width of the raster image in screen coordinates.</summary>
+            <returns>Width of the raster image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.GetImageHeightCore">
+            <summary>Returns the height of the raster image in screen coordinates.</summary>
+            <returns>Height of the raster image in screen coordinates.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.OpenCore">
+            <summary>Opens the raster source to have it ready to use.</summary>
+            <remarks>Protected virtual method called from the concrete public method Open.</remarks>
+            <returns>None</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.CloseCore">
+            <summary>Opens the raster source to have it ready to use.</summary>
+            <returns>None</returns>
+            <remarks>Called from the concrete public method Close.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.GetImageCore(Mapgenix.Shapes.RectangleShape,System.Int32,System.Int32)">
+            <summary>Returns an image based on a world extent, an image width and height.</summary>
+            <returns>Image based on a world extent, an image width and height.</returns>
+            <param name="worldExtent">World extent to draw.</param>
+            <param name="canvasWidth">Width of the image to draw.</param>
+            <param name="canvasHeight">Height of the image to draw.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.GetBoundingBoxCore">
+            <summary>Returns the bounding box of the raster source.</summary>
+            <returns>Bounding box of the raster source.</returns>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.GetImageRectangle(System.Int32,System.Int32,Mapgenix.Shapes.RectangleShape,Mapgenix.Shapes.RectangleShape)">
+            <summary>Returns image rectangle of the raster source.</summary>
+        </member>
+        <member name="M:Mapgenix.RasterSource.GdiPlusRasterSource.StretchImage(System.Drawing.Bitmap,System.Drawing.Rectangle,System.Int32,System.Int32)">
+            <summary>Returns the stretched image of the raster source.</summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.ImageRasterHelper">
+            <summary>Static class for operations on image rasters.</summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.TiledWmsRasterSource">
+            <summary>Raster source for OGC Tiled WMS.</summary>
+        </member>
+        <member name="T:Mapgenix.RasterSource.WmsRasterSource">
+            <summary>Raster source for OGC WMS (Web Map Service).</summary>
+            <remarks>A Web Map Service (WMS) produces spatially referenced image data in formats such as PNG or JPEG.</remarks>
+        </member>
+        <member name="T:Mapgenix.RasterSource.ContactAddress">
+            <summary> 
+            Information about a contact address for WMS. 
+            </summary> 
+        </member>
+        <member name="T:Mapgenix.RasterSource.ContactPerson">
+            <summary> 
+            Information about a contact person for WMS.
+            </summary> 
+        </member>
+        <member name="T:Mapgenix.RasterSource.ServerLayer">
+            <summary> 
+            Represents an object encapsulating a WMS Layer.
+            </summary> 
+        </member>
+        <member name="T:Mapgenix.RasterSource.StyleLegend">
+            <summary> 
+            Structure for Online Resource. 
+            </summary> 
+        </member>
+        <member name="T:Mapgenix.RasterSource.WmsOnlineResource">
+            <summary> 
+            Structure for Online Resource. 
+            </summary> 
+        </member>
+        <member name="T:Mapgenix.RasterSource.WorldFile">
+            <summary>Values for a world file.</summary>
+            <remarks>A world file is an attribute file associated with a corresponding image file.</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.WorldFile.#ctor">
+            <summary>Default constructor of WorldFile class.</summary>
+            <returns>None</returns>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.WorldFile.#ctor(System.String)">
+            <summary>Constructor passsing a world file text.</summary>
+            <remarks>A world file text is typically read from a world file.</remarks>
+            <param name="worldFileText">World file text containing the world file attribute information.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.WorldFile.#ctor(Mapgenix.Shapes.RectangleShape,System.Single,System.Single)">
+            <summary>Constructor passing the world extent of the image, the height and the width of the image.</summary>
+            <param name="worldExtent">World Coordinate Extent of the image.</param>
+            <param name="imageWidth">Image width of the image.</param>
+            <param name="imageHeight">Image height of the image.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.WorldFile.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double)">
+            <summary>Constructor passing 6 attributes in double associated with the corresponding image file.</summary>
+            <returns>None</returns>
+            <param name="horizontalResolution">Size of pixels in the x direction.</param>
+            <param name="rotationRow">Rotation term for row.</param>
+            <param name="rotationColumn">Rotation term for column.</param>
+            <param name="verticalResolution">Size of pixels in the y direction.</param>
+            <param name="upperLeftX">X coordinate of the center of the upper-leftmost pixel in map units.</param>
+            <param name="upperLeftY">Y coordinate of the center of the upper-leftmost pixel in map units.</param>
+        </member>
+        <member name="M:Mapgenix.RasterSource.WorldFile.#ctor(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
+            <summary>Constructor passing 6 attributes in float associated with the corresponding image file.</summary>
+            <returns>None</returns>
+            <param name="horizontalResolution">Size of pixels in the x direction.</param>
+            <param name="rotationRow">Rotation term for row.</param>
+            <param name="rotationColumn">Rotation term for column.</param>
+            <param name="verticalResolution">Size of pixels in the y direction.</param>
+            <param name="upperLeftX">X coordinate of the center of the upper-leftmost pixel in map units.</param>
+            <param name="upperLeftY">Y coordinate of the center of the upper-leftmost pixel in map units.</param>
+        </member>
+        <member name="P:Mapgenix.RasterSource.WorldFile.HorizontalResolution">
+            <summary>Gets the horizontal resolution from the world file.</summary>
+            <value>Horizontal resolution from the world file.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.WorldFile.RotationRow">
+            <summary>Gets the rotation in row from the world file.</summary>
+            <value>Rotation in row from the world file.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.WorldFile.RotationColumn">
+            <summary>Gets the rotation in column from the world file.</summary>
+            <value>Rotation in column from the world file.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.WorldFile.VerticalResolution">
+            <summary>Gets the vertical resolution from the world file.</summary>
+            <value>Vertical resolution from the world file.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.WorldFile.UpperLeftX">
+            <summary>Gets the upper left Y coordinate from the world file.</summary>
+            <value>Upper left Y coordinate from the world file.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="P:Mapgenix.RasterSource.WorldFile.UpperLeftY">
+            <summary>Gets the upper left X coordinate from the world file.</summary>
+            <value>Upper left X coordinate from the world file.</value>
+            <remarks>None</remarks>
+        </member>
+        <member name="M:Mapgenix.RasterSource.WorldFile.GetBoundingBox(System.Single,System.Single)">
+            <summary>Gets the bounding box of the raster image from the world file.</summary>
+        </member>
+    </members>
+</doc>

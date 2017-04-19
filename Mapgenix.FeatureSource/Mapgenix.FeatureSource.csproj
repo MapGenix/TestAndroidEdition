@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CFFFD275-5F84-4DFA-B41C-451D0FF02ECE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapgenix.FeatureSource</RootNamespace>
+    <AssemblyName>Mapgenix.FeatureSource</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>false</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\Mapgenix.FeatureSource.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Mapgenix.FeatureSource.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'francois|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\francois\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'val|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\val\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KayVeramende|AnyCPU'">
+    <OutputPath>bin\KayVeramende\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Raul|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Raul\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <!--<Reference Include="Ciloci.Flee, Version=0.9.26.0, Culture=neutral, PublicKeyToken=c8526a021ef298ed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Trove.FLEE.0.9.26.0\lib\net20\Ciloci.Flee.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+	<Reference Include="DotSpatial.Data, Version=1.7.0.0, Culture=neutral, PublicKeyToken=c29dbf30e059ca9d, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotSpatial.Data.1.7\lib\net40-Client\DotSpatial.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Mono, Version=1.7.0.0, Culture=neutral, PublicKeyToken=425ba4de41127026, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotSpatial.Mono.1.7\lib\net40-Client\DotSpatial.Mono.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Projections, Version=1.7.0.0, Culture=neutral, PublicKeyToken=272632bddd08a38b, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotSpatial.Projections.1.7\lib\net40-Client\DotSpatial.Projections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Serialization, Version=1.7.0.0, Culture=neutral, PublicKeyToken=441f200f827611e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotSpatial.Serialization.1.7\lib\net40-Client\DotSpatial.Serialization.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotSpatial.Topology, Version=1.7.0.0, Culture=neutral, PublicKeyToken=a66b5e9434ca3671, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotSpatial.Topology.1.7\lib\net40-Client\DotSpatial.Topology.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="gdalconst_csharp, Version=1.0.4704.32537, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\gdalconst_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="gdal_csharp, Version=1.0.4704.32537, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\gdal_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoAPI.1.7.4\lib\net45\GeoAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.9.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>..\packages\LumenWorksCsvReader.3.9\lib\net20\LumenWorks.Framework.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.7\lib\net45\Mono.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\net45\NetTopologySuite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.PostGis, Version=1.13.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.PostGis.1.13.2\lib\net403-client\NetTopologySuite.IO.PostGis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>-->
+    <Reference Include="Mapgenix.Gdal.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Gdal.Data\bin\Debug\Mapgenix.Gdal.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapgenix.Index, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Index\bin\Debug\Mapgenix.Index.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ogr_csharp, Version=1.0.4704.32537, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\ogr_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <!--<Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.1.24160719\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.EntityFramework.12.1.2400\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="osr_csharp, Version=1.0.4704.32536, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\osr_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PowerCollections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2573bf8a1bdddcd5, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\net45\PowerCollections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>-->
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <!--<Reference Include="System.Data.SQLite, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.99.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.99.0\lib\net45\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.99.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.99.0\lib\net45\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>-->
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <!--<Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+      <Private>True</Private>
+    </Reference>-->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArcGISServerRESTFeatureSource.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTFeature.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTGeometry.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTLayerExtent.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTFeaturesId.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTLayerFeatures.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTLayerField.cs" />
+    <Compile Include="ArcGISServerREST\ArcGISServerRESTLayerInfo.cs" />
+    <Compile Include="Events\ColumnFetchEventArgs.cs" />
+    <Compile Include="Events\CommitTransactionEventArgs.cs" />
+    <Compile Include="Events\ShapeFileIndexEventArgs.cs" />
+    <Compile Include="Events\SqlEventArgs.cs" />
+    <Compile Include="Events\TransactionBuffer.cs" />
+    <Compile Include="Events\WfsRequestEventArgs.cs" />
+    <Compile Include="Events\WfsResponseEventArgs.cs" />
+    <Compile Include="Factories\FeatureSourceFactory.cs" />
+    <Compile Include="GeoColumns.cs" />
+    <Compile Include="GeoData.cs" />
+    <Compile Include="OgrWrapper.cs" />
+    <Compile Include="TextFileSettings.cs" />
+    <Compile Include="Tools\GeoDbf\DbfColumn.cs" />
+    <Compile Include="Tools\GeoDbf\DbfFieldInfo.cs" />
+    <Compile Include="Tools\GeoDbf\DbfReadWriteMode.cs" />
+    <Compile Include="Tools\GeoDbf\FeatureSourceColumn.cs" />
+    <Compile Include="Grid\CalculateGridCellStateInfo.cs" />
+    <Compile Include="Grid\CellValueCalculator.cs" />
+    <Compile Include="Grid\ElevationValue.cs" />
+    <Compile Include="Grid\FunctionThrough.cs" />
+    <Compile Include="Grid\GridCell.cs" />
+    <Compile Include="Grid\GridDefinition.cs" />
+    <Compile Include="Grid\BaseGridInterpolationModel.cs" />
+    <Compile Include="Grid\IsoRectangle.cs" />
+    <Compile Include="Grid\RectangleEnter.cs" />
+    <Compile Include="Grid\IsoRectangleIndex.cs" />
+    <Compile Include="Grid\RectangleOuter.cs" />
+    <Compile Include="Grid\TrackDiagonal.cs" />
+    <Compile Include="Grid\TrackLine.cs" />
+    <Compile Include="Grid\ValueRectangle.cs" />
+    <Compile Include="ShapeFileFeatureSourceHelper.cs" />
+    <Compile Include="ShapeFile\BoundingBox.cs" />
+    <Compile Include="ShapeFile\ShapeFile.cs" />
+    <Compile Include="ShapeFile\ShapeFileHeader.cs" />
+    <Compile Include="ShapeFile\ShapeFileIndex.cs" />
+    <Compile Include="Tools\EditTools.cs" />
+    <Compile Include="BaseFeatureSource.cs" />
+    <Compile Include="Filters\ColumnFilter.cs" />
+    <Compile Include="Tools\GeoDbf.cs" />
+    <Compile Include="GridFeatureSource.cs" />
+    <Compile Include="InMemoryFeatureSource.cs" />
+    <Compile Include="MultipleFeatureSource.cs" />
+    <Compile Include="MultipleShapeFileFeatureSource.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ExceptionDescription.Designer.cs">
+      <DependentUpon>ExceptionDescription.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\MitabExceptionDescription.Designer.cs">
+      <DependentUpon>MitabExceptionDescription.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Tools\QueryTools.cs" />
+    <Compile Include="ShapeFileFeatureSource.cs" />
+    <Compile Include="TransactionResult .cs" />
+    <Compile Include="Types\BuildIndexMode.cs" />
+    <Compile Include="Types\DbfColumnType.cs" />
+    <Compile Include="Types\ExecutingSqlStatementType.cs" />
+    <Compile Include="Types\OverwriteMode.cs" />
+    <Compile Include="Types\QueryType.cs" />
+    <Compile Include="Types\ReadWriteMode.cs" />
+    <Compile Include="Types\ShapeFileType.cs" />
+    <Compile Include="Types\SpatialDataType.cs" />
+    <Compile Include="Types\TransactionResultStatus.cs" />
+    <Compile Include="Types\WfsNameSpace.cs" />
+    <Compile Include="Validators.cs" />
+    <Compile Include="WfsFeatureSource.cs" />
+    <Compile Include="WfsFeatureSourceHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\ExceptionDescription.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionDescription.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\MitabExceptionDescription.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MitabExceptionDescription.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mapgenix.Canvas\Mapgenix.Canvas.csproj">
+      <Project>{ac2e86d2-21a0-4036-bf5f-a3cb2d756a64}</Project>
+      <Name>Mapgenix.Canvas</Name>
+    </ProjectReference>
+    <!--<ProjectReference Include="..\..\GSuite1\Mapgenix.Gdal.Data\Mapgenix.Gdal.Data.csproj">
+      <Project>{51c6e16e-920e-4d36-b41e-d48abef837e7}</Project>
+      <Name>Mapgenix.Gdal.Data</Name>
+    </ProjectReference>-->
+    <ProjectReference Include="..\Mapgenix.Shapes\Mapgenix.Shapes.csproj">
+      <Project>{2d313724-7588-4fc4-9715-e039ab38453c}</Project>
+      <Name>Mapgenix.Shapes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Styles\Mapgenix.Styles.csproj">
+      <Project>{d65abe3c-788b-45e0-88ab-c015eb77e7c0}</Project>
+      <Name>Mapgenix.Styles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Utils\Mapgenix.Utils.csproj">
+      <Project>{e2ce16b4-bb3b-41cf-a6bb-633fad90a655}</Project>
+      <Name>Mapgenix.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FeatureSourceSql\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--<Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\packages\Mapgenix.Gdal.Extension.1.9.2.1\build\Mapgenix.Gdal.Extension.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Mapgenix.Gdal.Extension.1.9.2.1\build\Mapgenix.Gdal.Extension.targets'))" />
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets'))" />
+  </Target>
+  <Import Project="..\packages\Mapgenix.Gdal.Extension.1.9.2.1\build\Mapgenix.Gdal.Extension.targets" Condition="Exists('..\packages\Mapgenix.Gdal.Extension.1.9.2.1\build\Mapgenix.Gdal.Extension.targets')" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.99.0\build\net45\System.Data.SQLite.Core.targets')" />
+  -->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

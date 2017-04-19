@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1A0BA404-AB14-461E-BF24-E6826B5D7021}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mapgenix.Layers</RootNamespace>
+    <AssemblyName>Mapgenix.Layers</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>false</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <DocumentationFile>bin\Debug\Mapgenix.Layers.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Mapgenix.Layers.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'francois|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\francois\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'val|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\val\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'KayVeramende|AnyCPU'">
+    <OutputPath>bin\KayVeramende\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Raul|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Raul\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ciloci.Flee, Version=0.9.26.0, Culture=neutral, PublicKeyToken=c8526a021ef298ed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Trove.FLEE.0.9.26.0\lib\net20\Ciloci.Flee.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="gdalconst_csharp, Version=1.0.4704.32537, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\gdalconst_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="gdal_csharp, Version=1.0.4704.32537, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\gdal_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GeoAPI, Version=1.7.4.0, Culture=neutral, PublicKeyToken=a1a0da7def465678, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoAPI.1.7.4\lib\net45\GeoAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="LumenWorks.Framework.IO, Version=3.9.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>..\packages\LumenWorksCsvReader.3.9\lib\net20\LumenWorks.Framework.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\Npgsql.2.2.5\lib\net45\Mono.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite, Version=1.14.0.0, Culture=neutral, PublicKeyToken=f580a05016ebada1, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\net45\NetTopologySuite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetTopologySuite.IO.PostGis, Version=1.13.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.IO.PostGis.1.13.2\lib\net403-client\NetTopologySuite.IO.PostGis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ogr_csharp, Version=1.0.4704.32537, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\ogr_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="osr_csharp, Version=1.0.4704.32536, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mapgenix.Gdal.Extension.1.9.2.1\lib\net40\osr_csharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PowerCollections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2573bf8a1bdddcd5, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetTopologySuite.1.14\lib\net45\PowerCollections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.97.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.97.0\lib\net45\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="ZedGraph, Version=5.1.7.430, Culture=neutral, PublicKeyToken=02a83cbd123fcd60, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZedGraph.5.1.7\lib\net35-Client\ZedGraph.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BackgroundLayer.cs" />
+    <Compile Include="DrawHelper.cs" />
+    <Compile Include="Events\FeaturesEventArgs.cs" />
+    <Compile Include="GeoLayers\Adornment\AdornmentDrawHelper.cs" />
+    <Compile Include="GeoLayers\ExtremesLatLong.cs" />
+    <Compile Include="GeoLayers\Features\ArcGISRestFeatureLayer.cs" />
+    <Compile Include="GeoLayers\Iso\InverseDistanceWeightedInterpolationModel.cs" />
+    <Compile Include="GeoLayers\OpenStreetMapLayerTileInfo.cs" />
+    <Compile Include="Factories\AdornmentLayerFactory.cs" />
+    <Compile Include="Factories\FeatureLayerFactory.cs" />
+    <Compile Include="Factories\LayerFactory.cs" />
+    <Compile Include="Factories\WebLayerFactory.cs" />
+    <Compile Include="GeoLayers\Adornment\BaseAdornmentLayer.cs" />
+    <Compile Include="GeoLayers\Events\AdornmentLayerEventArgs.cs" />
+    <Compile Include="GeoLayers\Events\AdornmentLayersEventArgs.cs" />
+    <Compile Include="GeoLayers\Features\BaseFeatureLayer.cs" />
+    <Compile Include="GeoLayers\ScaleBar\FeetValues.cs" />
+    <Compile Include="GeoLayers\ScaleBar\KiloMetersValues.cs" />
+    <Compile Include="GeoLayers\ScaleBar\MetersValues.cs" />
+    <Compile Include="GeoLayers\ScaleBar\MilesValues.cs" />
+    <Compile Include="GeoLayers\ScaleBar\UnitSystem.cs" />
+    <Compile Include="GeoLayers\Web\BingMapsLayer.cs" />
+    <Compile Include="GeoLayers\Web\Bing\BingMapRequestBuilder.cs" />
+    <Compile Include="GeoLayers\Web\Bing\BingMapsLayerImageCache.cs" />
+    <Compile Include="GeoLayers\Web\Bing\BingMapsMapType.cs" />
+    <Compile Include="GeoLayers\Web\Bing\BingMapsTileMode.cs" />
+    <Compile Include="GeoLayers\Web\GoogleMapsLayer.cs" />
+    <Compile Include="GeoLayers\Adornment\GraticuleAdornmentLayer.cs" />
+    <Compile Include="GeoLayers\BaseLayer.cs" />
+    <Compile Include="GeoLayers\Events\LayerEventArgs.cs" />
+    <Compile Include="GeoLayers\Events\LayersEventArgs.cs" />
+    <Compile Include="GeoLayers\Adornment\LegendAdornmentLayer.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapAdapter.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapsLayerImageCache.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapsLayer\CreatingRequestGoogleMapsLayerEventArgs.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapsLayer\GoogleMapsLayerTileInfo.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapsLayer\GoogleMapsMapType.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapsLayer\GoogleMapsPictureFormat.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleMapsLayer\GoogleMapsTileMode.cs" />
+    <Compile Include="GeoLayers\Web\Google\Helper\ITileHelper.cs" />
+    <Compile Include="GeoLayers\Web\Google\Helper\MultiTileHelper.cs" />
+    <Compile Include="GeoLayers\Web\Google\Helper\ProjectionHelper.cs" />
+    <Compile Include="GeoLayers\Web\Google\Helper\SingleTileHelper.cs" />
+    <Compile Include="GeoLayers\Web\Google\GoogleRequestBuilder.cs" />
+    <Compile Include="GeoLayers\Web\HERE\HEREMapsLayerImageCache.cs" />
+    <Compile Include="GeoLayers\Web\HERE\HEREMapsTileMode.cs" />
+    <Compile Include="GeoLayers\Web\OpenStreet\OpenStreetMapLayerImageCache.cs" />
+    <Compile Include="GeoLayers\Web\OpenStreet\OpenStreetRequestBuilder.cs" />
+    <Compile Include="GeoLayers\Web\OpenStreet\OpenStreetProjectionHelper.cs" />
+    <Compile Include="GeoLayers\Web\WmsLayer.cs" />
+    <Compile Include="GeoLayers\Web\ResponseProcessor.cs" />
+    <Compile Include="GeoLayers\Web\OpenStreetMapLayer.cs" />
+    <Compile Include="GeoLayers\Web\HERE\HEREMapsMapType.cs" />
+    <Compile Include="GeoLayers\Web\Wms\WmsLayerImageCache.cs" />
+    <Compile Include="GeoLayers\Web\Wms\WmsLayerTileInfo.cs" />
+    <Compile Include="GeoLayers\Web\Wms\WmsRequestBuilder.cs" />
+    <Compile Include="GeoLayers\Web\Wms\WmsTileMode.cs" />
+    <Compile Include="Types\LabelTextJustification.cs" />
+    <Compile Include="GeoLayers\Web\GeometryHelper.cs" />
+    <Compile Include="GeoLayers\Web\RectangleShapeExtension.cs" />
+    <Compile Include="GeoLayers\Web\HEREMapsLayer.cs" />
+    <Compile Include="GeoLayers\Features\GridFeatureLayer.cs" />
+    <Compile Include="GeoLayers\Web\HERE\HEREMapsRequestBuilder.cs" />
+    <Compile Include="GeoLayers\Web\HERE\HEREMapsAdapter.cs" />
+    <Compile Include="GeoLayers\Web\ZoomLevelHelper.cs" />
+    <Compile Include="GeoLayers\HEREMapsLayerTileInfo.cs" />
+    <Compile Include="GraticuleLabel.cs" />
+    <Compile Include="HeatLayer.cs" />
+    <Compile Include="GeoLayers\Features\InMemoryFeatureLayer.cs" />
+    <Compile Include="GeoLayers\Adornment\LogoAdornmentLayer.cs" />
+    <Compile Include="Helpers\DataTableHelper.cs" />
+    <Compile Include="Helpers\FeatureHelper.cs" />
+    <Compile Include="Helpers\LevelLines.cs" />
+    <Compile Include="MapEngine.cs" />
+    <Compile Include="GeoLayers\Features\MultipleFeatureLayer.cs" />
+    <Compile Include="GeoLayers\Features\MultipleShapeFileFeatureLayer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ExceptionDescription.Designer.cs">
+      <DependentUpon>ExceptionDescription.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GeoLayers\Adornment\RestrictionAdornmentLayer.cs" />
+    <Compile Include="RestrictionLayer.cs" />
+    <Compile Include="GeoLayers\Adornment\ScaleLineAdornmentLayer.cs" />
+    <Compile Include="GeoLayers\Features\ShapeFileFeatureLayer.cs" />
+    <Compile Include="Types\AdornmentLocation.cs" />
+    <Compile Include="Types\DrawingExceptionMode.cs" />
+    <Compile Include="Types\IsoLineType.cs" />
+    <Compile Include="Types\LineType.cs" />
+    <Compile Include="Types\RestrictionMode.cs" />
+    <Compile Include="Types\RestrictionStyle.cs" />
+    <Compile Include="Types\WrappingMode.cs" />
+    <Compile Include="Validators.cs" />
+    <Compile Include="GeoLayers\Features\WfsFeatureLayer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\ExceptionDescription.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExceptionDescription.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DrawExceptionRedCross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\MapgenixLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="License-LGPL.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mapgenix.Canvas\Mapgenix.Canvas.csproj">
+      <Project>{ac2e86d2-21a0-4036-bf5f-a3cb2d756a64}</Project>
+      <Name>Mapgenix.Canvas</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.FeatureSource\Mapgenix.FeatureSource.csproj">
+      <Project>{cfffd275-5f84-4dfa-b41c-451d0ff02ece}</Project>
+      <Name>Mapgenix.FeatureSource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Shapes\Mapgenix.Shapes.csproj">
+      <Project>{2d313724-7588-4fc4-9715-e039ab38453c}</Project>
+      <Name>Mapgenix.Shapes</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Styles\Mapgenix.Styles.csproj">
+      <Project>{d65abe3c-788b-45e0-88ab-c015eb77e7c0}</Project>
+      <Name>Mapgenix.Styles</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapgenix.Utils\Mapgenix.Utils.csproj">
+      <Project>{e2ce16b4-bb3b-41cf-a6bb-633fad90a655}</Project>
+      <Name>Mapgenix.Utils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GeoLayers\Raster\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -11,6 +11,7 @@ using Mapgenix.Layers;
 using Android.Content;
 using Android.Graphics;
 using NativeAndroid = Android;
+using Android.Widget;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -200,38 +201,18 @@ namespace Mapgenix.GSuite.Android
         protected override void DrawCore(RectangleShape targetExtent, OverlayRefreshType overlayRefreshType)
         {
             Validators.CheckParameterIsNotNull(targetExtent, "targetExtent");
-          
-            if (overlayRefreshType == OverlayRefreshType.Pan)
+
+            if (OverlayCanvas.ChildCount == 0)
             {
-                if (PreviousExtent != null)
-                {
-                    double resolution = MapArguments.CurrentResolution;
-                    double worldOffsetX = targetExtent.UpperLeftPoint.X - PreviousExtent.UpperLeftPoint.X;
-                    double worldOffsetY = targetExtent.UpperLeftPoint.Y - PreviousExtent.UpperLeftPoint.Y;
-                    double screenOffsetX = worldOffsetX / resolution;
-                    double screenOffsetY = worldOffsetY / resolution;
-
-                    /*_translateTransform.X -= screenOffsetX;
-                    _translateTransform.Y += screenOffsetY;*/
-                }
+                OverlayCanvas.AddView(_tile);
             }
-            else
-            {
-                /*_translateTransform.X = 0;
-                _translateTransform.Y = 0;*/
 
-                if (OverlayCanvas.ChildCount == 0)
-                {
-                    OverlayCanvas.AddView(_tile);
-                }
+            _tile.TargetExtent = targetExtent;
 
-                _tile.TargetExtent = targetExtent;
-
-                LayoutParams p = new LayoutParams(Convert.ToInt32(MapArguments.ActualWidth), Convert.ToInt32(MapArguments.ActualHeight));
-                _tile.LayoutParameters = p;
-                _tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
-                DrawTile(_tile);
-            }
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(Convert.ToInt32(MapArguments.ActualWidth), Convert.ToInt32(MapArguments.ActualHeight));
+            _tile.LayoutParameters = p;
+            _tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
+            DrawTile(_tile);
         }
 
         protected override void Dispose(bool disposing)
@@ -243,32 +224,18 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        private void DrawTile(LayerTile layerTile)
+        private void DrawTile(LayerTile tile)
         {
             int tileSw = (int)MapArguments.ActualWidth;
             int tileSh = (int)MapArguments.ActualHeight;
-
-            object nativeImage = null;
-
-            if (RenderMode == RenderMode.DrawingVisual)
+            using (Bitmap nativeImage = Bitmap.CreateBitmap(tileSw, tileSh, Bitmap.Config.Argb8888))
             {
-                /*DrawingVisualGeoCanvas geoCanvas = new DrawingVisualGeoCanvas();
-                nativeImage = new RenderTargetBitmap(tileSw, tileSh, geoCanvas.Dpi, geoCanvas.Dpi, PixelFormats.Pbgra32);
-                geoCanvas.BeginDrawing(nativeImage, layerTile.TargetExtent, MapArguments.MapUnit);
-                DrawTileCore(geoCanvas);
-                geoCanvas.EndDrawing();
-                layerTile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));*/
-            }
-            else
-            {
-                nativeImage = Bitmap.CreateBitmap(tileSw, tileSh, Bitmap.Config.Argb8888);
                 GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context);
-                geoCanvas.BeginDrawing(nativeImage, layerTile.TargetExtent, MapArguments.MapUnit);
+                geoCanvas.BeginDrawing(nativeImage, tile.TargetExtent, MapArguments.MapUnit);
                 DrawTileCore(geoCanvas);
                 geoCanvas.EndDrawing();
-                layerTile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
+                tile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
             }
-
         }
 
         protected virtual void DrawTileCore(GdiPlusAndroidGeoCanvas geoCanvas)
@@ -566,9 +533,9 @@ namespace Mapgenix.GSuite.Android
             return returnValues;
         }
 
-        /*protected override InteractiveResult MouseDownCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult MotionDownCore(MapMotionEventArgs motionArgs)
         {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
 
             bool addSucceed = false;
             bool findSucceed = false;
@@ -576,7 +543,7 @@ namespace Mapgenix.GSuite.Android
 
             if (!EditShapesLayer.IsEmpty())
             {
-                if (SetSelectedControlPoint(new PointShape(interactionArguments.WorldX, interactionArguments.WorldY), interactionArguments.SearchingTolerance))
+                if (SetSelectedControlPoint(new PointShape(motionArgs.WorldX, motionArgs.WorldY), motionArgs.SearchingTolerance))
                 {
                     drawSelected = true;
                 }
@@ -588,8 +555,8 @@ namespace Mapgenix.GSuite.Android
             }
             else
             {
-                addSucceed = this.AddVertex(new PointShape(interactionArguments.WorldX, interactionArguments.WorldY), interactionArguments.SearchingTolerance);
-                if (SetSelectedControlPoint(new PointShape(interactionArguments.WorldX, interactionArguments.WorldY), interactionArguments.SearchingTolerance))
+                addSucceed = this.AddVertex(new PointShape(motionArgs.WorldX, motionArgs.WorldY), motionArgs.SearchingTolerance);
+                if (SetSelectedControlPoint(new PointShape(motionArgs.WorldX, motionArgs.WorldY), motionArgs.SearchingTolerance))
                 {
                     drawSelected = true;
                 }
@@ -606,11 +573,11 @@ namespace Mapgenix.GSuite.Android
             }
 
             return result;
-        }*/
+        }
 
-        /*protected override InteractiveResult MouseMoveCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult MotionMoveCore(MapMotionEventArgs motionArgs)
         {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
 
             bool editSucceed = false;
 
@@ -623,16 +590,16 @@ namespace Mapgenix.GSuite.Android
                 switch (_controlPointType)
                 {
                     case ControlPointType.Drag:
-                        editedFeature = DragFeature(_originalEditingFeature, sourceControlPoint, new PointShape(interactionArguments.WorldX, interactionArguments.WorldY));
+                        editedFeature = DragFeature(_originalEditingFeature, sourceControlPoint, new PointShape(motionArgs.WorldX, motionArgs.WorldY));
                         break;
                     case ControlPointType.Rotate:
-                        editedFeature = RotateFeature(_originalEditingFeature, sourceControlPoint, new PointShape(interactionArguments.WorldX, interactionArguments.WorldY));
+                        editedFeature = RotateFeature(_originalEditingFeature, sourceControlPoint, new PointShape(motionArgs.WorldX, motionArgs.WorldY));
                         break;
                     case ControlPointType.Resize:
-                        editedFeature = ResizeFeature(_originalEditingFeature, sourceControlPoint, new PointShape(interactionArguments.WorldX, interactionArguments.WorldY));
+                        editedFeature = ResizeFeature(_originalEditingFeature, sourceControlPoint, new PointShape(motionArgs.WorldX, motionArgs.WorldY));
                         break;
                     case ControlPointType.Vertex:
-                        editedFeature = MoveVertex(_originalEditingFeature, sourceControlPoint, new PointShape(interactionArguments.WorldX, interactionArguments.WorldY));
+                        editedFeature = MoveVertex(_originalEditingFeature, sourceControlPoint, new PointShape(motionArgs.WorldX, motionArgs.WorldY));
                         break;
                     case ControlPointType.None:
                     default:
@@ -672,17 +639,17 @@ namespace Mapgenix.GSuite.Android
             }
         
             return result;
-        }*/
+        }
 
-        /*protected override InteractiveResult MouseUpCore(InteractionArguments interactionArguments)
+        protected override InteractiveResult MotionUpCore(MapMotionEventArgs motionArgs)
         {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
 
             bool editSucceed = false;
 
             if (_controlPointType != ControlPointType.None)
             {
-                EndEditing(new PointShape(interactionArguments.WorldX, interactionArguments.WorldY));
+                EndEditing(new PointShape(motionArgs.WorldX, motionArgs.WorldY));
                 editSucceed = true;
             }
 
@@ -697,7 +664,7 @@ namespace Mapgenix.GSuite.Android
             return result;
         }
 
-        protected override InteractiveResult MouseClickCore(InteractionArguments interactionArguments)
+        /*protected override InteractiveResult MouseClickCore(InteractionArguments interactionArguments)
         {
             Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
 
@@ -1729,23 +1696,26 @@ namespace Mapgenix.GSuite.Android
 
         private void SetDefaultStyle()
         {
-            /*_editShapesLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Red), 10, GeoColor.FromArgb(100, 0, 0, 255), 2);
+            _editShapesLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Red), 10, GeoColor.FromArgb(100, 0, 0, 255), 2);
             _editShapesLayer.ZoomLevelSet.ZoomLevel01.DefaultLineStyle = LineStyles.CreateSimpleLineStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Red), 3, true);
             _editShapesLayer.ZoomLevelSet.ZoomLevel01.DefaultAreaStyle = AreaStyles.CreateSimpleAreaStyle(GeoColor.FromArgb(150, GeoColor.StandardColors.Red), GeoColor.StandardColors.Gray, 3);
             _editShapesLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
             MemoryStream draggingNode = new MemoryStream();
-            Resources.Shape_move.Save(draggingNode, ImageFormat.Png);
+            Bitmap dragginImage = BitmapFactory.DecodeResource(Resources, global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_move);
+            dragginImage.Compress(Bitmap.CompressFormat.Png, 0, draggingNode);
             _dragControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(draggingNode)); 
             _dragControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
             MemoryStream rotatingNode = new MemoryStream();
-            Resources.Shape_rotate.Save(rotatingNode, ImageFormat.Png);
+            Bitmap rotateImage = BitmapFactory.DecodeResource(Resources, global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_rotate);
+            rotateImage.Compress(Bitmap.CompressFormat.Png, 0, rotatingNode);
             _rotateControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(rotatingNode));
             _rotateControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
             MemoryStream resizingNode = new MemoryStream();
-            Resources.Shape_resize.Save(resizingNode, ImageFormat.Png);
+            Bitmap resizeImage = BitmapFactory.DecodeResource(Resources, global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_resize);
+            resizeImage.Compress(Bitmap.CompressFormat.Png, 0, resizingNode);
             _resizeControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(resizingNode));
             _resizeControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
@@ -1755,7 +1725,7 @@ namespace Mapgenix.GSuite.Android
             valueStyle.ValueItems.Add(new ValueItem(string.Empty, PointStyles.CreateSimpleCircleStyle(GeoColor.StandardColors.White, 9, GeoColor.StandardColors.Black)));
             valueStyle.ValueItems.Add(new ValueItem(ExistingFeatureColumnValue, selectedPointStyle));
             _existingControlPointsLayer.ZoomLevelSet.ZoomLevel01.CustomStyles.Add(valueStyle);
-            _existingControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;*/
+            _existingControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
         }
 
         private void ShowAllControlPointLayers(bool visible)
@@ -1794,7 +1764,7 @@ namespace Mapgenix.GSuite.Android
         }
 
   
-        private static GeoImage GetGeoImageFromResource(Image image, ImageFormat format)
+        /*private static GeoImage GetGeoImageFromResource(Image image, ImageFormat format)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -1802,6 +1772,6 @@ namespace Mapgenix.GSuite.Android
                 return new GeoImage(stream);
             }
                 
-        }
+        }*/
     }
 }

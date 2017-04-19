@@ -1,0 +1,13 @@
+<project outputDir=".\Confused" baseDir="." xmlns="http://confuser.codeplex.com">
+  <module path=".\bin\Release\Mapgenix.FeatureSource.dll">
+    <rule pattern="true" inherit="false">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="constants" />
+      <protection id="ctrl flow" />
+      <protection id="anti dump" />
+      <protection id="rename" />
+      <protection id="ref proxy" />
+    </rule>
+  </module>
+</project>

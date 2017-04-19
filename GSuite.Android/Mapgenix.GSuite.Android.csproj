@@ -39,6 +39,7 @@
       <HintPath>..\..\GSuite1\Mapgenix.Index\bin\Debug\Mapgenix.Index.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
@@ -51,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\System.Drawing.dll</HintPath>
     </Reference>
@@ -111,6 +113,7 @@
     <Compile Include="Overlays\BingMapsOverlay.cs" />
     <Compile Include="Overlays\GoogleMapsOverlay.cs" />
     <Compile Include="Overlays\HEREMapsOverlay.cs" />
+    <Compile Include="Overlays\InteractiveOverlay\EditInteractiveOverlay.cs" />
     <Compile Include="Overlays\InteractiveOverlay\ExtentInteractiveOverlay.cs" />
     <Compile Include="Overlays\InteractiveOverlay\InteractiveResult.cs" />
     <Compile Include="Overlays\InteractiveOverlay\KeyEventInteractionArguments.cs" />
@@ -179,6 +182,9 @@
     <AndroidResource Include="Resources\drawable\minus_blue_square.png" />
     <AndroidResource Include="Resources\drawable\plus_blue_square.png" />
     <AndroidResource Include="Resources\drawable\PowerBy.png" />
+    <AndroidResource Include="Resources\drawable\Shape_move.png" />
+    <AndroidResource Include="Resources\drawable\Shape_resize.png" />
+    <AndroidResource Include="Resources\drawable\Shape_rotate.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mapgenix.Canvas\Mapgenix.Canvas.csproj">
