@@ -64,7 +64,6 @@ namespace Mapgenix.GSuite.Android
             return MapUtil.GetSnappedZoomLevelIndex(extent, MapUnit, ZoomLevelScales, ActualWidth, ActualHeight);
         }
 
-      
         public int GetSnappedZoomLevelIndex(double scale)
         {
             return MapUtil.GetSnappedZoomLevelIndex(scale, ZoomLevelScales);

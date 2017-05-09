@@ -45,8 +45,8 @@ namespace Mapgenix.GSuite.Android
         protected BaseTileOverlay(Context context)
             :base (context)
         {
-            TileWidth = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(128, Context.Resources.DisplayMetrics.Xdpi));
-            TileHeight = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(128, Context.Resources.DisplayMetrics.Xdpi)); ;
+            TileWidth = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(256, Context.Resources.DisplayMetrics.Xdpi));
+            TileHeight = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(256, Context.Resources.DisplayMetrics.Xdpi)); ;
             ImageFormat = TileImageFormat.Png;
             JpegQuality = 80;
             _lockerObject = new object();
@@ -576,7 +576,7 @@ namespace Mapgenix.GSuite.Android
                         ShiftAndRemoveStretchTiles(targetExtent, MapArguments.CurrentResolution, isPanning);
                     }
                 }
-
+                //return;
                 Dictionary<string, TileMatrixCell> cells = GetDrawingCells(targetExtent);
                 for (int i = DrawingCanvas.ChildCount - 1; i >= 0; i--)
                 {

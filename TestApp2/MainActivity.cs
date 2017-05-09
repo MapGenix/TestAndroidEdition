@@ -13,6 +13,13 @@ using System.Net;
 using Mapgenix.Styles;
 using Android.Views;
 using System;
+using Android.Content.PM;
+using Android.Runtime;
+using Android;
+using System.Reflection;
+using NativeAndroid = Android;
+using GeoAPI;
+using System.Collections.Generic;
 
 namespace TestApp2
 {
@@ -22,15 +29,19 @@ namespace TestApp2
         private Map MainMap;
         private string sampleDataPath;
 
-        private void LoadShapes()
+        private void LoadData()
         {
             AssetManager am = this.Assets;
-            string[] files = am.List("panama");
+            string[] shapes = am.List("panama");
 
-            foreach (string file in files)
-            {
+            sampleDataPath = BaseContext.CacheDir.Path;
+            sampleDataPath = System.IO.Path.Combine(sampleDataPath, "Temp2/SampleData/");
 
-                sampleDataPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+            if (!Directory.Exists(sampleDataPath))
+                Directory.CreateDirectory(sampleDataPath);
+
+            foreach (string file in shapes)
+            {                               
                 var filename = System.IO.Path.Combine(sampleDataPath, file);
 
                 if (File.Exists(filename))
@@ -85,12 +96,46 @@ namespace TestApp2
                     //fileStream.Dispose();
                 }
             }
+
+            string[] geojson = am.List("geojson");
+            foreach(string file in geojson)
+            {
+                try
+                {
+                    var filename = System.IO.Path.Combine(sampleDataPath, file);
+
+                    if (File.Exists(filename))
+                        continue;
+
+                    using (var br = new BinaryReader(Application.Context.Assets.Open("geojson/" + file)))
+                    {
+                        using (var bw = new BinaryWriter(new FileStream(filename, FileMode.Create)))
+                        {
+                            byte[] buffer = new byte[2048];
+                            int length = 0;
+                            while ((length = br.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                bw.Write(buffer, 0, length);
+                            }
+                        }
+                    }
+                }
+                catch (FileLoadException e)
+                {
+                    throw e;
+                }
+                finally
+                {
+                    //stream.Dispose();
+                    //fileStream.Dispose();
+                }
+            }
         }
 
         private void OpenStreetMap()
         {
-            string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            string cachePath = System.IO.Path.Combine(basePath, "Temp");
+            string basePath = Android.OS.Environment.ExternalStorageDirectory.Path;
+            string cachePath = System.IO.Path.Combine(basePath, "Temp2");
 
             MainMap.MapUnit = GeographyUnit.Meter;
             OpenStreetMapOverlay osmOverlay = OverlayFactory.CreateOpenStreetMapOverlay(MainMap.Context, cachePath);
@@ -104,8 +149,8 @@ namespace TestApp2
 
         private void HEREMaps()
         {
-            string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            string cachePath = System.IO.Path.Combine(basePath, "Temp");
+            string basePath = Android.OS.Environment.ExternalStorageDirectory.Path;
+            string cachePath = System.IO.Path.Combine(basePath, "Temp2");
 
             MainMap.MapUnit = GeographyUnit.Meter;
 
@@ -121,8 +166,9 @@ namespace TestApp2
 
         private void BingMaps()
         {
-            string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
-            string cachePath = System.IO.Path.Combine(basePath, "Temp");
+            CheckSelfPermission(Manifest.Permission.AccessFineLocation);
+            string basePath = Android.OS.Environment.DownloadCacheDirectory.Path;
+            string cachePath = System.IO.Path.Combine(basePath, "Temp2");
 
             MainMap.MapUnit = GeographyUnit.Meter;
 
@@ -137,15 +183,15 @@ namespace TestApp2
         }
 
         private void GoogleMaps()
-        {
-            string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.ApplicationData);
+        {            
+            string basePath = BaseContext.CacheDir.Path;
             string cachePath = System.IO.Path.Combine(basePath, "Temp2");
 
             MainMap.MapUnit = GeographyUnit.Meter;
 
             GoogleMapsOverlay googleMapsOverlay = OverlayFactory.CreateGoogleMapsOverlay(MainMap.Context, "AIzaSyB8VXGFKgzu3CH_6lOmRze_wl1zKcneruc");
             googleMapsOverlay.CacheDirectory = cachePath;
-            googleMapsOverlay.CachePictureFormat = GoogleMapsPictureFormat.Png32;
+            googleMapsOverlay.CachePictureFormat = GoogleMapsPictureFormat.Jpeg;
             googleMapsOverlay.MapType = GoogleMapsMapType.RoadMap;
 
             MainMap.Overlays.Add("GoogleOverlay", googleMapsOverlay);
@@ -182,24 +228,41 @@ namespace TestApp2
 
         protected override void OnCreate(Bundle bundle)
         {
+            base.OnCreate(bundle);
+            SetContentView(Resource.Layout.Main);
+            MainMap = FindViewById<Map>(Resource.Id.MainMap);
+            MainMap.ZoomAnimationDuration = 100;
+            InitButtonEvents();
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, certificate, chain, errors) => true;
+            MainMap.MapUnit = GeographyUnit.DecimalDegree;
+            //MainMap.BackgroundOverlay.BackgroundBrush = new GeoSolidBrush(GeoColor.StandardColors.LightBlue);
+            GoogleMaps();
+            LoadData();  
+            //WmsOverlay();
+        }
+
+        private static IEnumerable<Type> GetLoadableTypes(Assembly assembly)
+        {
+            if (assembly == null)
+                return new Type[0];
+
             try
             {
-                base.OnCreate(bundle);
-                SetContentView(Resource.Layout.Main);
-                MainMap = FindViewById<Map>(Resource.Id.MainMap);
-                InitButtonEvents();                
-                System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, certificate, chain, errors) => true;
-                GoogleMaps();
-                LoadShapes();
+                return assembly.GetExportedTypes();
             }
-            catch(Exception ex)
+            catch (ReflectionTypeLoadException ex)
             {
-                if(ex != null)
-                {
-
-                }
+                var types = ex.Types;
+                IList<Type> list = new List<Type>(types.Length);
+                foreach (var t in types)
+                    if (t != null && t.IsPublic)
+                        list.Add(t);
+                return list;
             }
-                                  
+            catch
+            {
+                return new Type[0];
+            }
         }
 
         private void InitButtonEvents()
@@ -292,8 +355,7 @@ namespace TestApp2
         private void InitMapShapes()
         {
             if (MainMap != null)
-            {
-                //MainMap.BackgroundOverlay.BackgroundBrush = new GeoSolidBrush(GeoColor.StandardColors.LightBlue);
+            {                
                 ShapeFileFeatureLayer districtLayer = FeatureLayerFactory.CreateShapeFileFeatureLayer(sampleDataPath + "/panama_districts.shp");
                 districtLayer.ZoomLevelSet.ZoomLevel01.DefaultAreaStyle = AreaStyles.CreateSimpleAreaStyle(GeoColor.StandardColors.LightPink, GeoColor.StandardColors.Black);
                 districtLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
@@ -315,15 +377,13 @@ namespace TestApp2
 
                 LayerOverlay overlay = new LayerOverlay(MainMap.Context);
                 overlay.Layers.Add("District", districtLayer);
-                //overlay.Layers.Add("Road", roadLayer);
-                //overlay.Layers.Add("Location", locationLayer);
-
-                //MainMap.MapUnit = GeographyUnit.DecimalDegree;
+                overlay.Layers.Add("Road", roadLayer);
+                overlay.Layers.Add("Location", locationLayer);
 
                 string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 string cachePath = System.IO.Path.Combine(basePath, "Temp");
 
-                MainMap.Overlays.Add(overlay);
+                //MainMap.Overlays.Add(overlay);
 
                 districtLayer.Open();
                 MainMap.CurrentExtent = districtLayer.GetBoundingBox();                
@@ -334,16 +394,45 @@ namespace TestApp2
 
                 MainMap.MapTools.ScaleLine.Enabled = true;
                 MainMap.MapTools.MouseCoordinate.Enabled = true;
-               // MainMap.TrackOverlay.TrackMode = TrackMode.Point;
 
                 MainMap.Refresh();
             }
+        }
+
+        private void WmsOverlay()
+        {
+            WmsOverlayLite overlayWMS = OverlayFactory.CreateWmsOverlayLite(MainMap.Context, 
+                new Uri("http://mrdata.usgs.gov/services/ca?request=getcapabilities&service=WMS&version=1.1.1&"));
+            overlayWMS.Parameters["LAYERS"] = "California_Lithology,California_Contacts";
+
+            MainMap.Overlays.Add(overlayWMS);
+            MainMap.CurrentExtent = new RectangleShape(-123.45, 38.69, -121.41, 37.40);
+            MainMap.Refresh();
+        }
+
+        private void GEOJSON()
+        {
+            //MapUnit set to DecimalDegrees because the data is in Longitude / Latitude.
+            MainMap.MapUnit = GeographyUnit.DecimalDegree;
+            MainMap.BackgroundOverlay.BackgroundBrush = new GeoSolidBrush(GeoColor.StandardColors.White);
+            string usPath = sampleDataPath + "/states.geojson";
+            BaseFeatureLayer usLayer = FeatureLayerFactory.CreateVectorFeatureLayer(usPath);
+            usLayer.ZoomLevelSet.ZoomLevel01.DefaultAreaStyle = AreaStyles.CreateSimpleAreaStyle(GeoColor.StandardColors.DarkCyan, GeoColor.StandardColors.Black);
+            usLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
+
+            LayerOverlay staticOverlay = new LayerOverlay(MainMap.Context);
+            staticOverlay.Layers.Add("VectorLayer", usLayer);
+            MainMap.Overlays.Add("StaticOverlay", staticOverlay);
+            MainMap.MapTools.ScaleLine.Enabled = true;
+            MainMap.CurrentExtent = new RectangleShape(-130, 50, -63, 21);
+            MainMap.Refresh();
         }
 
         protected override void OnResume()
         {
             base.OnResume();
             InitMapShapes();   
+            //GEOJSON();
         }
     }
 }

@@ -10,16 +10,16 @@ namespace Mapgenix.GSuite.Android
 {
     public partial class Map
     {
-        private const int ClickPointTolerance = 14;
-        private PointF _tempMotionDownPosition = new PointF(0, 0);
+        private const int ClickPointTolerance = 50;
+        /*private PointF _tempMotionDownPosition = new PointF(0, 0);
         private int _activePointerId = -1;
         private float _lastTouchX;
         private float _lastTouchY;
         private float _posX;
-        private float _posY;
+        private float _posY;*/
         private GestureDetector _gestureDetector;
         private ScaleGestureDetector _scaleDetector;
-        private int _fingerDown = 0;
+        //private int _fingerDown = 0;
 
         //public event EventHandler<MapClickEventArgs> MapClick;
 
@@ -70,145 +70,48 @@ namespace Mapgenix.GSuite.Android
                 EventManagerDoubleTap(sender, e.Event);
             };
 
-            /*_scaleDetector = new ScaleGestureDetector(Context, new MapPinchGestureManager()
+            _scaleDetector = new ScaleGestureDetector(Context, new MapPinchGestureManager()
             {
                 Sender = this
-            });*/
+            });
         }
 
-        public override bool OnTouchEvent(MotionEvent ev)
+        public override bool OnTouchEvent(MotionEvent e)
         {
             if (TrackOverlay.TrackMode != TrackMode.None)
             {
-                return TrackOverlay.OnTouchEvent(ev, this);
+                return TrackOverlay.OnTouchEvent(e, this);
             }              
-            //_scaleDetector.OnTouchEvent(ev);
-            _gestureDetector.OnTouchEvent(ev);
+            _scaleDetector.OnTouchEvent(e);
+            _gestureDetector.OnTouchEvent(e);
 
-            MotionEventActions action = ev.Action & MotionEventActions.Mask;
-            int pointerIndex;
-            PointF currentScreenPoint = new PointF();
-            MapMotionEventArgs motionArgs = new MapMotionEventArgs();
-            switch (action)
+            _currentMousePosition = new PointF(e.GetX(), e.GetY());
+
+            MapMotionEventArgs motionArgs = CollectMotionEventArguments(e);
+
+            switch (e.Action)
             {
-
-                case MotionEventActions.PointerDown:
                 case MotionEventActions.Down:
-                    _fingerDown++;
-                    _tempMotionDownPosition = new PointF(ev.GetX(), ev.GetY());
-                    _activePointerId = ev.GetPointerId(0);
-                    _currentMousePosition = _tempMotionDownPosition;
-                    //MotionEventArgs motionArgs = CollectMotionEventArguments(_tempMotionDownPosition);
-
-                    //_lastTouchX = ev.GetX();
-                    //_lastTouchY = ev.GetY();
-
-                    //MapMouseButton mouseButton = ConvertToMapMouseButton(e);
-                    currentScreenPoint = _tempMotionDownPosition;
-                    PointShape worldCoordinate = ToWorldCoordinate(currentScreenPoint);
-                    //MapClickEventArgs clickArgs = new MapClickEventArgs((float)currentScreenPoint.X, (float)currentScreenPoint.Y, worldCoordinate.X, worldCoordinate.Y, mouseButton);
-
-                    //OnMapClick(clickArgs);
-
-                    motionArgs = CollectMotionEventArguments(_tempMotionDownPosition);
-                    motionArgs.MotionAction = action;
-                    //interactionArguments.MouseButton = mouseButton;
-                    //EventManagerMouseClickCore(interactionArguments);
                     EventManagerMotionDownCore(motionArgs);
-
                     break;
 
                 case MotionEventActions.Move:
 
-                    /*if (!_scaleDetector.IsInProgress)
-                    {*/
-                    pointerIndex = ev.FindPointerIndex(_activePointerId);
-
-                    float x = ev.GetX(pointerIndex);
-                    float y = ev.GetY(pointerIndex);
-
-                    float deltaX = x - _lastTouchX;
-                    float deltaY = y - _lastTouchY;
-                    _posX += deltaX;
-                    _posY += deltaY;
-
-                    currentScreenPoint = new PointF(x, y);
-                    _currentMousePosition = currentScreenPoint;
-                    motionArgs = CollectMotionEventArguments(currentScreenPoint);
-
-                    motionArgs.MotionAction = action;
-
-                    Invalidate();
-
-                    /*MotionEventActions mapMouseButton = CollectMapMouseButton(e);
-                    if (mapMouseButton != MapMouseButton.None)
-                    {
-                        interactionArguments.MouseButton = mapMouseButton;
-                    }*/
-
-                    _lastTouchX = x;
-                    _lastTouchY = y;
-
-                    EventManagerMotionMoveCore(motionArgs);
-
-                    OnMapMove(motionArgs);
-
-                    /*}
-                    else
-                    {
-                        EventManagerPich(_scaleDetector);
-                    }*/
-
-                    /*pointerIndex = ev.FindPointerIndex(_activePointerId);
-                    float x = ev.GetX(pointerIndex);
-                    float y = ev.GetY(pointerIndex);
                     if (!_scaleDetector.IsInProgress)
                     {
-                        // Only move the ScaleGestureDetector isn't already processing a gesture.
-                        float deltaX = x - _lastTouchX;
-                        float deltaY = y - _lastTouchY;
-                        _posX += deltaX;
-                        _posY += deltaY;
-                        Invalidate();
+                        EventManagerMotionMoveCore(motionArgs);
+                        OnMapMove(motionArgs);
                     }
 
-                    _lastTouchX = x;
-                    _lastTouchY = y;*/
                     break;
 
                 case MotionEventActions.Up:
-
-                    PointF upPosition = new PointF(ev.GetX(), ev.GetY());
-                    motionArgs = CollectMotionEventArguments(upPosition);
-                    motionArgs.MotionAction = action;
                     EventManagerMotionUpCore(motionArgs);
-
                     break;
                 case MotionEventActions.Cancel:
-                    // This events occur when something cancels the gesture (for example the
-                    // activity going in the background) or when the pointer has been lifted up.
-                    // We no longer need to keep track of the active pointer.
-                    //_activePointerId = InvalidPointerId;
-                    if(_fingerDown > 0)
-                        _fingerDown--;
                     break;
 
                 case MotionEventActions.PointerUp:
-                    if (_fingerDown > 0)
-                        _fingerDown--;
-                    /*// We only want to update the last touch position if the the appropriate pointer
-                    // has been lifted off the screen.
-                    pointerIndex = (int)(ev.Action & MotionEventActions.PointerIndexMask) >> (int)MotionEventActions.PointerIndexShift;
-                    int pointerId = ev.GetPointerId(pointerIndex);
-                    if (pointerId == _activePointerId)
-                    {
-                        // This was our active pointer going up. Choose a new
-                        // action pointer and adjust accordingly
-                        int newPointerIndex = pointerIndex == 0 ? 1 : 0;
-                        _lastTouchX = ev.GetX(newPointerIndex);
-                        _lastTouchY = ev.GetY(newPointerIndex);
-                        _activePointerId = ev.GetPointerId(newPointerIndex);
-                    }*/
                     break;
             }
             return true;
@@ -302,36 +205,44 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        private void BindingEvent()
+        private MapMotionEventArgs CollectMotionEventArguments(MotionEvent e)
         {
-            /*MouseEventManager eventManager = new MouseEventManager(_eventCanvas);
-
-            eventManager.MouseLeave += EventManagerMouseLeave;
-            eventManager.MouseButtonDown += EventManagerMouseButtonDown;
-            eventManager.MouseButtonUp += EventManagerMouseButtonUp;
-            eventManager.MouseClick += EventManagerMouseClick;
-            eventManager.MouseDoubleClick += EventManagerMouseDoubleClick;
-            eventManager.MouseMove += EventManagerMouseMove;
-            eventManager.MouseWheel += EventManagerMouseWheel;
-            eventManager.MouseEnter += EventManagerMouseEnter;
-            eventManager.ActualMouseButtonDown += EventManagerActualMouseButtonDown;
-
-            _eventCanvas.KeyDown += EventCanvasKeyDown;
-            _eventCanvas.KeyUp += EventCanvasKeyUp;*/
-        }
-
-        private MapMotionEventArgs CollectMotionEventArguments(PointF currentScreenPoint)
-        {
-            PointShape currentWorldPoint = ToWorldCoordinate(currentScreenPoint);
+            PointShape currentWorldPoint = ToWorldCoordinate(new PointF(e.GetX(), e.GetY()));
             MapMotionEventArgs arguments = new MapMotionEventArgs();
             arguments.CurrentExtent = CurrentExtent;
             arguments.MapHeight = (int)MapHeight;
             arguments.MapWidth = (int)MapWidth;
             arguments.MapUnit = MapUnit;
-            //arguments.MouseWheelDelta = 0;
             arguments.Scale = CurrentScale;
-            arguments.ScreenX = (float)currentScreenPoint.X;
-            arguments.ScreenY = (float)currentScreenPoint.Y;
+            arguments.ScreenX = (float)e.GetX();
+            arguments.ScreenY = (float)e.GetY();
+            arguments.WorldX = currentWorldPoint.X;
+            arguments.WorldY = currentWorldPoint.Y;
+            arguments.MotionAction = e.Action;
+
+            if(e.PointerCount > 0)
+                for(int i = 0; i < e.PointerCount; i++)
+                    arguments.ScreenPointers.Add(new PointF(e.GetX(i), e.GetY(i)));
+
+            if (!Double.IsNaN(MapWidth) && MapWidth != 0 && !Double.IsNaN(MapHeight) && MapHeight != 0)
+            {
+                arguments.SearchingTolerance = ClickPointTolerance * Math.Max(CurrentExtent.Width / MapWidth, CurrentExtent.Height / MapHeight);
+            }
+
+            return arguments;
+        }
+
+        private MapMotionEventArgs CollectMotionEventArguments(PointF point)
+        {
+            PointShape currentWorldPoint = ToWorldCoordinate(point);
+            MapMotionEventArgs arguments = new MapMotionEventArgs();
+            arguments.CurrentExtent = CurrentExtent;
+            arguments.MapHeight = (int)MapHeight;
+            arguments.MapWidth = (int)MapWidth;
+            arguments.MapUnit = MapUnit;
+            arguments.Scale = CurrentScale;
+            arguments.ScreenX = (float)point.X;
+            arguments.ScreenY = (float)point.Y;
             arguments.WorldX = currentWorldPoint.X;
             arguments.WorldY = currentWorldPoint.Y;
             arguments.MotionAction = MotionEventActions.Mask;
@@ -343,20 +254,6 @@ namespace Mapgenix.GSuite.Android
 
             return arguments;
         }
-
-        /*private KeyEventInteractionArguments CollectKeyEventInteractiveArguments(KeyEventArgs e)
-        {
-            string keyCode = e.Key.ToString();
-            bool isAltPressed = (Keyboard.Modifiers == ModifierKeys.Alt);
-            bool isCtlPressed = (Keyboard.Modifiers == ModifierKeys.Control);
-            bool isShtPressed = (Keyboard.Modifiers == ModifierKeys.Shift);
-
-            KeyEventInteractionArguments keyInteractiveArguments = new KeyEventInteractionArguments(keyCode, isCtlPressed, isShtPressed, isAltPressed);
-            keyInteractiveArguments.CurrentExtent = CurrentExtent;
-            keyInteractiveArguments.CurrentScale = CurrentScale;
-
-            return keyInteractiveArguments;
-        }*/
 
         private bool ProcessWithInteractiveResult(InteractiveResult interactiveResult, BaseInteractiveOverlay interactiveOverlay)
         {
@@ -384,44 +281,7 @@ namespace Mapgenix.GSuite.Android
             }
 
             return isBreak;
-        }
-
-        /*private void EventManagerMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            Point currentScreenPoint = e.GetPosition((UIElement)sender);
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-            interactionArguments.MouseButton = MapMouseButton.Middle;
-            interactionArguments.MouseWheelDelta = e.Delta;
-            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
-
-            EventManagerMouseWheelCore(interactionArguments);
-        }
-
-        private void EventManagerMouseWheelCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseWheel(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
-            }
-        }
-
-        private void EventManagerMouseMove(object sender, MouseEventArgs e)
-        {
-            Point currentScreenPoint = e.GetPosition((UIElement)sender);
-            _currentMousePosition = currentScreenPoint;
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-
-            MapMouseButton mapMouseButton = CollectMapMouseButton(e);
-            if (mapMouseButton != MapMouseButton.None)
-            {
-                interactionArguments.MouseButton = mapMouseButton;
-            }
-            
-            EventManagerMouseMoveCore(interactionArguments);
-        }*/
+        }        
 
         private void EventManagerMotionMoveCore(MapMotionEventArgs interactionArguments)
         {
@@ -461,12 +321,9 @@ namespace Mapgenix.GSuite.Android
 
         private void EventManagerDoubleTap(object sender, MotionEvent e)
         {
-            PointF currentScreenPoint = new PointF(e.GetX(), e.GetY());
-            MapMotionEventArgs interactionArguments = CollectMotionEventArguments(currentScreenPoint);
+            MapMotionEventArgs interactionArguments = CollectMotionEventArguments(e);
             interactionArguments.MotionAction = MotionEventActions.Down;
-            //interactionArguments.MouseWheelDelta = e.Delta;
-            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
-
+            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;            
             EventManagerDoubleTapCore(interactionArguments);
         }
 
@@ -482,25 +339,40 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        internal void EventManagerPich(ScaleGestureDetector detector)
+        internal void EventManagerPinch(float scaleFactor, float startingFocusX, float startingFocusY)
         {
-            PointF currentScreenPoint = new PointF(detector.FocusX, detector.FocusY);
+            PointF currentScreenPoint = new PointF(startingFocusX, startingFocusY);
             MapMotionEventArgs interactionArguments = CollectMotionEventArguments(currentScreenPoint);
-            interactionArguments.PinchFactor = detector.ScaleFactor;
-            //InteractiveOverlays
-            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+            interactionArguments.PinchFactor = scaleFactor;
 
-            EventManagerPichCore(interactionArguments);
+            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+            EventManagerPinchCore(interactionArguments);
         }
 
-        private void EventManagerPichCore(MapMotionEventArgs interactionArguments)
+        private void EventManagerPinchCore(MapMotionEventArgs interactionArguments)
+        {
+            OverlayCanvas.PostScale(interactionArguments.PinchFactor, interactionArguments.ScreenX, interactionArguments.ScreenY);
+        }
+
+        internal void EventManagerPinchEnd(float scaleFactor, float startingFocusX, float startingFocusY)
+        {
+            PointF currentScreenPoint = new PointF(startingFocusX, startingFocusY);
+            MapMotionEventArgs interactionArguments = CollectMotionEventArguments(currentScreenPoint);
+            interactionArguments.PinchFactor = scaleFactor;
+            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
+            interactionArguments.Dpi = _dpi;
+            OverlayCanvas.PostScale(1, startingFocusX, startingFocusY);
+            EventManagerPinchEndCore(interactionArguments);
+        }
+
+        private void EventManagerPinchEndCore(MapMotionEventArgs interactionArguments)
         {
             Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
                 //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
-                InteractiveResult interactiveResult = overlay.Pich(interactionArguments);
+                InteractiveResult interactiveResult = overlay.PinchEnd(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
         }

@@ -35,46 +35,6 @@ namespace Mapgenix.GSuite.Android
             : base(context)
         { }
 
-        /*public static int InteractiveClickInterval
-        {
-            get { return MouseEventManager.SystemClickInterval; }
-            set
-            {
-                Validators.CheckValueIsGreaterThanZero(value, "InteractiveClickInterval");
-                MouseEventManager.SystemClickInterval = value;
-            }
-        }
-
-        public InteractiveResult MouseDown(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseDown(new MapMouseEventArgs(interactionArguments));
-            return MouseDownCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseDownCore(InteractionArguments interactionArguments)
-        {
-     
-            return new InteractiveResult();
-        }
-
-        public InteractiveResult MouseMove(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseMove(new MapMouseEventArgs(interactionArguments));
-            return MouseMoveCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseMoveCore(InteractionArguments interactionArguments)
-        {
-     
-            return new InteractiveResult();
-        }*/
-
         public InteractiveResult MotionDown(MapMotionEventArgs motionArgs)
         {
             Validators.CheckParameterIsNotNull(motionArgs, "interactionArguments");
@@ -104,6 +64,20 @@ namespace Mapgenix.GSuite.Android
             return new InteractiveResult();
         }
 
+        public InteractiveResult MotionUp(MapMotionEventArgs interactionArguments)
+        {
+            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            if (!IsOverlayInitialized) return new InteractiveResult();
+
+            //OnMapMouseUp(new MapMouseEventArgs(interactionArguments));
+            return MotionUpCore(interactionArguments);
+        }
+
+        protected virtual InteractiveResult MotionUpCore(MapMotionEventArgs interactionArguments)
+        {
+            return new InteractiveResult();
+        }
+
         public InteractiveResult DoubleTap(MapMotionEventArgs motionArgs)
         {
             Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
@@ -119,143 +93,48 @@ namespace Mapgenix.GSuite.Android
             return new InteractiveResult();
         }
 
-        public InteractiveResult Pich(MapMotionEventArgs motionArgs)
+        public InteractiveResult Pinch(MapMotionEventArgs motionArgs)
         {
             Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
             if (!IsOverlayInitialized) return new InteractiveResult();
 
             //OnMapMotionMove(new MapMotionEventArgs(motionArgs))
 
-            return PichCore(motionArgs);
+            return PinchCore(motionArgs);
         }
 
-        protected virtual InteractiveResult PichCore(MapMotionEventArgs motionArgs)
+        protected virtual InteractiveResult PinchCore(MapMotionEventArgs motionArgs)
         {
             return new InteractiveResult();
         }
 
-        //public InteractiveResult
-
-        /*public InteractiveResult MouseUp(InteractionArguments interactionArguments)
+        public InteractiveResult PinchEnd(MapMotionEventArgs motionArgs)
         {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
             if (!IsOverlayInitialized) return new InteractiveResult();
 
-            OnMapMouseUp(new MapMouseEventArgs(interactionArguments));
-            return MouseUpCore(interactionArguments);
+            //OnMapMotionMove(new MapMotionEventArgs(motionArgs))
+
+            return PinchEndCore(motionArgs);
         }
 
-        protected virtual InteractiveResult MouseUpCore(InteractionArguments interactionArguments)
+        protected virtual InteractiveResult PinchEndCore(MapMotionEventArgs motionArgs)
         {
-     
             return new InteractiveResult();
-        }*/
+        }
 
-        public InteractiveResult MotionUp(MapMotionEventArgs interactionArguments)
+        public InteractiveResult MotionPointerDown(MapMotionEventArgs motionArgs)
         {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
+            Validators.CheckParameterIsNotNull(motionArgs, "motionArgs");
             if (!IsOverlayInitialized) return new InteractiveResult();
 
-            //OnMapMouseUp(new MapMouseEventArgs(interactionArguments));
-            return MotionUpCore(interactionArguments);
+            return MotionPointerDownCore(motionArgs);
         }
 
-        protected virtual InteractiveResult MotionUpCore(MapMotionEventArgs interactionArguments)
+        protected virtual InteractiveResult MotionPointerDownCore(MapMotionEventArgs motionArgs)
         {
             return new InteractiveResult();
         }
-
-        /*public InteractiveResult MouseClick(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseClick(new MapMouseEventArgs(interactionArguments));
-            return MouseClickCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseClickCore(InteractionArguments interactionArguments)
-        {
-     
-            return new InteractiveResult();
-        }
-
-        public InteractiveResult MouseDoubleClick(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseDoubleClick(new MapMouseEventArgs(interactionArguments));
-            return MouseDoubleClickCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseDoubleClickCore(InteractionArguments interactionArguments)
-        {
-     
-            return new InteractiveResult();
-        }
-
-        public InteractiveResult MouseWheel(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseWheel(new MapMouseEventArgs(interactionArguments));
-            return MouseWheelCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseWheelCore(InteractionArguments interactionArguments)
-        {
-            return new InteractiveResult();
-        }
-
-        public InteractiveResult MouseLeave(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseLeave(new MapMouseEventArgs(interactionArguments));
-            return MouseLeaveCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseLeaveCore(InteractionArguments interactionArguments)
-        {
-            return new InteractiveResult();
-        }
-
-        public InteractiveResult MouseEnter(InteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapMouseEnter(new MapMouseEventArgs(interactionArguments));
-            return MouseEnterCore(interactionArguments);
-        }
-
-        protected virtual InteractiveResult MouseEnterCore(InteractionArguments interactionArguments)
-        {
-            return new InteractiveResult();
-        }
-
-
-        public InteractiveResult KeyUp(KeyEventInteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapKeyUp(new MapKeyEventArgs(interactionArguments));
-            return new InteractiveResult();
-        }
-        
-        public InteractiveResult KeyDown(KeyEventInteractionArguments interactionArguments)
-        {
-            Validators.CheckParameterIsNotNull(interactionArguments, "interactionArguments");
-            if (!IsOverlayInitialized) return new InteractiveResult();
-
-            OnMapKeyDown(new MapKeyEventArgs(interactionArguments));
-            return new InteractiveResult();
-        }*/
-
 
         /*protected void OnMapMouseDown(MapMouseEventArgs e)
         {

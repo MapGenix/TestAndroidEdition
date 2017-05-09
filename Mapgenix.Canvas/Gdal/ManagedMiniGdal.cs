@@ -56,11 +56,11 @@ namespace Mapgenix.Canvas
             var majorNumber = numbers[0];
             var secondNumber = numbers[1];
 
-            CsvFileHelper.CsvFileFolder =
+            /*CsvFileHelper.CsvFileFolder =
                 string.Format(Environment.SystemDirectory +
                               string.Format(CultureInfo.InvariantCulture,
                                   "\\..\\{0}\\GSuite {1}.{2}\\GSuitePrjHelper\\",
-                                  IntPtr.Size == 4 ? "System32" : "SysWOW64", majorNumber, secondNumber));
+                                  IntPtr.Size == 4 ? "System32" : "SysWOW64", majorNumber, secondNumber));*/
         }
     }
 }

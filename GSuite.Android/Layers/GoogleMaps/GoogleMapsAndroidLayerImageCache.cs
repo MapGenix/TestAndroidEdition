@@ -77,15 +77,19 @@ namespace Mapgenix.GSuite.Android
         public void SaveCacheImage(Bitmap image, GoogleMapsMapType mapType, int zoomlevel, int tileX, int tileY, GoogleMapsPictureFormat pictureFormat)
         {
             string filename = GetFilename(mapType, zoomlevel, tileX, tileY, pictureFormat);
-            FileStream file = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
-            image.Compress(GetImageFormat(pictureFormat), 0, file);
+            using (FileStream file = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite))
+            {
+                image.Compress(GetImageFormat(pictureFormat), 100, file);
+            }                
         }
 
         public void SaveCacheImage(Bitmap image, GoogleMapsMapType mapType, int zoomlevel, string urlPath, GoogleMapsPictureFormat pictureFormat)
         {
             string filename = GetFilename(mapType, zoomlevel, urlPath, pictureFormat);
-            FileStream file = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
-            image.Compress(GetImageFormat(pictureFormat), 90, file);
+            using (FileStream file = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite))
+            {
+                image.Compress(GetImageFormat(pictureFormat), 5, file);
+            }                
         }
 
         public Bitmap GetCacheImage(GoogleMapsMapType mapType, int zoomlevel, int tileX, int tileY, GoogleMapsPictureFormat pictureFormat)

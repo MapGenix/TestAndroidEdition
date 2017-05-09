@@ -80,7 +80,7 @@ namespace Mapgenix.GSuite.Android
             else return interactiveResult;
 
             _originPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
-            //interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
+            interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
             return interactiveResult;
         }
 
@@ -93,7 +93,7 @@ namespace Mapgenix.GSuite.Android
 
             //ExtentChangedType = ExtentChangedType.Pan;
 
-            if (ExtentChangedType == ExtentChangedType.Pan)
+            if (ExtentChangedType == ExtentChangedType.Pan && motionArgs.ScreenPointers.Count == 1)
             {
                 double currentResolution = MapArguments.CurrentResolution;
                 double offsetScreenX = currentPosition.X - _originPosition.X;
@@ -109,25 +109,31 @@ namespace Mapgenix.GSuite.Android
                 interactiveResult.NewCurrentExtent = new RectangleShape(left, top, right, bottom);
                 _originPosition = currentPosition;
             }
-            else if (ExtentChangedType == ExtentChangedType.TrackZoomIn)
-            {
-                /*if (_trackShape != null)
-                {
-                    if (currentPosition.X < _trackStartScreenPoint.X)
-                    {
-                        _trackShape.SetValue(System.Windows.Controls.Canvas.LeftProperty, _mousePosition.X);
-                    }
-                    if (currentPosition.Y < _trackStartScreenPoint.Y)
-                    {
-                        _trackShape.SetValue(System.Windows.Controls.Canvas.TopProperty, _mousePosition.Y);
-                    }
-                    _trackShape.Width = Math.Abs(_mousePosition.X - _trackStartScreenPoint.X);
-                    _trackShape.Height = Math.Abs(_mousePosition.Y - _trackStartScreenPoint.Y);
-                }*/
-            }
 
             return interactiveResult;
         }
+
+        /*protected override InteractiveResult MotionPointerDownCore(MapMotionEventArgs motionArgs)
+        {
+            
+        }
+
+        private static float Funtion1(MapMotionEventArgs motionArgs)
+        {
+            double num1 = motionArgs.ScreenPointers[0].X - motionArgs.ScreenPointers[1].X;
+            float num2 = motionArgs.ScreenPointers[0].Y - motionArgs.ScreenPointers[1].Y;
+            float num3 = (float)Math.Sqrt((double)(num1 * num1 + (double)num2 * (double)num2));
+
+            return num3;
+        }
+
+        private static void Function2(PointF point, MapMotionEventArgs motionArgs)
+        {
+            float num1 = motionArgs.ScreenPointers[0].X + motionArgs.ScreenPointers[1].X;
+            float num2 = motionArgs.ScreenPointers[0].Y + motionArgs.ScreenPointers[1].Y;
+
+            point.Set(num1, num2);
+        }*/
 
         protected override InteractiveResult DoubleTapCore(MapMotionEventArgs interactionArguments)
         {
@@ -163,9 +169,9 @@ namespace Mapgenix.GSuite.Android
             return interactiveResult;
         }
 
-        protected override InteractiveResult PichCore(MapMotionEventArgs motionArgs)
+        /*protected override InteractiveResult PinchCore(MapMotionEventArgs motionArgs)
         {
-            InteractiveResult interactiveResult = base.PichCore(motionArgs);
+            InteractiveResult interactiveResult = base.PinchCore(motionArgs);
             if (MapDoubleTapMode == MapDoubleTapMode.Disabled)
             {
                 return interactiveResult;
@@ -176,7 +182,6 @@ namespace Mapgenix.GSuite.Android
 
             if(motionArgs.PinchFactor != 1)
                 targetScale *= motionArgs.PinchFactor;
-            
 
             _tapPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             targetScale = MapArguments.ZoomLevelScales[MapUtil.GetSnappedZoomLevelIndex(targetScale, MapArguments.ZoomLevelScales, MapArguments.MinimumScale, MapArguments.MaximumScale)];
@@ -187,6 +192,24 @@ namespace Mapgenix.GSuite.Android
             newWorldCenter.X += deltaX * newResolution;
             newWorldCenter.Y += deltaY * newResolution;
             interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)newWorldCenter.X, (float)newWorldCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight);
+
+            ExtentChangedType = ExtentChangedType.DoubleClickZoomOut;
+
+            return interactiveResult;
+        }*/
+
+        protected override InteractiveResult PinchEndCore(MapMotionEventArgs motionArgs)
+        {
+            InteractiveResult interactiveResult = base.PinchEndCore(motionArgs);
+
+            int level = MapArguments.GetSnappedZoomLevelIndex(motionArgs.CurrentExtent);
+            double targetScale = MapArguments.ZoomLevelScales[level];
+
+            targetScale /= motionArgs.PinchFactor;
+
+            ExtentChangedType = ExtentChangedType.MouseWheelZoomIn;
+            PointShape currentCenter = new PointShape(motionArgs.WorldX, motionArgs.WorldY);
+            interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)currentCenter.X, (float)currentCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight, motionArgs.Dpi);
 
             return interactiveResult;
         }

@@ -285,37 +285,37 @@ namespace Mapgenix.GSuite.Android
             };
             return overlay;
         }
-        /*
+        
         /// <summary>
         /// Factory method for creating an WmsOverlayLite
         /// </summary>
-        public static WmsOverlayLite CreateWmsOverlayLite()
+        public static WmsOverlayLite CreateWmsOverlayLite(Context context)
         {
-            return CreateWmsOverlayLite(new Collection<Uri>(), null);
+            return CreateWmsOverlayLite(context, new Collection<Uri>(), null);
         }
 
         /// <summary>
         /// Factory method for creating an WmsOverlayLite
         /// </summary>
-        public static WmsOverlayLite CreateWmsOverlayLite(Uri serverUri)
+        public static WmsOverlayLite CreateWmsOverlayLite(Context context, Uri serverUri)
         {
-            return CreateWmsOverlayLite(new Collection<Uri>() { serverUri }, null);
+            return CreateWmsOverlayLite(context, new Collection<Uri>() { serverUri }, null);
         }
 
         /// <summary>
         /// Factory method for creating an WmsOverlayLite
         /// </summary>
-        public static WmsOverlayLite CreateWmsOverlayLite(IEnumerable<Uri> serverUris)
+        public static WmsOverlayLite CreateWmsOverlayLite(Context context, IEnumerable<Uri> serverUris)
         {
-            return CreateWmsOverlayLite(serverUris, null);
+            return CreateWmsOverlayLite(context,serverUris, null);
         }
 
         /// <summary>
         /// Factory method for creating an WmsOverlayLite
         /// </summary>
-        public static WmsOverlayLite CreateWmsOverlayLite(IEnumerable<Uri> serverUris, WebProxy webProxy)
+        public static WmsOverlayLite CreateWmsOverlayLite(Context context, IEnumerable<Uri> serverUris, WebProxy webProxy)
         {
-            WmsOverlayLite overlay = new WmsOverlayLite
+            WmsOverlayLite overlay = new WmsOverlayLite(context)
             {
                 ServerUris = (Collection<Uri>)serverUris,
                 WebProxy = webProxy
@@ -323,6 +323,7 @@ namespace Mapgenix.GSuite.Android
             return overlay;
         }
 
+        /*
         /// <summary>
         /// Factory method for creating an ArcGISServerRESTTileOverlay
         /// </summary>

@@ -227,8 +227,8 @@ namespace Mapgenix.GSuite.Android
 
                 if (string.IsNullOrEmpty(clientId) && string.IsNullOrEmpty(privateKey))
                 {
-                    newWidth = Math.Min((int)canvas.Width, 640);
-                    newHeight = Math.Min((int)canvas.Height, 640);
+                    newWidth = Math.Min((int)canvas.Width, 1024);
+                    newHeight = Math.Min((int)canvas.Height, 1024);
                 }
 
                 if (zoomlevel <= 1)
@@ -281,6 +281,10 @@ namespace Mapgenix.GSuite.Android
                         image = BitmapFactory.DecodeStream(imageStream);
                         imageCache.SaveCacheImage(image, mapType, zoomlevel, requestString, pictureFormat);
                     }
+                }
+                catch(Exception ex)
+                {
+
                 }
                 finally
                 {

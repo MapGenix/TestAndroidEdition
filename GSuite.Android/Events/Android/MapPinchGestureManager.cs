@@ -15,33 +15,35 @@ namespace Mapgenix.GSuite.Android
     internal class MapPinchGestureManager : ScaleGestureDetector.SimpleOnScaleGestureListener
     {
 
+        private float _startingSpan;
+        private float _currentScale = 1;
+        private float _startFocusX;
+        private float _startFocusY;
+
         internal Map Sender
         {
             get; set;
         }
 
+        public override bool OnScaleBegin(ScaleGestureDetector detector)
+        {
+            _startingSpan = detector.CurrentSpan;
+            _startFocusX = detector.FocusX;
+            _startFocusY = detector.FocusY;
+            return true;
+        }
+
         public override bool OnScale(ScaleGestureDetector detector)
         {
-            Console.WriteLine("Pinch start!!!");
-            Console.WriteLine("ScaleFactor: " + detector.ScaleFactor);
-            Console.WriteLine("Current Span: " + detector.CurrentSpan);
-            Console.WriteLine("Current Span X: " + detector.CurrentSpanX);
-            Console.WriteLine("Current Span Y: " + detector.CurrentSpanY);
-            Console.WriteLine("Focus X: " + detector.FocusX);
-            Console.WriteLine("Focus Y: " + detector.FocusY);
-            Console.WriteLine("Previous Span: " + detector.PreviousSpan);
-            Console.WriteLine("Previous Span X: " + detector.PreviousSpanX);
-            Console.WriteLine("Previous Span Y: " + detector.PreviousSpanY);
-            Console.WriteLine("Pinch end!!!");
-
-            if (detector.IsInProgress)
-                Console.WriteLine("Is progress");
-            else
-                Console.WriteLine("Finished process");
-
-            //Sender.EventManagerPich(detector);
-
+            _currentScale = (detector.CurrentSpan / _startingSpan);
+            Sender.EventManagerPinch(_currentScale, _startFocusX, _startFocusY);
             return true;
+        }
+
+        public override void OnScaleEnd(ScaleGestureDetector detector)
+        {
+            base.OnScaleEnd(detector);
+            Sender.EventManagerPinchEnd(_currentScale, _startFocusX, _startFocusY);
         }
     }
 }

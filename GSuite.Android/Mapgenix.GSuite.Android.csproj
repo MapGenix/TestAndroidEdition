@@ -46,10 +46,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OpenTK" />
-    <Reference Include="PowerCollections, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2573bf8a1bdddcd5, processorArchitecture=MSIL">
-      <HintPath>..\packages\NetTopologySuite.1.14\lib\portable-net403+sl5+netcore45+wpa81+wp8+MonoAndroid10+XamariniOS10+MonoTouch10\PowerCollections.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -100,6 +96,7 @@
     <Compile Include="Layers\HEREMaps\HEREMapsAndroidLayerImageCache.cs" />
     <Compile Include="Layers\OpenStreetMapAndroidLayer.cs" />
     <Compile Include="Layers\ResponseProcessor.cs" />
+    <Compile Include="Layout\MapLayout.cs" />
     <Compile Include="MapTools\DisplayZoomBarText.cs" />
     <Compile Include="MapTools\LogoMapTool.cs" />
     <Compile Include="MapTools\MapTools.cs" />
@@ -120,6 +117,7 @@
     <Compile Include="Overlays\InteractiveOverlay\TrackInteractiveOverlay.cs" />
     <Compile Include="Overlays\LayerOverlay.cs" />
     <Compile Include="Overlays\OpenStreetMapOverlay.cs" />
+    <Compile Include="Overlays\WmsOverlayLite.cs" />
     <Compile Include="Properties\ExceptionMessage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -154,6 +152,7 @@
     <Compile Include="Tiles\LayerTile.cs" />
     <Compile Include="Tiles\LockLayerMode.cs" />
     <Compile Include="Tiles\NativeImageTile.cs" />
+    <Compile Include="Tiles\UriTile.cs" />
     <Compile Include="Types\ClearTilesMode.cs" />
     <Compile Include="Types\ControlPointType.cs" />
     <Compile Include="Types\DrawType.cs" />
@@ -171,6 +170,7 @@
     <Compile Include="Types\WrapDatelineMode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
   </ItemGroup>

@@ -131,20 +131,41 @@ namespace Mapgenix.GSuite.Android
             paint.Color = Color.Black;
             paint.StrokeWidth = 3;
 
-            Bitmap background = Bitmap.CreateBitmap((int)_scaleLineWidthPixel, (int)_scaleLineHeightPixel, Bitmap.Config.Argb8888);
-            NativeAndroid.Graphics.Canvas backGroundCanvas = new NativeAndroid.Graphics.Canvas(background);
-            backGroundCanvas.DrawPath(leftLine, paint);
-            backGroundCanvas.DrawPath(topLine, paint);
-            backGroundCanvas.DrawPath(middleLine, paint);
-            backGroundCanvas.DrawPath(bottomLine, paint);
+            Bitmap background = null;
+            NativeAndroid.Graphics.Canvas backGroundCanvas = null;
 
-            if (_scaleLineImage == null)
+            try
             {
-                _scaleLineImage = new ImageView(Context);
-                _scaleLineCanvas.AddView(_scaleLineImage);
-            }
+                background = Bitmap.CreateBitmap((int)_scaleLineWidthPixel, (int)_scaleLineHeightPixel, Bitmap.Config.Argb8888);
+                backGroundCanvas = new NativeAndroid.Graphics.Canvas(background);
+                backGroundCanvas.DrawPath(leftLine, paint);
+                backGroundCanvas.DrawPath(topLine, paint);
+                backGroundCanvas.DrawPath(middleLine, paint);
+                backGroundCanvas.DrawPath(bottomLine, paint);
 
-            _scaleLineImage.SetImageBitmap(background);            
+                if (_scaleLineImage == null)
+                {
+                    _scaleLineImage = new ImageView(Context);
+                    _scaleLineCanvas.AddView(_scaleLineImage);
+                }
+
+                _scaleLineImage.SetImageBitmap(background);
+            }
+            catch(Exception ex)
+            {
+                Toast.MakeText(Context, this.GetType().ToString() + " ERROR:" + ex.Message, ToastLength.Short).Show();
+            }
+            finally
+            {
+                background.Dispose();
+                paint.Dispose();                
+                leftLine.Dispose();
+                topLine.Dispose();
+                middleLine.Dispose();
+                bottomLine.Dispose();
+                backGroundCanvas.Dispose();
+            }
+                        
         }
 
         private void UpdateBarItems(RectangleShape extent)

@@ -21,9 +21,19 @@ namespace Mapgenix.GSuite.Android
             return scale / (GetInchesByUnit(unit) * DotsPerInch);
         }
 
+        public static double GetResolutionFromScale(double scale, GeographyUnit unit, int dpi)
+        {
+            return scale / (GetInchesByUnit(unit) * dpi);
+        }
+
         public static double GetScaleFromResolution(double resolution, GeographyUnit unit)
         {
             return resolution * (GetInchesByUnit(unit) * DotsPerInch);
+        }
+
+        public static double GetScaleFromResolution(double resolution, GeographyUnit unit, int dpi)
+        {
+            return resolution * (GetInchesByUnit(unit) * dpi);
         }
 
         public static RectangleShape CalculateExtent(PointF center, double scale, GeographyUnit mapUnit, double mapWidth, double mapHeight)
@@ -34,6 +44,23 @@ namespace Mapgenix.GSuite.Android
             }
 
             double resolution = GetResolutionFromScale(scale, mapUnit);
+            double widthInDegree = mapWidth * resolution;
+            double heightInDegree = mapHeight * resolution;
+            double left = center.X - widthInDegree * .5;
+            double right = center.X + widthInDegree * .5;
+            double top = center.Y + heightInDegree * .5;
+            double bottom = center.Y - heightInDegree * .5;
+            return new RectangleShape(left, top, right, bottom);
+        }
+
+        public static RectangleShape CalculateExtent(PointF center, double scale, GeographyUnit mapUnit, double mapWidth, double mapHeight, int dpi)
+        {
+            if (Double.IsNaN(mapWidth) || Double.IsNaN(mapHeight))
+            {
+                return null;
+            }
+
+            double resolution = GetResolutionFromScale(scale, mapUnit, 96);
             double widthInDegree = mapWidth * resolution;
             double heightInDegree = mapHeight * resolution;
             double left = center.X - widthInDegree * .5;

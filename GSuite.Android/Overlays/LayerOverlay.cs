@@ -134,7 +134,7 @@ namespace Mapgenix.GSuite.Android
             {
                 sourceFeatureLayer.FeatureSource.Projection.Close();
             }
-
+            
             BaseLayer copiedLayer = SerializationHelper.CloneDeep(sourceLayer);
             if (isOpened) sourceLayer.Open();
             return copiedLayer;
@@ -177,50 +177,26 @@ namespace Mapgenix.GSuite.Android
             int th = (int)tile.LayoutParameters.Height;
 
             object nativeImage = null;
-
-            if (RenderMode == RenderMode.DrawingVisual)
+            
+            if (TileCache != null) { layerTile.TileCache = TileCache; }
+            GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context)
             {
-                layerTile.TileCache = null;
-                layerTile.IsAsync = false;
-                DrawingVisualGeoCanvas geoCanvas = new DrawingVisualGeoCanvas();
-                //nativeImage = new RenderTargetBitmap(tw, th, geoCanvas.Dpi, geoCanvas.Dpi, PixelFormats.Pbgra32);
-                nativeImage = Bitmap.CreateBitmap(tw, th, Bitmap.Config.Argb8888);
-                geoCanvas.BeginDrawing(nativeImage, targetExtent, MapArguments.MapUnit);
-                if (tile.IsAsync)
-                {
-                    layerTile.DrawAsync(geoCanvas);
-                }
-                else
-                {
-                    layerTile.Draw(geoCanvas);
-                    geoCanvas.EndDrawing();
-                    layerTile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
-                }
+                //CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed,
+                DrawingQuality = DrawingQuality.HighSpeed,
+                //SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed
+            };
+            nativeImage = Bitmap.CreateBitmap(tw, th, Bitmap.Config.Argb8888);
+            geoCanvas.BeginDrawing(nativeImage, targetExtent, MapArguments.MapUnit);
+            if (tile.IsAsync)
+            {
+                layerTile.DrawAsync(geoCanvas);
             }
             else
             {
-                if (TileCache != null) { layerTile.TileCache = TileCache; }
-                GdiPlusAndroidGeoCanvas geoCanvas = new GdiPlusAndroidGeoCanvas(Context)
-                {
-                    //CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed,
-                    DrawingQuality = DrawingQuality.HighSpeed,
-                    //SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed
-                };
-                nativeImage = Bitmap.CreateBitmap(tw, th, Bitmap.Config.Argb8888);
-                geoCanvas.BeginDrawing(nativeImage, targetExtent, MapArguments.MapUnit);
-                if (tile.IsAsync)
-                {
-                    layerTile.DrawAsync(geoCanvas);
-                }
-                else
-                {
-                    layerTile.Draw(geoCanvas);
-                    geoCanvas.EndDrawing();
-                    layerTile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
-                }
+                layerTile.Draw(geoCanvas);
+                geoCanvas.EndDrawing();
+                layerTile.CommitDrawing(geoCanvas, MapUtil.GetImageSourceFromNativeImage(nativeImage));
             }
-
-
         }
 
         protected override RectangleShape GetBoundingBoxCore()

@@ -15,8 +15,8 @@ namespace Mapgenix.GSuite.Android
     [Serializable]
     public class GoogleMapsOverlay : BaseTileOverlay
     {
-        private const int DefaultTileWidth = 128;
-        private const int DefaultTileHeight = 128;
+        private const int DefaultTileWidth = 256;
+        private const int DefaultTileHeight = 256;
         private GoogleMapsAndroidLayer _googleLayer;
 
         public GoogleMapsOverlay(Context context)
@@ -31,8 +31,8 @@ namespace Mapgenix.GSuite.Android
             : base(context)
         {
             _googleLayer = new GoogleMapsAndroidLayer(licenseKey, cacheDirectory, clientId, privateKey, webProxy);
-            TileWidth = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(DefaultTileWidth, Context.Resources.DisplayMetrics.Xdpi));
-            TileHeight = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(DefaultTileHeight, Context.Resources.DisplayMetrics.Xdpi));
+            TileWidth = Math.Min(Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(DefaultTileWidth, Context.Resources.DisplayMetrics.Xdpi)), 640);
+            TileHeight = Math.Min(Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(DefaultTileHeight, Context.Resources.DisplayMetrics.Xdpi)), 640);
         }
 
         public GoogleMapsMapType MapType

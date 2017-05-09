@@ -42,7 +42,7 @@ namespace Mapgenix.GSuite.Android
             get { return OverlayCanvas.Visibility == ViewStates.Visible; }
             set
             {
-                OverlayCanvas.Visibility = value ? ViewStates.Visible : ViewStates.Invisible;
+                OverlayCanvas.Visibility = value ? ViewStates.Visible : ViewStates.Gone;
                 
             }
         }
@@ -87,7 +87,14 @@ namespace Mapgenix.GSuite.Android
             OnDrawing(args);
             if (args.Cancel) { return; }
 
-            DrawCore(targetExtent, refreshType);
+            try
+            {
+                DrawCore(targetExtent, refreshType);
+            }
+            catch(Exception ex)
+            {
+                Toast.MakeText(Context, this.GetType().ToString() + " ERROR:" + ex.Message + " SOURCE: " + ex.Source, ToastLength.Short).Show();
+            }            
             PreviousExtent = targetExtent;
         }
 

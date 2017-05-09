@@ -12,6 +12,8 @@ using Android.Widget;
 using Mapgenix.Shapes;
 using Mapgenix.Canvas;
 using System.Globalization;
+using System.Collections.ObjectModel;
+using Android.Graphics;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -32,6 +34,8 @@ namespace Mapgenix.GSuite.Android
         private double _scale;
         private MotionEventActions _motionAction;
         private float _pinchFactor = 1;
+        private int _dpi;
+        private Collection<PointF> _screenPointers;
 
         public MapMotionEventArgs()
         {
@@ -39,6 +43,7 @@ namespace Mapgenix.GSuite.Android
             this._currentExtent = new RectangleShape();
             this._mapUnit = GeographyUnit.Unknown;
             this._zoomLevelSet = new ZoomLevelSet();
+            this._screenPointers = new Collection<PointF>();
         }
 
 
@@ -118,6 +123,20 @@ namespace Mapgenix.GSuite.Android
         {
             get { return _scale; }
             set { _scale = value; }
+        }
+
+        public int Dpi
+        {
+            get { return _dpi; }
+            set { _dpi = value; }
+        }
+
+        public Collection<PointF> ScreenPointers
+        {
+            get
+            {
+                return _screenPointers;
+            }
         }
 
         public override string ToString()

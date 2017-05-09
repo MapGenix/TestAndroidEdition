@@ -91,11 +91,10 @@ namespace Mapgenix.GSuite.Android
                 //baseOverlay.SetMatrixTiles(toMatrix);
             }
 
-            OverlayCanvas.StartAnimation(_zoomAnimation);
+            //OverlayCanvas.StartAnimation(_zoomAnimation);
 
-            //CurrentExtent = _targetSnappedExtent;
-            //Refresh();
-
+            CurrentExtent = _targetSnappedExtent;
+            Refresh();
         }
     }
 }

@@ -247,15 +247,6 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        protected virtual void DrawTileCore(DrawingVisualGeoCanvas geoCanvas)
-        {
-            LayerTile layerTile = OverlayCanvas.GetChildAt(0) as LayerTile;
-            if (layerTile != null)
-            {
-                layerTile.Draw(geoCanvas);
-            }
-        }
-
         private LayerTile GetLayerTile()
         {
             LayerTile layerTile = new LayerTile(Context);
@@ -401,12 +392,20 @@ namespace Mapgenix.GSuite.Android
 
         public void CalculateAllControlPoints()
         {
-            ClearAllControlPoints();
+            try
+            {
+                ClearAllControlPoints();
 
-            if (_canDrag) { CalculateDragControlPoints(); }
-            if (_canRotate) { CalculateRotateControlPoints(); }
-            if (_canResize) { CalculateResizeControlPoints(); }
-            if (_canReshape) { CalculateVertexControlPoints(); }
+                if (_canDrag) { CalculateDragControlPoints(); }
+                if (_canRotate) { CalculateRotateControlPoints(); }
+                if (_canResize) { CalculateResizeControlPoints(); }
+                if (_canReshape) { CalculateVertexControlPoints(); }
+            }
+            catch (Exception ex)
+            {
+                NativeAndroid.Util.Log.Debug("MyApp", "ERROR CalculateDragControlPoints()!!!!!!!!");
+                NativeAndroid.Util.Log.Debug("MyApp", ex.Message);
+            }       
         }
 
         protected void CalculateDragControlPoints()
@@ -1704,19 +1703,22 @@ namespace Mapgenix.GSuite.Android
             MemoryStream draggingNode = new MemoryStream();
             Bitmap dragginImage = BitmapFactory.DecodeResource(Resources, global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_move);
             dragginImage.Compress(Bitmap.CompressFormat.Png, 0, draggingNode);
-            _dragControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(draggingNode)); 
+            _dragControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(draggingNode));
+            //_dragControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimplePointStyle(PointSymbolType.Circle, GeoColor.StandardColors.SkyBlue, 20);
             _dragControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
             MemoryStream rotatingNode = new MemoryStream();
             Bitmap rotateImage = BitmapFactory.DecodeResource(Resources, global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_rotate);
             rotateImage.Compress(Bitmap.CompressFormat.Png, 0, rotatingNode);
             _rotateControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(rotatingNode));
+            //_rotateControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimplePointStyle(PointSymbolType.Circle, GeoColor.StandardColors.SkyBlue, 20);
             _rotateControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
             MemoryStream resizingNode = new MemoryStream();
             Bitmap resizeImage = BitmapFactory.DecodeResource(Resources, global::Mapgenix.GSuite.Android.Resource.Drawable.Shape_resize);
             resizeImage.Compress(Bitmap.CompressFormat.Png, 0, resizingNode);
             _resizeControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = new PointStyle(new GeoImage(resizingNode));
+            //_resizeControlPointsLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimplePointStyle(PointSymbolType.Circle, GeoColor.StandardColors.SkyBlue, 20);
             _resizeControlPointsLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
             PointStyle selectedPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.StandardColors.Red, 10, GeoColor.StandardColors.Black); 

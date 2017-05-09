@@ -940,7 +940,7 @@ namespace Mapgenix.Canvas
                 }
 
 
-                foreach (var item in possilbeVersions)
+                /*foreach (var item in possilbeVersions)
                 {
                     possilbeFolders.Add(Environment.SystemDirectory +
                                         string.Format(CultureInfo.InvariantCulture, "\\..\\SysWOW64\\GSuite {0}\\", item));
@@ -952,7 +952,7 @@ namespace Mapgenix.Canvas
                     possilbeFolders.Add(Environment.SystemDirectory +
                                         string.Format(CultureInfo.InvariantCulture, "\\GSuite {0}\\", item));
                 }
-                possilbeFolders.Add(Environment.SystemDirectory + "\\");
+                possilbeFolders.Add(Environment.SystemDirectory + "\\");*/
 
                 return possilbeFolders.ToArray();
             }

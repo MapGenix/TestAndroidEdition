@@ -33,22 +33,25 @@ namespace Mapgenix.GSuite.Android
 
         [NonSerialized]
         private ImageView _view;
+        private float _saveScale = 0f;
+        private float _minScale = 590591790f;
+        private float _maxScale = 1126.4644432067871f;
+        private Matrix _matrix;
+        public float[] m;
+
 
         public event EventHandler Opened;
-
         public event EventHandler<GeoCanvasEventArgs> Drawing;
-
         public event EventHandler<GeoCanvasEventArgs> Drawn;
 
         private bool _isOpened;
         private bool _disposed;
 
         [NonSerialized]
-        private ImageView watermarkCanvas;
-        
+        private Bitmap watermarkCanvas;
 
         [NonSerialized]
-        private BackgroundWorker _backgroundWorker;
+        private TileAsyncTask _backgroundTask;
      
         public Tile(Context context)
             : base(context)
@@ -58,18 +61,17 @@ namespace Mapgenix.GSuite.Android
             HasWatermark = true;
             IsPartial = false;
             Focusable = false;
-            InitializeBackgroundWorkder();
             _view = new ImageView(context);
-            AddView(_view);
+            
+            _matrix = new Matrix();
+            _view.ImageMatrix = _matrix;
+            m = new float[9];
+            _view.SetScaleType(ImageView.ScaleType.Matrix);
+
+            AddView(_view);            
         }
 
-        private void InitializeBackgroundWorkder()
-        {
-            _backgroundWorker = new BackgroundWorker();
-            _backgroundWorker.WorkerSupportsCancellation = true;
-            //_backgroundWorker.DoWork += backgroundWorker_DoWork;
-            //_backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
-        }
+        #region properties
 
         public Bitmap ImageSource
         {
@@ -98,61 +100,19 @@ namespace Mapgenix.GSuite.Android
                     OnOpened(new EventArgs());
                 }
             }
-        }
+        }        
 
         protected virtual bool CancellationPending
         {
             get
             {
-                if (_backgroundWorker != null && _backgroundWorker.CancellationPending) { return true; }
-                else return false;
+                //if (_backgroundWorker != null && _backgroundWorker.CancellationPending) { return true; }
+                //else return false;
+                return false;
             }
         }
 
         internal bool IsPartial { get; set; }
-
-        public void CommitDrawing(BaseGeoCanvas geoCanvas, object nativeImage)
-        {
-            CommitDrawingCore(geoCanvas, nativeImage);
-        }
-
-        protected virtual void CommitDrawingCore(BaseGeoCanvas geoCanvas, object imageSource)
-        {
-            _view.SetImageBitmap(ToImageSourceCore(imageSource));
-            IsOpened = true;
-        }
-
-        public Bitmap ToImageSource(object nativeImage)
-        {
-            return ToImageSourceCore(nativeImage);
-        }
-
-        protected virtual Bitmap ToImageSourceCore(object imageSource)
-        {            
-            Stream streamSource = imageSource as Stream;
-            NativeAndroid.Graphics.Bitmap renderTargetBitmap = imageSource as NativeAndroid.Graphics.Bitmap;
-            if (streamSource != null)
-            {
-                /*BitmapImage bitmapSource = new BitmapImage();
-                bitmapSource.BeginInit();
-                bitmapSource.StreamSource = streamSource;
-                bitmapSource.EndInit();
-                MapUtil.FreezeElement(bitmapSource);
-                return bitmapSource;*/
-
-                NativeAndroid.Graphics.Bitmap bitmapSource = NativeAndroid.Graphics.BitmapFactory.DecodeStream(streamSource);
-                return bitmapSource;
-            }
-            else if (renderTargetBitmap != null)
-            {
-                //MapUtil.FreezeElement(renderTargetBitmap);
-                return renderTargetBitmap;
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         public bool IsAsync { get; set; }
 
@@ -162,160 +122,36 @@ namespace Mapgenix.GSuite.Android
 
         public DrawingExceptionMode DrawingExceptionMode { get; set; }
 
-        /*public override void OnApplyTemplate()
+        internal float MinScale
         {
-            base.OnApplyTemplate();
-            watermarkCanvas = (System.Windows.Controls.Canvas)GetTemplateChild("WatermarkCanvas");
-           
-            if (HasWatermark)
-            {
-                DrawWatermark();
-            }
-        }*/
-
-        public void DrawAsync(GdiPlusAndroidGeoCanvas geoCanvas)
-        {
-
-            Task.Factory.StartNew
-            (
-                () => TaskStart(geoCanvas)
-            )
-            .ContinueWith(task =>
-            {
-                using (var h = new Handler(Context.MainLooper))
-                {
-                    h.Post(() =>
-                    {
-                        TaskComplete(this, task);
-                    });
-                }  
-            });
+            get { return _minScale; }
+            set { _minScale = value; }
         }
 
-        private object TaskStart(GdiPlusAndroidGeoCanvas geoCanvas)
+        internal float MaxScale
         {
-            object result;
-            try
-            {
-                object imageSource = geoCanvas.NativeImage;
-                Draw(geoCanvas);
-                geoCanvas.EndDrawing();
-
-                Bitmap bitmap = imageSource as Bitmap;
-                if (bitmap != null)
-                {
-                    MemoryStream memoryStream = new MemoryStream();
-                    bitmap.Compress(Bitmap.CompressFormat.Png, 0, memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    imageSource = memoryStream;
-                }
-                result = new TileAsyncResult() { GeoCanvas = geoCanvas, ImageSource = imageSource };
-            }
-            catch (Exception ex)
-            {
-                result = null;
-            }
-
-            return result;
+            get { return _maxScale; }
+            set { _maxScale = value; }
         }
 
-        private void TaskComplete(object sender, Task<object> e)
+        internal float Scale
         {
-            if (e.IsCanceled)
-            {
-                return;
-            }
-            else if (e.Exception == null && e.Result != null)
-            {
-                TileAsyncResult result = (TileAsyncResult)e.Result;
-                CommitDrawing(result.GeoCanvas, result.ImageSource);
-            }
-
-            if (_disposed && _backgroundWorker != null)
-            {
-                _backgroundWorker.Dispose();
-                _backgroundWorker = null;
-            }
+            get { return _saveScale; }
+            set { _saveScale = value; }
         }
 
-        public void DrawAsync(DrawingVisualGeoCanvas geoCanvas)
+        #endregion
+
+        #region public methods
+
+        public void CommitDrawing(BaseGeoCanvas geoCanvas, object nativeImage)
         {
-
-            /*new Thread(() => (geoCanvas)
-                {
-                    
-                }
-            );*/
-            _backgroundWorker.CancelAsync();
-            while (_backgroundWorker != null && _backgroundWorker.IsBusy)
-            {
-                //System.Windows.Forms.Application.DoEvents();
-            }
-
-            if (_backgroundWorker == null) InitializeBackgroundWorkder();
-            _backgroundWorker.RunWorkerAsync(geoCanvas);
+            CommitDrawingCore(geoCanvas, nativeImage);
         }
 
-        public void Draw(DrawingVisualGeoCanvas geoCanvas)
+        public Bitmap ToImageSource(object nativeImage)
         {
-            try
-            {
-                OnDrawing(new GeoCanvasEventArgs(geoCanvas));
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                if (TileCache == null || geoCanvas is DrawingVisualGeoCanvas)
-                {
-                    DrawCore(geoCanvas);
-                    geoCanvas.Flush();
-                }
-                else if (IsPartial)
-                {
-                    //DrawPartial(geoCanvas);
-                }
-                else
-                {
-                    DrawFull(geoCanvas);
-                }
-                stopwatch.Stop();
-                DrawingTime = stopwatch.Elapsed;
-                OnDrawn(new GeoCanvasEventArgs(geoCanvas, false));
-            }
-            catch (Exception ex)
-            {
-                DrawException(geoCanvas, ex);
-            }
-        }
-
-
-
-        public void Draw(GdiPlusGeoCanvas geoCanvas)
-        {
-            try
-            {
-                OnDrawing(new GeoCanvasEventArgs(geoCanvas));
-                Stopwatch stopwatch = new Stopwatch();
-                stopwatch.Start();
-                if (TileCache == null || geoCanvas is DrawingVisualGeoCanvas)
-                {
-                    DrawCore(geoCanvas);
-                    geoCanvas.Flush();
-                }
-                else if (IsPartial)
-                {
-                    //DrawPartial(geoCanvas);
-                }
-                else
-                {
-                    DrawFull(geoCanvas);
-                }
-                stopwatch.Stop();
-                DrawingTime = stopwatch.Elapsed;
-                OnDrawn(new GeoCanvasEventArgs(geoCanvas, false));
-            }
-            catch (Exception ex)
-            {
-                DrawException(geoCanvas, ex);
-            }
+            return ToImageSourceCore(nativeImage);
         }
 
         public void Draw(GdiPlusAndroidGeoCanvas geoCanvas)
@@ -348,141 +184,154 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        /*private void DrawPartial(DrawingVisualGeoCanvas geoCanvas)
+        public void Dispose()
         {
-            BitmapTile imageTile = null;
-            lock (TileCache)
-            {
-                double targetScale = MapUtil.GetScale(geoCanvas.MapUnit, geoCanvas.CurrentWorldExtent, geoCanvas.Width, geoCanvas.Height);
-                TileCache.TileMatrix.Scale = targetScale;
-                TileCache.TileMatrix.Id = targetScale.ToString(CultureInfo.InvariantCulture);
-                try
-                {
-                    imageTile = TileCache.GetTile(geoCanvas.CurrentWorldExtent);
-                }
-                catch { }
-            }
+            Dispose(true);
+        }
 
-            if (imageTile != null && imageTile.Bitmap != null)
+        public void DrawAsync(GdiPlusAndroidGeoCanvas geoCanvas)
+        {
+            /*await Task.Factory.StartNew
+            (
+                () => TaskStart(geoCanvas)
+            )
+            .ContinueWith(task =>
             {
-                //Bitmap cachedBitmap = imageTile.Bitmap;
-                MemoryStream cachedStream = new MemoryStream();
-                try
+                using (var h = new Handler(Context.MainLooper))
                 {
-                    //cachedBitmap.Compress(Bitmap.CompressFormat.Png, 100, cachedStream);
-                    using (GeoImage cachedImage = new GeoImage(cachedStream))
+                    h.Post(() =>
                     {
-                        geoCanvas.DrawScreenImage(cachedImage,
-                            geoCanvas.Width * .5f,
-                            geoCanvas.Height * .5f,
-                            geoCanvas.Width,
-                            geoCanvas.Height,
-                            DrawingLevel.LevelOne,
-                            0f, 0f, 0f);
-                    }
+                        TaskComplete(this, task);
+                    });
                 }
-                finally
-                {
-                    //if (cachedBitmap != null) { cachedBitmap.Dispose(); }
-                }
-            }
-            else
-            {
-                DrawCore(geoCanvas);
-                Bitmap nativeImage = (Bitmap)geoCanvas.NativeImage;
-                RectangleShape currentWorldExtent = geoCanvas.CurrentWorldExtent;
-                GeographyUnit mapUnit = geoCanvas.MapUnit;
+            });*/
 
+            if(_backgroundTask == null )
+                _backgroundTask = new TileAsyncTask();
+
+            if (_backgroundTask.GetStatus() == AsyncTask.Status.Running || _backgroundTask.GetStatus() == AsyncTask.Status.Finished)
+                return;
+
+            Func<GdiPlusAndroidGeoCanvas, object> task = TaskStart;
+            Action<object> complete = (Action<object>)((object taskResult) =>
+            {
+                using (var h = new Handler(Context.MainLooper))
+                {
+                    h.Post(() =>
+                    {
+                        TaskComplete(taskResult);
+                    });
+                }
+            });
+            _backgroundTask.Execute(task, geoCanvas, complete);
+        }
+
+        #endregion
+
+        #region private methods
+
+        private object TaskStart(GdiPlusAndroidGeoCanvas geoCanvas)
+        {
+            object result;
+            try
+            {
+                object imageSource = geoCanvas.NativeImage;
+                Draw(geoCanvas);
                 geoCanvas.EndDrawing();
-                geoCanvas.BeginDrawing(nativeImage, currentWorldExtent, mapUnit);
 
-                if (!CancellationPending)
+                Bitmap bitmap = imageSource as Bitmap;
+                if (bitmap != null)
                 {
-                    if (imageTile == null)
-                    {
-                        imageTile = new BitmapTile(geoCanvas.CurrentWorldExtent, TileCache.TileMatrix.Scale);
-                    }
-
-                    imageTile.Bitmap = Bitmap.CreateScaledBitmap(nativeImage, nativeImage.Width, nativeImage.Height, true);
-                    lock (TileCache)
-                    {
-                        try
-                        {
-                            TileCache.SaveTile(imageTile);
-                        }
-                        catch { }
-                    }
+                    MemoryStream memoryStream = new MemoryStream();
+                    bitmap.Compress(Bitmap.CompressFormat.Png, 1, memoryStream);
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    imageSource = memoryStream;
+                    bitmap.Dispose();
                 }
+                result = new TileAsyncResult() { GeoCanvas = geoCanvas, ImageSource = imageSource };
+            }
+            catch (Exception ex)
+            {
+                result = null;
+            }
+
+            return result;
+        }
+
+        private void TaskComplete(object sender, Task<object> e)
+        {
+            if (e.IsCanceled)
+            {
+                return;
+            }
+            else if (e.Exception == null && e.Result != null)
+            {
+                TileAsyncResult result = (TileAsyncResult)e.Result;
+                CommitDrawing(result.GeoCanvas, result.ImageSource);
             }
         }
 
-
-        private void DrawPartial(GdiPlusGeoCanvas geoCanvas)
+        private void TaskComplete(object taskResult)
         {
-            BitmapTile imageTile = null;
-            lock (TileCache)
+            if (_backgroundTask.IsCancelled)
             {
-                double targetScale = MapUtil.GetScale(geoCanvas.MapUnit, geoCanvas.CurrentWorldExtent, geoCanvas.Width, geoCanvas.Height);
-                TileCache.TileMatrix.Scale = targetScale;
-                TileCache.TileMatrix.Id = targetScale.ToString(CultureInfo.InvariantCulture);
-                try
-                {
-                    imageTile = TileCache.GetTile(geoCanvas.CurrentWorldExtent);
-                }
-                catch { }
+                return;
             }
-
-            if (imageTile != null && imageTile.Bitmap != null)
+            else if (taskResult != null)
             {
-                Bitmap cachedBitmap = imageTile.Bitmap;
-                MemoryStream cachedStream = new MemoryStream();
-                try
-                {
-                    cachedBitmap.Save(cachedStream, System.Drawing.Imaging.ImageFormat.Png);
-                    using (GeoImage cachedImage = new GeoImage(cachedStream))
-                    {
-                        geoCanvas.DrawScreenImage(cachedImage,
-                            geoCanvas.Width * .5f,
-                            geoCanvas.Height * .5f,
-                            geoCanvas.Width,
-                            geoCanvas.Height,
-                            DrawingLevel.LevelOne,
-                            0f, 0f, 0f);
-                    }
-                }
-                finally
-                {
-                    if (cachedBitmap != null) { cachedBitmap.Dispose(); }
-                }
+                TileAsyncResult result = (TileAsyncResult)taskResult;
+                CommitDrawing(result.GeoCanvas, result.ImageSource);
+            }
+        }
+
+        private void DrawWatermark()
+        {
+            if (watermarkCanvas != null)
+            {
+                //InstallerHelper.CheckInstaller(watermarkCanvas, Width, Height);
+            }
+        }
+                
+        #endregion
+
+        #region protected method
+
+        protected virtual void CommitDrawingCore(BaseGeoCanvas geoCanvas, object imageSource)
+        {
+            Bitmap bitmap = null;
+            try
+            {
+                bitmap = ToImageSourceCore(imageSource);
+                _view.SetImageBitmap(bitmap);
+                IsOpened = true;
+            }
+            finally
+            {
+                if (bitmap != null)
+                    bitmap.Dispose();
+            }
+            
+        }
+
+        protected virtual Bitmap ToImageSourceCore(object imageSource)
+        {
+            Stream streamSource = imageSource as Stream;
+            NativeAndroid.Graphics.Bitmap renderTargetBitmap = imageSource as NativeAndroid.Graphics.Bitmap;
+            if (streamSource != null)
+            {
+                NativeAndroid.Graphics.Bitmap bitmapSource = NativeAndroid.Graphics.BitmapFactory.DecodeStream(streamSource);
+                streamSource.Dispose();
+                return bitmapSource;
+            }
+            else if (renderTargetBitmap != null)
+            {
+                return renderTargetBitmap;
             }
             else
             {
-                DrawCore(geoCanvas);
-                Bitmap nativeImage = (Bitmap)geoCanvas.NativeImage;
-                RectangleShape currentWorldExtent = geoCanvas.CurrentWorldExtent;
-                GeographyUnit mapUnit = geoCanvas.MapUnit;
-               
-                geoCanvas.EndDrawing();
-                geoCanvas.BeginDrawing(nativeImage, currentWorldExtent, mapUnit);
-
-                if (!CancellationPending)
-                {
-                    if (imageTile == null)
-                    {
-                        imageTile = new BitmapTile(geoCanvas.CurrentWorldExtent, TileCache.TileMatrix.Scale);
-                    }
-                    imageTile.Bitmap = (Bitmap)nativeImage.Clone();
-                    lock (TileCache)
-                    {
-                        try
-                        {
-                            TileCache.SaveTile(imageTile);
-                        }
-                        catch { }
-                    }
-                }
+                return null;
             }
-        }*/
+        }
 
         protected virtual void DrawCore(BaseGeoCanvas geoCanvas)
         { }
@@ -506,8 +355,6 @@ namespace Mapgenix.GSuite.Android
                 MemoryStream streamSource = new MemoryStream();
                 using (GeoImage geoImage = new GeoImage(streamSource))
                 {
-                    //exceptionImage.Save(streamSource, System.Drawing.Imaging.ImageFormat.Png);
-                    //streamSource.Seek(0, SeekOrigin.Begin);
                     canvas.DrawScreenImageWithoutScaling(geoImage, canvas.Width * .5f, canvas.Height * .5f, DrawingLevel.LevelOne, 0f, 0f, 0f);
                 }
             }
@@ -540,90 +387,21 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing && _backgroundWorker != null)
+            if (disposing)
             {
-                /*if (ImageSource != null && ImageSource is BitmapImage && ((BitmapImage)ImageSource).StreamSource != null)
+                ImageSource = null;                
+                if(_backgroundTask != null)
                 {
-                    Stream streamSource = ((BitmapImage)ImageSource).StreamSource;
-                    streamSource.Close();
-                    streamSource.Dispose();
-                    streamSource = null;
-                }*/
-
-                ImageSource = null;
-                if (_backgroundWorker != null && _backgroundWorker.IsBusy)
-                {
-                    _backgroundWorker.CancelAsync();
-                    _backgroundWorker.Dispose();
+                    _backgroundTask.Cancel(true);
+                    _backgroundTask = null;
                 }
                 _disposed = true;
             }
         }
 
-        private void DrawWatermark()
-        {
-            if (watermarkCanvas != null)
-            {
-                //InstallerHelper.CheckInstaller(watermarkCanvas, Width, Height);
-            }
-        }
-
-        /*private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            if (_backgroundWorker == null)
-            {
-                return;
-            }
-            else if (_backgroundWorker.CancellationPending)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                GdiPlusAndroidGeoCanvas geoCanvas = (GdiPlusAndroidGeoCanvas)e.Argument;
-                object imageSource = geoCanvas.NativeImage;
-                Draw(geoCanvas);
-                geoCanvas.EndDrawing();
-
-                Bitmap bitmap = imageSource as Bitmap;
-                if (bitmap != null)
-                {
-                    MemoryStream memoryStream = new MemoryStream();
-                    bitmap.Compress(Bitmap.CompressFormat.Png, 0, memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    imageSource = memoryStream;
-                }
-
-                e.Result = new TileAsyncResult() { GeoCanvas = geoCanvas, ImageSource = imageSource };
-                e.Cancel = (_backgroundWorker == null || _backgroundWorker.CancellationPending);
-            }
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled)
-            {
-                return;
-            }
-            else if (e.Error == null && e.Result != null)
-            {
-                TileAsyncResult result = (TileAsyncResult)e.Result;
-                CommitDrawing(result.GeoCanvas, result.ImageSource);
-            }
-
-            if (_disposed && _backgroundWorker != null)
-            {
-                _backgroundWorker.Dispose();
-                _backgroundWorker = null;
-            }
-        }*/
+        #endregion
     }
 
     public class TileAsyncResult
@@ -642,4 +420,34 @@ namespace Mapgenix.GSuite.Android
 
         public object ImageSource { get; set; }
     }
+
+    public class TileAsyncTask : AsyncTask<object, object, object>
+    {
+
+        Action<object> _actionComplete;
+
+        protected override void OnPreExecute()
+        {
+            base.OnPreExecute();
+        }
+
+        protected override void OnCancelled()
+        {
+            base.OnCancelled();
+        }
+
+        protected override void OnPostExecute(object result)
+        {
+            base.OnPostExecute(result);
+            _actionComplete(result);
+        }
+
+        protected override object RunInBackground(params object[] @params)
+        {
+            Func<GdiPlusAndroidGeoCanvas, object> action = (Func<GdiPlusAndroidGeoCanvas, object>)@params[0];
+            _actionComplete = (Action<object>)@params[2];
+            return action((GdiPlusAndroidGeoCanvas)@params[1]);
+        }
+    }
+
 }

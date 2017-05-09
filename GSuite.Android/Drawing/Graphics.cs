@@ -90,17 +90,31 @@ namespace Mapgenix.GSuite.Android
             }
             catch (Exception e)
             {
-
                 throw e;
             }
-
+            /*finally
+            {
+                tempBitmap.Dispose();
+                paint.Dispose();
+            }*/
         }
 
         public void DrawImage(Bitmap tempBitmap, RectF dest, RectF source)
         {
-            Validators.CheckParameterIsNotNull(tempBitmap, "tempBitmap");
-            Rect destRect = new Rect((int)dest.Left, (int)dest.Top, (int)dest.Right, (int)dest.Bottom);
-            _canvas.DrawBitmap(tempBitmap, destRect, source, _drawConfig);
+            try
+            {
+                Validators.CheckParameterIsNotNull(tempBitmap, "tempBitmap");
+                Rect destRect = new Rect((int)dest.Left, (int)dest.Top, (int)dest.Right, (int)dest.Bottom);
+                _canvas.DrawBitmap(tempBitmap, destRect, source, _drawConfig);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            /*finally
+            {
+                tempBitmap.Dispose();
+            }*/
         }
 
         public void DrawPolygon(Paint pen, Point[] points)
@@ -116,17 +130,29 @@ namespace Mapgenix.GSuite.Android
         {
             Path polygon = new Path();
 
-            for (int i = 0; i < points.Length; i++)
-            {
-                if (i == 0)
-                    polygon.MoveTo(points[i].X, points[i].Y);
-                else
-                    polygon.LineTo(points[i].X, points[i].Y);
+            try
+            {                
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (i == 0)
+                        polygon.MoveTo(points[i].X, points[i].Y);
+                    else
+                        polygon.LineTo(points[i].X, points[i].Y);
+                }
+
+                polygon.Close();
+
+                _canvas.DrawPath(polygon, pen);
             }
-
-            polygon.Close();
-
-            _canvas.DrawPath(polygon, pen);
+            catch(Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                polygon.Dispose();
+            }
+            
         }
 
         public void DrawLines(Paint pen, Point[] points)
@@ -142,15 +168,26 @@ namespace Mapgenix.GSuite.Android
         {
             Path line = new Path();
 
-            for (int i = 0; i < points.Length; i++)
+            try
             {
-                if (i == 0)
-                    line.MoveTo(points[i].X, points[i].Y);
-                else
-                    line.LineTo(points[i].X, points[i].Y);
-            }
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (i == 0)
+                        line.MoveTo(points[i].X, points[i].Y);
+                    else
+                        line.LineTo(points[i].X, points[i].Y);
+                }
 
-            _canvas.DrawPath(line, paint);
+                _canvas.DrawPath(line, paint);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                line.Dispose();
+            }
         }
 
         public void DrawPath(Paint paint, GraphicsPath path)
@@ -187,20 +224,33 @@ namespace Mapgenix.GSuite.Android
         {
             Path polygon = new Path();
 
-            for (int i = 0; i < points.Length; i++)
+            try
             {
-                if (i == 0)
-                    polygon.MoveTo(points[i].X, points[i].Y);
-                else
-                    polygon.LineTo(points[i].X, points[i].Y);
+
+                for (int i = 0; i < points.Length; i++)
+                {
+                    if (i == 0)
+                        polygon.MoveTo(points[i].X, points[i].Y);
+                    else
+                        polygon.LineTo(points[i].X, points[i].Y);
+                }
+
+                polygon.Close();
+
+                Paint paint = new Paint(_drawConfig);
+                paint.Color = fillColor;
+                paint.SetStyle(Paint.Style.Fill);
+                _canvas.DrawPath(polygon, paint);
+
             }
-
-            polygon.Close();
-
-            Paint paint = new Paint(_drawConfig);
-            paint.Color = fillColor;
-            paint.SetStyle(Paint.Style.Fill);
-            _canvas.DrawPath(polygon, paint);
+            catch(Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                polygon.Dispose();   
+            }            
         }
 
         public void FillPath(Color fillColor, GraphicsPath path)

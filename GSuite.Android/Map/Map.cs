@@ -29,9 +29,9 @@ namespace Mapgenix.GSuite.Android
         private double _targetMapScreenHeight;
         private double _minimumScale;
         private double _maximumScale;
-        private RelativeLayout _overlayCanvas;
-        private RelativeLayout _eventCanvas;
-        private RelativeLayout _toolsGrid;
+        private MapLayout _overlayCanvas;
+        private MapLayout _eventCanvas;
+        private MapLayout _toolsGrid;
         //private DispatcherTimer _resizeTimer;
         private GeographyUnit _mapUnit;
         private RectangleShape _maxExtent;
@@ -48,6 +48,7 @@ namespace Mapgenix.GSuite.Android
         private MapTools _mapTools;
         private Collection<RectangleShape> _mapPreviousExtents;
         private bool _needsRefreshOverlayChildren;
+        private int _dpi;
 
         public Map(Context context, IAttributeSet attrs) :
             base(context, attrs)
@@ -103,6 +104,8 @@ namespace Mapgenix.GSuite.Android
             _maximumScale = double.MaxValue;
             SetMinimumWidth(1);
             SetMinimumHeight(1);
+
+            _dpi = (int)Context.Resources.DisplayMetrics.Xdpi;
 
             //SizeChanged += WpfMapSizeChanged;
         }
@@ -199,11 +202,11 @@ namespace Mapgenix.GSuite.Android
 
         public RectangleShape MaxExtent { get { return _maxExtent; } }
 
-        protected RelativeLayout OverlayCanvas { get { return _overlayCanvas; } }
+        protected MapLayout OverlayCanvas { get { return _overlayCanvas; } }
 
-        protected RelativeLayout EventCanvas { get { return _eventCanvas; } }
+        protected MapLayout EventCanvas { get { return _eventCanvas; } }
 
-        public RelativeLayout ToolsGrid { get { return _toolsGrid; } }
+        public MapLayout ToolsGrid { get { return _toolsGrid; } }
 
         public MapTools MapTools { get { return _mapTools; } }
 
@@ -262,7 +265,7 @@ namespace Mapgenix.GSuite.Android
         {
             if(_overlayCanvas == null)
             {
-                _overlayCanvas = new RelativeLayout(Context);
+                _overlayCanvas = new MapLayout(Context);
                 RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
                 p.TopMargin = 0;
                 p.LeftMargin = 0;
@@ -272,7 +275,7 @@ namespace Mapgenix.GSuite.Android
 
             if(_toolsGrid == null)
             {
-                _toolsGrid = new RelativeLayout(Context);
+                _toolsGrid = new MapLayout(Context);
                 RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
                 p.TopMargin = 0;
                 p.LeftMargin = 0;
@@ -614,9 +617,9 @@ namespace Mapgenix.GSuite.Android
             RemoveAllViews();
             foreach (BaseOverlay overlay in Overlays)
             {
-                //if (!(overlay is BaseMarkerOverlay) && !(overlay is PopupOverlay))
-                //{
-                    AddView(overlay.OverlayCanvas, index++);
+                /*if (!(overlay is BaseMarkerOverlay) && !(overlay is PopupOverlay))
+                {*/
+                overlay.Elevation = index++;
                 //}
             }
         }
@@ -663,13 +666,13 @@ namespace Mapgenix.GSuite.Android
 
         private void DrawOverlays(IEnumerable<BaseOverlay> drawingOverlays, RectangleShape targetExtent, OverlayRefreshType refreshType)
         {
-            /*if (ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
+            if (ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
             {
-                ReOrderOverlayElements();
+                //ReOrderOverlayElements();
                 OverlaysEventArgs drawingArgs = new OverlaysEventArgs(drawingOverlays, targetExtent);
                 OnOverlaysDrawing(drawingArgs);
                 if (drawingArgs.Cancel) { return; }
-            }*/
+            }
 
             foreach (BaseOverlay overlay in drawingOverlays)
             {
@@ -686,18 +689,17 @@ namespace Mapgenix.GSuite.Android
                 LimitPreviousExtentCapability();
             }*/
 
-            /*if (ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
+            if (ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
             {
                 OverlaysEventArgs drawnArgs = new OverlaysEventArgs(drawingOverlays, targetExtent);
                 OnOverlaysDrawn(drawnArgs);
-            }*/
+            }
         }
 
         private void DrawOverlay(BaseOverlay overlay, RectangleShape targetExtent, OverlayRefreshType overlayRefreshType)
         {
             if (OverlayCanvas != null && OverlayCanvas.IndexOfChild(overlay.OverlayCanvas) == -1)
             {
-                //OverlayCanvas.Children.Add(overlay.OverlayCanvas);
                 OverlayCanvas.AddView(overlay.OverlayCanvas);
             }
 
@@ -706,7 +708,8 @@ namespace Mapgenix.GSuite.Android
 
             if (overlayRefreshType == OverlayRefreshType.Pan)
             {
-                overlay.Draw(targetExtent, OverlayRefreshType.Pan);
+                if(!overlay.IsEmpty)
+                    overlay.Draw(targetExtent, OverlayRefreshType.Pan);
             }
             else
             {

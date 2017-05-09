@@ -46,9 +46,12 @@ namespace Mapgenix.GSuite.Android
             }
             catch (System.Exception ex)
             {
-
-                throw;
-            }            
+                Toast.MakeText(Context, this.GetType().ToString() + " ERROR:" + ex.Message, ToastLength.Short).Show();
+            }
+            finally
+            {
+                _imageSource.Dispose();
+            }
         }
 
         public LogoMapTool(Context context, Bitmap imageSource)
@@ -69,6 +72,7 @@ namespace Mapgenix.GSuite.Android
             LayoutParameters = layout;
 
             AddView(_image);
+
         }
 
        
