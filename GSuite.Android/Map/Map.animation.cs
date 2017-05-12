@@ -16,6 +16,7 @@ namespace Mapgenix.GSuite.Android
         private PointF _lastZoomingCenter = new PointF(0, 0);
         private PointF _tempZoomingCenter = new PointF(0, 0);
         private long _zoomAnimationDuration;
+        private float _zoomFactor;
 
         public long ZoomAnimationDuration
         {
@@ -58,7 +59,6 @@ namespace Mapgenix.GSuite.Android
 
             CurrentExtent = _targetSnappedExtent;
             Refresh();
-
         }
 
         private void ExecuteZoomAnimation(double targetZoomingScale, double previousZoomingScale, PointF zoomLogicCenter)

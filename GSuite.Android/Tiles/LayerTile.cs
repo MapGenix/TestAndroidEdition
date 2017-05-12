@@ -6,6 +6,7 @@ using Mapgenix.Canvas;
 using Mapgenix.Utils;
 using Mapgenix.Layers;
 using Android.Content;
+using Android.Widget;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -73,6 +74,10 @@ namespace Mapgenix.GSuite.Android
                             layer.Close();
 
                         }
+                    }
+                    catch(Exception ex)
+                    {
+                        Toast.MakeText(Context, this.GetType().ToString() + " ERROR:" + ex.Message + " SOURCE: " + ex.Source, ToastLength.Short).Show();
                     }
                     finally
                     {

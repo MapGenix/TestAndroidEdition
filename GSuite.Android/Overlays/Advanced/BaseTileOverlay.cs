@@ -26,9 +26,11 @@ namespace Mapgenix.GSuite.Android
         public event EventHandler<TileEventArgs> DrawnTile;
 
         [NonSerialized]
-        private FrameLayout _drawingCanvas;
+        private RelativeLayout _drawingCanvas;
         [NonSerialized]
-        private FrameLayout _stretchCanvas;
+        private RelativeLayout _stretchCanvas;
+        [NonSerialized]
+        private RelativeLayout _copyCanvas;
         /*[NonSerialized]
         private TranslateTransform _translateTransform;*/
         private TileType _tileType;
@@ -54,11 +56,15 @@ namespace Mapgenix.GSuite.Android
             TileType = TileType.MultipleTile;
             TransitionEffect = TransitionEffect.Stretch;
 
-            _drawingCanvas = new FrameLayout(context);
+            _drawingCanvas = new RelativeLayout(context);
             _drawingCanvas.Elevation = ZIndexes.DrawingTileCanvas;
             OverlayCanvas.AddView(_drawingCanvas);
 
-            _stretchCanvas = new FrameLayout(context);
+            _copyCanvas = new RelativeLayout(context);
+            _copyCanvas.Elevation = ZIndexes.CopyTileCanvas;
+            OverlayCanvas.AddView(_copyCanvas);
+
+            _stretchCanvas = new RelativeLayout(context);
             _stretchCanvas.Elevation = ZIndexes.StretchTileCanvas;
             OverlayCanvas.AddView(_stretchCanvas);
 
@@ -135,13 +141,12 @@ namespace Mapgenix.GSuite.Android
 
        
         public RectangleShape MaxExtent { get; set; }
-
        
-        protected FrameLayout DrawingCanvas { get { return _drawingCanvas; } }
-
+        protected RelativeLayout DrawingCanvas { get { return _drawingCanvas; } }
       
-        protected FrameLayout StretchCanvas { get { return _stretchCanvas; } }
+        protected RelativeLayout StretchCanvas { get { return _stretchCanvas; } }
 
+        protected RelativeLayout CopyCanvas { get { return _copyCanvas; } }
      
         protected override void DrawCore(RectangleShape targetExtent, OverlayRefreshType overlayRefreshType)
         {
@@ -557,7 +562,7 @@ namespace Mapgenix.GSuite.Android
         {
             lock (_lockerObject)
             {
-                if (PreviousExtent != null)
+               /*if (PreviousExtent != null)
                 {
                     double targetScale = MapUtil.GetScale(MapArguments.MapUnit, targetExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
                     double previousScale = MapUtil.GetScale(MapArguments.MapUnit, PreviousExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
@@ -575,7 +580,7 @@ namespace Mapgenix.GSuite.Android
                     {
                         ShiftAndRemoveStretchTiles(targetExtent, MapArguments.CurrentResolution, isPanning);
                     }
-                }
+                }*/
                 //return;
                 Dictionary<string, TileMatrixCell> cells = GetDrawingCells(targetExtent);
                 for (int i = DrawingCanvas.ChildCount - 1; i >= 0; i--)
@@ -593,13 +598,13 @@ namespace Mapgenix.GSuite.Android
                         if (tile.ZoomLevelIndex != MapArguments.GetSnappedZoomLevelIndex(targetExtent))
                         {
                             DrawingCanvas.RemoveView(tile);
-                            continue;
+                            //continue;
                         }
 
                         double offsetX = Math.Round((tile.TargetExtent.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) / tile.TargetExtent.Width * TileWidth);
                         double offsetY = Math.Round((targetExtent.UpperLeftPoint.Y - tile.TargetExtent.UpperLeftPoint.Y) / tile.TargetExtent.Height * TileHeight);
 
-                        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(tile.LayoutParameters.Width, tile.LayoutParameters.Height);
+                        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(tile.LayoutParameters.Width, tile.LayoutParameters.Height);
                         p.LeftMargin = Convert.ToInt32(offsetX);
                         p.TopMargin = Convert.ToInt32(offsetY);
                         tile.LayoutParameters = p;
@@ -628,7 +633,7 @@ namespace Mapgenix.GSuite.Android
                         double resolution = 1 / MapUtil.GetResolution(targetExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
                         double offsetX = Math.Round((cell.BoundingBox.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) * resolution);
                         double offsetY = Math.Round((targetExtent.UpperLeftPoint.Y - cell.BoundingBox.UpperLeftPoint.Y) * resolution);
-                        FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(tile.LayoutParameters.Width, tile.LayoutParameters.Height);
+                        RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(tile.LayoutParameters.Width, tile.LayoutParameters.Height);
                         p.LeftMargin = Convert.ToInt32(offsetX);
                         p.TopMargin = Convert.ToInt32(offsetY);
                         tile.LayoutParameters = p;
@@ -706,7 +711,7 @@ namespace Mapgenix.GSuite.Android
             double offsetX = (targetTile.TargetExtent.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) / currentResolution;
             double offsetY = (targetExtent.UpperLeftPoint.Y - targetTile.TargetExtent.UpperLeftPoint.Y) / currentResolution;
 
-            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(targetTile.Width, targetTile.Height);
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(targetTile.Width, targetTile.Height);
             p.LeftMargin = Convert.ToInt32(offsetX);
             p.TopMargin = Convert.ToInt32(offsetY);
             targetTile.LayoutParameters = p;
@@ -760,7 +765,7 @@ namespace Mapgenix.GSuite.Android
             double newTileHeight = tile.TargetExtent.Height / currentResolution;
             double offsetX = (tile.TargetExtent.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) / currentResolution;
             double offsetY = (targetExtent.UpperLeftPoint.Y - tile.TargetExtent.UpperLeftPoint.Y) / currentResolution;
-            FrameLayout.LayoutParams p = new FrameLayout.LayoutParams(Convert.ToInt32(newTileWidth), Convert.ToInt32(newTileHeight));
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(Convert.ToInt32(newTileWidth), Convert.ToInt32(newTileHeight));
             p.LeftMargin = Convert.ToInt32(offsetX);
             p.TopMargin = Convert.ToInt32(offsetY);
             p.Width = Convert.ToInt32(newTileWidth);

@@ -2,7 +2,8 @@
 {
     internal static class ZIndexes
     {
-        internal const int DrawingTileCanvas = 2;
+        internal const int DrawingTileCanvas = 3;
+        internal const int CopyTileCanvas = 2;
         internal const int StretchTileCanvas = 1;
         internal const int ExtentInteractiveOverlay = 601;
         internal const int TrackInteractiveOverlay = 601;

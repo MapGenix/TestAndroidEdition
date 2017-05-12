@@ -73,6 +73,11 @@ namespace Mapgenix.GSuite.Android
 
         #region properties
 
+        internal ImageView View
+        {
+            get { return _view; }
+        } 
+
         public Bitmap ImageSource
         {
             get { return _imageSource; }
@@ -273,6 +278,9 @@ namespace Mapgenix.GSuite.Android
 
         private void TaskComplete(object taskResult)
         {
+            if (_backgroundTask == null)
+                return;
+
             if (_backgroundTask.IsCancelled)
             {
                 return;
@@ -298,19 +306,9 @@ namespace Mapgenix.GSuite.Android
 
         protected virtual void CommitDrawingCore(BaseGeoCanvas geoCanvas, object imageSource)
         {
-            Bitmap bitmap = null;
-            try
-            {
-                bitmap = ToImageSourceCore(imageSource);
-                _view.SetImageBitmap(bitmap);
-                IsOpened = true;
-            }
-            finally
-            {
-                if (bitmap != null)
-                    bitmap.Dispose();
-            }
-            
+            ImageSource = ToImageSourceCore(imageSource);
+            _view.SetImageBitmap(ImageSource);
+            IsOpened = true;            
         }
 
         protected virtual Bitmap ToImageSourceCore(object imageSource)
@@ -398,7 +396,20 @@ namespace Mapgenix.GSuite.Android
                     _backgroundTask = null;
                 }
                 _disposed = true;
+                _view.Dispose();
             }
+        }
+
+        protected virtual Tile Clone()
+        {
+            Tile tile = new Tile(Context);
+            tile.View.SetImageBitmap(this.ImageSource);
+            tile.LayoutParameters = new LinearLayout.LayoutParams(tile.LayoutParameters);
+            tile.TargetExtent = new RectangleShape(this.TargetExtent.UpperLeftPoint, this.TargetExtent.LowerRightPoint);
+            tile.RowIndex = this.RowIndex;
+            tile.ColumnIndex = this.ColumnIndex;
+            tile.ZoomLevelIndex = this.ZoomLevelIndex;
+            return tile;
         }
 
         #endregion

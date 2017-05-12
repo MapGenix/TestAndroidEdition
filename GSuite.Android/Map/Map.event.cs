@@ -360,9 +360,9 @@ namespace Mapgenix.GSuite.Android
             MapMotionEventArgs interactionArguments = CollectMotionEventArguments(currentScreenPoint);
             interactionArguments.PinchFactor = scaleFactor;
             interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
-            interactionArguments.Dpi = _dpi;
-            OverlayCanvas.PostScale(1, startingFocusX, startingFocusY);
+            interactionArguments.Dpi = _dpi;            
             EventManagerPinchEndCore(interactionArguments);
+            OverlayCanvas.PostScale(1, startingFocusX, startingFocusY);
         }
 
         private void EventManagerPinchEndCore(MapMotionEventArgs interactionArguments)

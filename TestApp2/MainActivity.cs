@@ -383,7 +383,7 @@ namespace TestApp2
                 string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 string cachePath = System.IO.Path.Combine(basePath, "Temp");
 
-                //MainMap.Overlays.Add(overlay);
+                MainMap.Overlays.Add(overlay);
 
                 districtLayer.Open();
                 MainMap.CurrentExtent = districtLayer.GetBoundingBox();                

@@ -79,7 +79,7 @@ namespace Mapgenix.GSuite.Android
             string filename = GetFilename(mapType, zoomlevel, tileX, tileY, pictureFormat);
             using (FileStream file = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite))
             {
-                image.Compress(GetImageFormat(pictureFormat), 100, file);
+                image.Compress(GetImageFormat(pictureFormat), 5, file);
             }                
         }
 
@@ -88,7 +88,7 @@ namespace Mapgenix.GSuite.Android
             string filename = GetFilename(mapType, zoomlevel, urlPath, pictureFormat);
             using (FileStream file = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite))
             {
-                image.Compress(GetImageFormat(pictureFormat), 5, file);
+                image.Compress(GetImageFormat(pictureFormat), 20, file);
             }                
         }
 

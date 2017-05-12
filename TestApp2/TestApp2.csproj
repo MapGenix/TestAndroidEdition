@@ -37,6 +37,7 @@
     <EnableLLVM>False</EnableLLVM>
     <AndroidEnableMultiDex>False</AndroidEnableMultiDex>
     <EnableProguard>False</EnableProguard>
+    <JavaMaximumHeapSize>700m</JavaMaximumHeapSize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -62,6 +63,14 @@
     <AndroidSupportedAbis>armeabi;armeabi-v7a;x86;x86_64;arm64-v8a</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mapgenix.Canvas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Canvas\bin\Debug\Mapgenix.Canvas.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapgenix.FeatureSource, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.FeatureSource\bin\Debug\Mapgenix.FeatureSource.dll</HintPath>
+    </Reference>
     <Reference Include="Mapgenix.Gdal.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\GSuite1\Mapgenix.Gdal.Data\bin\Debug\Mapgenix.Gdal.Data.dll</HintPath>
@@ -70,8 +79,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\GSuite.Android\bin\Debug\Mapgenix.Index.dll</HintPath>
     </Reference>
+    <Reference Include="Mapgenix.Layers, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Layers\bin\Debug\Mapgenix.Layers.dll</HintPath>
+    </Reference>
     <Reference Include="Mapgenix.RasterSource">
       <HintPath>..\..\GSuite1\Mapgenix.RasterSource\bin\Debug\Mapgenix.RasterSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapgenix.Shapes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Shapes\bin\Debug\Mapgenix.Shapes.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapgenix.Styles, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Styles\bin\Debug\Mapgenix.Styles.dll</HintPath>
+    </Reference>
+    <Reference Include="Mapgenix.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\GSuite1\Mapgenix.Utils\bin\Debug\Mapgenix.Utils.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android" />
     <Reference Include="Mono.Security">
@@ -159,30 +184,6 @@
     <ProjectReference Include="..\GSuite.Android\Mapgenix.GSuite.Android.csproj">
       <Project>{4163c82c-2c6e-4d00-95e1-f35fa64b52ea}</Project>
       <Name>Mapgenix.GSuite.Android</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mapgenix.Canvas\Mapgenix.Canvas.csproj">
-      <Project>{ac2e86d2-21a0-4036-bf5f-a3cb2d756a64}</Project>
-      <Name>Mapgenix.Canvas</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mapgenix.FeatureSource\Mapgenix.FeatureSource.csproj">
-      <Project>{cfffd275-5f84-4dfa-b41c-451d0ff02ece}</Project>
-      <Name>Mapgenix.FeatureSource</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mapgenix.Layers\Mapgenix.Layers.csproj">
-      <Project>{1a0ba404-ab14-461e-bf24-e6826b5d7021}</Project>
-      <Name>Mapgenix.Layers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mapgenix.Shapes\Mapgenix.Shapes.csproj">
-      <Project>{2d313724-7588-4fc4-9715-e039ab38453c}</Project>
-      <Name>Mapgenix.Shapes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mapgenix.Styles\Mapgenix.Styles.csproj">
-      <Project>{d65abe3c-788b-45e0-88ab-c015eb77e7c0}</Project>
-      <Name>Mapgenix.Styles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mapgenix.Utils\Mapgenix.Utils.csproj">
-      <Project>{e2ce16b4-bb3b-41cf-a6bb-633fad90a655}</Project>
-      <Name>Mapgenix.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
