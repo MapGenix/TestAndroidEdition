@@ -15,7 +15,7 @@ namespace Mapgenix.GSuite.Android
     public abstract class BaseOverlay : RelativeLayout, IDisposable
     {
         [NonSerialized]
-        private RelativeLayout _overlayCanvas;
+        private MapLayout _overlayCanvas;
 
         public event EventHandler<ExtentEventArgs> Drawing;
 
@@ -24,14 +24,14 @@ namespace Mapgenix.GSuite.Android
         protected BaseOverlay(Context context)
             :base(context)
         {
-            OverlayCanvas = new RelativeLayout(context);
+            OverlayCanvas = new MapLayout(context);
         }
 
         public string Name { get; set; }
 
         public MapArguments MapArguments { get; set; }
 
-        public RelativeLayout OverlayCanvas { get { return _overlayCanvas; } set { _overlayCanvas = value; } }
+        public MapLayout OverlayCanvas { get { return _overlayCanvas; } set { _overlayCanvas = value; } }
 
         protected RectangleShape PreviousExtent { get; set; }
 

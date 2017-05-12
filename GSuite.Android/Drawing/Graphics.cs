@@ -92,11 +92,6 @@ namespace Mapgenix.GSuite.Android
             {
                 throw e;
             }
-            /*finally
-            {
-                tempBitmap.Dispose();
-                paint.Dispose();
-            }*/
         }
 
         public void DrawImage(Bitmap tempBitmap, RectF dest, RectF source)
@@ -111,10 +106,6 @@ namespace Mapgenix.GSuite.Android
             {
                 throw e;
             }
-            /*finally
-            {
-                tempBitmap.Dispose();
-            }*/
         }
 
         public void DrawPolygon(Paint pen, Point[] points)
