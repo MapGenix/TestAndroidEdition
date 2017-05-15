@@ -30,6 +30,8 @@ namespace Mapgenix.GSuite.Android
         //public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(Tile));
         [NonSerialized]
         private Bitmap _imageSource;
+        [NonSerialized]
+        private Bitmap _imageCache;
 
         [NonSerialized]
         private ImageView _view;
@@ -37,6 +39,7 @@ namespace Mapgenix.GSuite.Android
         private float _minScale = 590591790f;
         private float _maxScale = 1126.4644432067871f;
         private Matrix _matrix;
+        private int _cacheZoomLevel = 0;
         public float[] m;
 
 
@@ -196,21 +199,6 @@ namespace Mapgenix.GSuite.Android
 
         public void DrawAsync(GdiPlusAndroidGeoCanvas geoCanvas)
         {
-            /*await Task.Factory.StartNew
-            (
-                () => TaskStart(geoCanvas)
-            )
-            .ContinueWith(task =>
-            {
-                using (var h = new Handler(Context.MainLooper))
-                {
-                    h.Post(() =>
-                    {
-                        TaskComplete(this, task);
-                    });
-                }
-            });*/
-
             if(_backgroundTask == null )
                 _backgroundTask = new TileAsyncTask();
 
@@ -229,6 +217,14 @@ namespace Mapgenix.GSuite.Android
                 }
             });
             _backgroundTask.Execute(task, geoCanvas, complete);
+        }
+
+        public void SetCacheImage(int newZoomLevel, Bitmap image)
+        {
+            _imageCache = image;
+            _cacheZoomLevel = ZoomLevelIndex;
+            ZoomLevelIndex = newZoomLevel;
+            this.Invalidate();
         }
 
         #endregion
@@ -410,6 +406,21 @@ namespace Mapgenix.GSuite.Android
             tile.ColumnIndex = this.ColumnIndex;
             tile.ZoomLevelIndex = this.ZoomLevelIndex;
             return tile;
+        }
+
+        protected override void DispatchDraw(global::Android.Graphics.Canvas canvas)
+        {
+            if (_cacheZoomLevel == 0)
+            {
+                base.DispatchDraw(canvas);
+                return;
+            }
+
+            canvas.Save(SaveFlags.Matrix);
+            float scaleFactor = ZoomLevelIndex / _cacheZoomLevel;
+            canvas.Scale(2, 2);
+            base.DispatchDraw(canvas);
+            canvas.Restore();
         }
 
         #endregion

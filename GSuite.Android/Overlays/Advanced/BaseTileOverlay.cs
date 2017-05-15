@@ -597,7 +597,8 @@ namespace Mapgenix.GSuite.Android
                     {
                         if (tile.ZoomLevelIndex != MapArguments.GetSnappedZoomLevelIndex(targetExtent))
                         {
-                            DrawingCanvas.RemoveView(tile);
+                            //DrawingCanvas.RemoveView(tile);
+                            //tile.SetCacheImage(MapArguments.GetSnappedZoomLevelIndex(targetExtent), tile.ImageSource);
                             //continue;
                         }
 
