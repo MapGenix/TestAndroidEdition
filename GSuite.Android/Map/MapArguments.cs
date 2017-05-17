@@ -40,10 +40,10 @@ namespace Mapgenix.GSuite.Android
 
      
         public RectangleShape CurrentExtent { get; set; }
-
         
         public RectangleShape MaxExtent { get; set; }
 
+        public PointF CurrentPointPosition { get; set; }
       
         public PointShape ToWorldCoordinate(PointShape screenCoordinate)
         {

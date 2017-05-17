@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using System.Collections.ObjectModel;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -26,25 +27,15 @@ namespace Mapgenix.GSuite.Android
 
         }
 
-        protected override void DispatchDraw(global::Android.Graphics.Canvas canvas)
+        public Collection<View> GetAllViews()
         {
-            canvas.Save(SaveFlags.Matrix);
-            canvas.Scale(_scaleFactor, _scaleFactor, _pivotX, _pivotY);
-            base.DispatchDraw(canvas);
-            canvas.Restore();
-        }
-
-        /*protected override void OnLayout(bool changed, int l, int t, int r, int b)
-        {
-            if (!changed)
-                return;
-            for (int index = 0; index < this.ChildCount; ++index)
+            Collection<View> views = new Collection<View>();
+            for(int i = 0; i < this.ChildCount; i++)
             {
-                ViewGroup.LayoutParams layoutParameters = this.GetChildAt(index).LayoutParameters;
-                if (layoutParameters.Width == -1 && layoutParameters.Height == -1)
-                    this.GetChildAt(index).Layout(0, 0, this.Width, this.Height);
+                views.Add(this.GetChildAt(i));
             }
-        }*/
+            return views;
+        }
 
         internal void PostScale(float scaleFactor, float pivotX, float pivotY)
         {
@@ -60,5 +51,12 @@ namespace Mapgenix.GSuite.Android
             this.Invalidate();
         }
 
+        protected override void DispatchDraw(global::Android.Graphics.Canvas canvas)
+        {
+            canvas.Save(SaveFlags.Matrix);
+            canvas.Scale(_scaleFactor, _scaleFactor, _pivotX, _pivotY);
+            base.DispatchDraw(canvas);
+            canvas.Restore();
+        }
     }
 }

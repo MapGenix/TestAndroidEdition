@@ -1,5 +1,6 @@
 ﻿using System;
 using Mapgenix.Shapes;
+using Android.Graphics;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -12,6 +13,8 @@ namespace Mapgenix.GSuite.Android
         private DrawType _interactiveOverlayDrawType;
         private ProcessOtherOverlaysMode _processOtherOverlays;
         private RectangleShape _newCurrentExtent;
+        private int _newZoomLevel;
+        private PointF _screenCenterPoint;
 
         public InteractiveResult()
             : this(DrawType.DoNotDraw, ProcessOtherOverlaysMode.ProcessOtherOverlays)
@@ -39,6 +42,18 @@ namespace Mapgenix.GSuite.Android
         {
             get { return _newCurrentExtent; }
             set { _newCurrentExtent = value; }
+        }
+
+        public int NewZoomLevel
+        {
+            get { return _newZoomLevel; }
+            set { _newZoomLevel = value; }
+        }
+
+        public PointF ScreenCenterPoint
+        {
+            get { return _screenCenterPoint; }
+            set { _screenCenterPoint = value; }
         }
     }
 }

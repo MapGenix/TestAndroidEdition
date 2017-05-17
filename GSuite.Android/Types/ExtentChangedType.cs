@@ -11,9 +11,7 @@
         Pan = 1,
         TrackZoomIn = 2,
         TrackZoomOut = 3,
-        DoubleClickZoomIn = 4,
-        DoubleClickZoomOut = 5,
-        MouseWheelZoomIn = 6,
-        MouseWheelZoomOut = 7,
+        DoubleTap = 4,
+        Pinch = 6        
     }
 }

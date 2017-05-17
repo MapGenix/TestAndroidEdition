@@ -8,6 +8,7 @@ namespace Mapgenix.GSuite.Android
         Default = 0,
         DrawingTiles = 1,
         StretchedTiles = 2,
-        AllTiles = 3
+        AllTiles = 3,
+        CopyTiles = 4
     }
 }

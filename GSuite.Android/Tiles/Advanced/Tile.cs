@@ -55,6 +55,9 @@ namespace Mapgenix.GSuite.Android
 
         [NonSerialized]
         private TileAsyncTask _backgroundTask;
+
+        [NonSerialized]
+        private Action<Tile> _callbackComplete;
      
         public Tile(Context context)
             : base(context)
@@ -197,7 +200,7 @@ namespace Mapgenix.GSuite.Android
             Dispose(true);
         }
 
-        public void DrawAsync(GdiPlusAndroidGeoCanvas geoCanvas)
+        public void DrawAsync(GdiPlusAndroidGeoCanvas geoCanvas, Action<Tile> callbackComplete)
         {
             if(_backgroundTask == null )
                 _backgroundTask = new TileAsyncTask();
@@ -205,6 +208,7 @@ namespace Mapgenix.GSuite.Android
             if (_backgroundTask.GetStatus() == AsyncTask.Status.Running || _backgroundTask.GetStatus() == AsyncTask.Status.Finished)
                 return;
 
+            _callbackComplete = callbackComplete;
             Func<GdiPlusAndroidGeoCanvas, object> task = TaskStart;
             Action<object> complete = (Action<object>)((object taskResult) =>
             {
@@ -304,7 +308,9 @@ namespace Mapgenix.GSuite.Android
         {
             ImageSource = ToImageSourceCore(imageSource);
             _view.SetImageBitmap(ImageSource);
-            IsOpened = true;            
+            IsOpened = true;
+            if(_callbackComplete != null)
+                _callbackComplete(this);
         }
 
         protected virtual Bitmap ToImageSourceCore(object imageSource)
@@ -392,7 +398,7 @@ namespace Mapgenix.GSuite.Android
                     _backgroundTask = null;
                 }
                 _disposed = true;
-                _view.Dispose();
+                //_view.Dispose();
             }
         }
 
@@ -418,7 +424,7 @@ namespace Mapgenix.GSuite.Android
 
             canvas.Save(SaveFlags.Matrix);
             float scaleFactor = ZoomLevelIndex / _cacheZoomLevel;
-            canvas.Scale(2, 2);
+            canvas.Scale(1, 1);
             base.DispatchDraw(canvas);
             canvas.Restore();
         }

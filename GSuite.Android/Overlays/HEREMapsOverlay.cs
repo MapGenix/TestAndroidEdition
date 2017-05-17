@@ -114,7 +114,7 @@ namespace Mapgenix.GSuite.Android
             return tile;
         }
 
-        protected override void DrawTileCore(Tile tile, RectangleShape targetExtent)
+        protected override void DrawTileCore(Tile tile, RectangleShape targetExtent, Action<Tile> callback)
         {
             LayerTile layerTile = tile as LayerTile;
 
@@ -129,7 +129,7 @@ namespace Mapgenix.GSuite.Android
                 geoCanvas.BeginDrawing(nativeImage, targetExtent, MapArguments.MapUnit);
                 if (tile.IsAsync)
                 {
-                    layerTile.DrawAsync(geoCanvas);
+                    layerTile.DrawAsync(geoCanvas, callback);
                 }
                 else
                 {

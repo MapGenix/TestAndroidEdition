@@ -746,6 +746,7 @@ namespace Mapgenix.GSuite.Android
             mapArgs.MaximumScale = MaximumScale;
             mapArgs.MinimumScale = MinimumScale;
             mapArgs.MaxExtent = MaxExtent;
+            mapArgs.CurrentPointPosition = _currentMousePosition;
 
             foreach (double zoomLevelScale in _zoomLevelScales)
             {
@@ -854,7 +855,14 @@ namespace Mapgenix.GSuite.Android
                 }
                 else
                 {
-                    ExecuteZoomAnimation(_targetSnappedScale, _previousSnappedScale, _currentMousePosition);
+                    if(ExtentOverlay.ExtentChangedType != ExtentChangedType.Pinch)
+                        ExecuteZoomAnimation(_targetSnappedScale, _previousSnappedScale, _currentMousePosition);
+                    else
+                    {
+                        CurrentExtent = _targetSnappedExtent;
+                        Refresh();
+                    }
+                        
                 }
             }
         }

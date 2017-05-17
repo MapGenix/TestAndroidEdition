@@ -16,7 +16,8 @@ namespace Mapgenix.GSuite.Android
         private PointF _lastZoomingCenter = new PointF(0, 0);
         private PointF _tempZoomingCenter = new PointF(0, 0);
         private long _zoomAnimationDuration;
-        private float _zoomFactor;
+        private float _zoomFactor = 1;
+        private float _previosZoomFactor;
 
         public long ZoomAnimationDuration
         {
@@ -68,7 +69,9 @@ namespace Mapgenix.GSuite.Android
 
             float fromX = Convert.ToSingle(zoomLogicCenter.X - 1);
             float fromy = Convert.ToSingle(zoomLogicCenter.Y - 1);
-            float zoomFactor = Math.Max(1f, Convert.ToSingle(previousZoomingScale / targetZoomingScale));
+            //float zoomFactor = Math.Max(1f, Convert.ToSingle(previousZoomingScale / targetZoomingScale));
+            _previosZoomFactor = _zoomFactor;
+            _zoomFactor = Convert.ToSingle(previousZoomingScale / targetZoomingScale);
 
             /* _zoomAnimationX.To = zoomFactor;
              _zoomAnimationY.To = zoomFactor;
@@ -77,24 +80,16 @@ namespace Mapgenix.GSuite.Android
              _zoomStoryboard.Begin();*/
 
             //_zoomAnimation = new ScaleAnimation(_lastZoomingCenter.X, zoomLogicCenter.X, _lastZoomingCenter.Y, _lastZoomingCenter.X);
-            _zoomAnimation = new ScaleAnimation(zoomFactor - 1f, zoomFactor, zoomFactor - 1f, zoomFactor, zoomLogicCenter.X, zoomLogicCenter.Y);
+            _zoomAnimation = new ScaleAnimation(1, _zoomFactor, 1, _zoomFactor, zoomLogicCenter.X, zoomLogicCenter.Y);
             _zoomAnimation.Duration = ZoomAnimationDuration;
             _zoomAnimation.AnimationEnd += ZoomAnimation_AnimationEnd;
 
             _tempZoomingCenter = zoomLogicCenter;
 
-            Matrix toMatrix = new Matrix();
-            toMatrix.SetScale(zoomFactor, zoomFactor);
-            foreach(var overlay in Overlays)
-            {
-                BaseTileOverlay baseOverlay = (BaseTileOverlay)overlay;
-                //baseOverlay.SetMatrixTiles(toMatrix);
-            }
+            OverlayCanvas.StartAnimation(_zoomAnimation);
 
-            //OverlayCanvas.StartAnimation(_zoomAnimation);
-
-            CurrentExtent = _targetSnappedExtent;
-            Refresh();
+            /*CurrentExtent = _targetSnappedExtent;
+            Refresh();*/
         }
     }
 }

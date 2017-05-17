@@ -26,11 +26,11 @@ namespace Mapgenix.GSuite.Android
         public event EventHandler<TileEventArgs> DrawnTile;
 
         [NonSerialized]
-        private RelativeLayout _drawingCanvas;
+        private MapLayout _drawingCanvas;
         [NonSerialized]
-        private RelativeLayout _stretchCanvas;
+        private MapLayout _stretchCanvas;
         [NonSerialized]
-        private RelativeLayout _copyCanvas;
+        private MapLayout _copyCanvas;
         /*[NonSerialized]
         private TranslateTransform _translateTransform;*/
         private TileType _tileType;
@@ -38,6 +38,7 @@ namespace Mapgenix.GSuite.Android
         private bool _isDrawing;
         private int _tileWidth;
         private int _tileHeight;
+        private int _processedTiles;
 
         /*[NonSerialized]
         private DispatcherTimer _panningTimer;*/
@@ -56,15 +57,15 @@ namespace Mapgenix.GSuite.Android
             TileType = TileType.MultipleTile;
             TransitionEffect = TransitionEffect.Stretch;
 
-            _drawingCanvas = new RelativeLayout(context);
+            _drawingCanvas = new MapLayout(context);
             _drawingCanvas.Elevation = ZIndexes.DrawingTileCanvas;
             OverlayCanvas.AddView(_drawingCanvas);
 
-            _copyCanvas = new RelativeLayout(context);
+            _copyCanvas = new MapLayout(context);
             _copyCanvas.Elevation = ZIndexes.CopyTileCanvas;
             OverlayCanvas.AddView(_copyCanvas);
 
-            _stretchCanvas = new RelativeLayout(context);
+            _stretchCanvas = new MapLayout(context);
             _stretchCanvas.Elevation = ZIndexes.StretchTileCanvas;
             OverlayCanvas.AddView(_stretchCanvas);
 
@@ -142,11 +143,11 @@ namespace Mapgenix.GSuite.Android
        
         public RectangleShape MaxExtent { get; set; }
        
-        protected RelativeLayout DrawingCanvas { get { return _drawingCanvas; } }
+        protected MapLayout DrawingCanvas { get { return _drawingCanvas; } }
       
-        protected RelativeLayout StretchCanvas { get { return _stretchCanvas; } }
+        protected MapLayout StretchCanvas { get { return _stretchCanvas; } }
 
-        protected RelativeLayout CopyCanvas { get { return _copyCanvas; } }
+        protected MapLayout CopyCanvas { get { return _copyCanvas; } }
      
         protected override void DrawCore(RectangleShape targetExtent, OverlayRefreshType overlayRefreshType)
         {
@@ -247,11 +248,20 @@ namespace Mapgenix.GSuite.Android
                     targetDrawingExtent = AdjustExtentForWrapDateline(targetDrawingExtent);
                 }
 
-                DrawTileCore(tile, targetDrawingExtent);
+                Action<Tile> callback = delegate (Tile t)
+                {
+                    _processedTiles++;
+                    if(_processedTiles == DrawingCanvas.ChildCount)
+                    {
+                        EndDrawing();
+                    }
+                };
+
+                DrawTileCore(tile, targetDrawingExtent, callback);
             }
         }
 
-        protected abstract void DrawTileCore(Tile tile, RectangleShape targetExtent);
+        protected abstract void DrawTileCore(Tile tile, RectangleShape targetExtent, Action<Tile> drawCallBack);
 
         protected override void Dispose(bool disposing)
         {
@@ -561,11 +571,14 @@ namespace Mapgenix.GSuite.Android
         private void DrawMultipleTiles(RectangleShape targetExtent, OverlayRefreshType refreshType, bool isPanning)
         {
             lock (_lockerObject)
-            {
-               /*if (PreviousExtent != null)
+            {               
+                double targetScale = 0;
+                double previousScale = 0;
+                _processedTiles = 0;
+                if (PreviousExtent != null)
                 {
-                    double targetScale = MapUtil.GetScale(MapArguments.MapUnit, targetExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
-                    double previousScale = MapUtil.GetScale(MapArguments.MapUnit, PreviousExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
+                    targetScale = MapUtil.GetScale(MapArguments.MapUnit, targetExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
+                    previousScale = MapUtil.GetScale(MapArguments.MapUnit, PreviousExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
 
                     if (!MapUtil.IsFuzzyEqual(targetScale, previousScale))
                     {
@@ -574,14 +587,22 @@ namespace Mapgenix.GSuite.Android
                         {
                             DrawStretchTiles(targetExtent);
                         }
-                        ClearTiles(ClearTilesMode.DrawingTiles);
+                        //ClearTiles(ClearTilesMode.DrawingTiles);
                     }
                     else
                     {
                         ShiftAndRemoveStretchTiles(targetExtent, MapArguments.CurrentResolution, isPanning);
                     }
-                }*/
+                }
                 //return;
+                if (targetScale != 0 && previousScale != 0)
+                {
+                    ClearTiles(ClearTilesMode.CopyTiles);
+                    float zoomFactor = Convert.ToSingle(previousScale / targetScale);
+                    CopyCanvas.PostScale(1, MapArguments.CurrentPointPosition.X, MapArguments.CurrentPointPosition.Y);
+                    CopyCanvas.PostScale(zoomFactor, MapArguments.CurrentPointPosition.X, MapArguments.CurrentPointPosition.Y);
+                }
+
                 Dictionary<string, TileMatrixCell> cells = GetDrawingCells(targetExtent);
                 for (int i = DrawingCanvas.ChildCount - 1; i >= 0; i--)
                 {
@@ -597,9 +618,9 @@ namespace Mapgenix.GSuite.Android
                     {
                         if (tile.ZoomLevelIndex != MapArguments.GetSnappedZoomLevelIndex(targetExtent))
                         {
-                            //DrawingCanvas.RemoveView(tile);
-                            //tile.SetCacheImage(MapArguments.GetSnappedZoomLevelIndex(targetExtent), tile.ImageSource);
-                            //continue;
+                            DrawingCanvas.RemoveView(tile);
+                            CopyCanvas.AddView(tile);
+                            continue;
                         }
 
                         double offsetX = Math.Round((tile.TargetExtent.UpperLeftPoint.X - targetExtent.UpperLeftPoint.X) / tile.TargetExtent.Width * TileWidth);
@@ -658,9 +679,6 @@ namespace Mapgenix.GSuite.Android
                 double worldOffsetY = targetExtent.UpperLeftPoint.Y - PreviousExtent.UpperLeftPoint.Y;
                 double screenOffsetX = worldOffsetX / resolution;
                 double screenOffsetY = worldOffsetY / resolution;
-
-                /*_translateTransform.X -= screenOffsetX;
-                _translateTransform.Y += screenOffsetY;*/
             }
         }
 
@@ -742,6 +760,10 @@ namespace Mapgenix.GSuite.Android
                 case ClearTilesMode.AllTiles:
                     clearTiles(StretchCanvas);
                     clearTiles(DrawingCanvas);
+                    clearTiles(CopyCanvas);
+                    break;
+                case ClearTilesMode.CopyTiles:
+                    clearTiles(CopyCanvas);
                     break;
                 case ClearTilesMode.Default:
                 case ClearTilesMode.DrawingTiles:
@@ -772,6 +794,11 @@ namespace Mapgenix.GSuite.Android
             p.Width = Convert.ToInt32(newTileWidth);
             p.Height = Convert.ToInt32(newTileHeight);
 
+        }
+
+        private void EndDrawing()
+        {
+            ClearTiles(ClearTilesMode.CopyTiles);
         }
 
         internal void SetMatrixTiles(Matrix matrix)

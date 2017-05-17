@@ -85,24 +85,23 @@ namespace Mapgenix.GSuite.Android
             _scaleDetector.OnTouchEvent(e);
             _gestureDetector.OnTouchEvent(e);
 
-            _currentMousePosition = new PointF(e.GetX(), e.GetY());
-
             MapMotionEventArgs motionArgs = CollectMotionEventArguments(e);
 
+            if (_scaleDetector.IsInProgress)
+            {
+                return true;
+            }
+
+            _currentMousePosition = new PointF(e.GetX(), e.GetY());
             switch (e.Action)
             {
                 case MotionEventActions.Down:
                     EventManagerMotionDownCore(motionArgs);
                     break;
 
-                case MotionEventActions.Move:
-
-                    if (!_scaleDetector.IsInProgress)
-                    {
-                        EventManagerMotionMoveCore(motionArgs);
-                        OnMapMove(motionArgs);
-                    }
-
+                case MotionEventActions.Move:                    
+                    EventManagerMotionMoveCore(motionArgs);
+                    OnMapMove(motionArgs);
                     break;
 
                 case MotionEventActions.Up:
@@ -259,13 +258,21 @@ namespace Mapgenix.GSuite.Android
         {
             bool isBreak = false;
             if (interactiveResult.NewCurrentExtent != null)
-            {
+            {                
                 if (IsInPanning())
                 {
                     Draw(interactiveResult.NewCurrentExtent, OverlayRefreshType.Pan);
                 }
                 else
                 {
+                    if(ExtentOverlay.ExtentChangedType == ExtentChangedType.Pinch)
+                    {
+                        float factor = (float)(CurrentScale / ZoomLevelScales[interactiveResult.NewZoomLevel]);
+                        //PointShape center = ToScreenCoordinate(interactiveResult.NewCurrentExtent.GetCenterPoint());
+                        OverlayCanvas.PostScale(factor, _currentMousePosition.X, _currentMousePosition.Y);
+                        //return true;
+                    }
+
                     Draw(interactiveResult.NewCurrentExtent, OverlayRefreshType.Redraw);
                 }
             }
@@ -279,6 +286,9 @@ namespace Mapgenix.GSuite.Android
             {
                 isBreak = true;
             }
+
+            if (ExtentOverlay.ExtentChangedType == ExtentChangedType.Pinch && interactiveResult.ScreenCenterPoint != null)
+                OverlayCanvas.PostScale(1, _currentMousePosition.X, _currentMousePosition.Y);
 
             return isBreak;
         }        
@@ -360,7 +370,10 @@ namespace Mapgenix.GSuite.Android
             MapMotionEventArgs interactionArguments = CollectMotionEventArguments(currentScreenPoint);
             interactionArguments.PinchFactor = scaleFactor;
             interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
-            interactionArguments.Dpi = _dpi;            
+            interactionArguments.Dpi = _dpi;
+            PointShape point = ToScreenCoordinate(CurrentExtent.GetCenterPoint());
+            //_currentMousePosition = new PointF((float)point.X, (float)point.Y);
+            _currentMousePosition = new PointF(startingFocusX, startingFocusY);
             EventManagerPinchEndCore(interactionArguments);
             OverlayCanvas.PostScale(1, startingFocusX, startingFocusY);
         }
@@ -376,203 +389,5 @@ namespace Mapgenix.GSuite.Android
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
         }
-
-        /*private void EventManagerMouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            MapMouseButton mouseButton = ConvertToMapMouseButton(e);
-            Point currentScreenPoint = _tempMouseDownPosition;
-            PointShape worldCoordinate = ToWorldCoordinate(currentScreenPoint);
-            MapClickEventArgs clickArgs = new MapClickEventArgs((float)currentScreenPoint.X, (float)currentScreenPoint.Y, worldCoordinate.X, worldCoordinate.Y, mouseButton);
-
-            OnMapDoubleClick(clickArgs);
-
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-            interactionArguments.MouseButton = mouseButton;
-            EventManagerMouseDoubleClickCore(interactionArguments);
-        }
-
-        private void EventManagerMouseDoubleClickCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseDoubleClick(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
-            }
-        }
-
-        private void EventManagerMouseClick(object sender, MouseButtonEventArgs e)
-        {
-            MapMouseButton mouseButton = ConvertToMapMouseButton(e);
-            Point currentScreenPoint = _tempMouseDownPosition; 
-            PointShape worldCoordinate = ToWorldCoordinate(currentScreenPoint);
-            MapClickEventArgs clickArgs = new MapClickEventArgs((float)currentScreenPoint.X, (float)currentScreenPoint.Y, worldCoordinate.X, worldCoordinate.Y, mouseButton);
-
-            OnMapClick(clickArgs);
-
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-            interactionArguments.MouseButton = mouseButton;
-            EventManagerMouseClickCore(interactionArguments);
-        }
-
-        private void EventManagerMouseClickCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseClick(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
-            }
-        }
-        
-        private void EventManagerMouseButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            Point currentScreenPoint = e.GetPosition((UIElement)sender);
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-            interactionArguments.MouseButton = ConvertToMapMouseButton(e);
-            EventManagerMouseButtonUpCore(interactionArguments);
-          
-        }
-
-        private void EventManagerMouseButtonUpCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseUp(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
-            }
-        }
-
-        private void EventManagerMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-            Point currentScreenPoint = _tempMouseDownPosition;
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-            interactionArguments.MouseButton = ConvertToMapMouseButton(e);
-            EventManagerMouseButtonDownCore(interactionArguments);
-        }
-
-        private void EventManagerMouseButtonDownCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseDown(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
-            }
-        }
-
-        private void EventManagerMouseLeave(object sender, MouseEventArgs e)
-        {
-            Point currentScreenPoint = e.GetPosition((UIElement)sender);
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-            EventManagerMouseLeaveCore(interactionArguments);
-        }
-
-        private void EventManagerMouseLeaveCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseLeave(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
-            }
-        }
-
-        private void EventManagerMouseEnter(object sender, MouseEventArgs e)
-        {
-            Point currentScreenPoint = e.GetPosition((UIElement)sender);
-            InteractionArguments interactionArguments = CollectMouseEventArguments(currentScreenPoint);
-
-            MapMouseButton mapMouseButton = CollectMapMouseButton(e);
-            if (mapMouseButton != MapMouseButton.None)
-            {
-                interactionArguments.MouseButton = mapMouseButton;
-            }
-
-            EventManagerMouseEnterCore(interactionArguments);
-        }
-
-        private void EventManagerMouseEnterCore(InteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.MouseEnter(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
-            }
-        }
-
-        private void EventCanvasKeyUp(object sender, KeyEventArgs e)
-        {
-            KeyEventInteractionArguments interactiveArguments = CollectKeyEventInteractiveArguments(e);
-            EventCanvasKeyUpCore(interactiveArguments);
-        }
-
-        private void EventManagerActualMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _tempMouseDownPosition = e.GetPosition(_eventCanvas);
-        }
-
-        private void EventCanvasKeyUpCore(KeyEventInteractionArguments interactionArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.KeyUp(interactionArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
-            }
-        }
-
-        private void EventCanvasKeyDown(object sender, KeyEventArgs e)
-        {
-            KeyEventInteractionArguments interactiveArguments = CollectKeyEventInteractiveArguments(e);
-            EventCanvasKeyDownCore(interactiveArguments);
-        }
-
-        private void EventCanvasKeyDownCore(KeyEventInteractionArguments interactiveArguments)
-        {
-            Collection<BaseInteractiveOverlay> currentInteractiveOverlays = CollectCurrentInteractiveOverlays();
-            foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
-            {
-                if (!overlay.IsVisible) continue;
-                InteractiveResult interactiveResult = overlay.KeyDown(interactiveArguments);
-                if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
-            }
-        }
-
-        private static MapMouseButton ConvertToMapMouseButton(MouseButtonEventArgs e)
-        {
-            string changedButton = e.ChangedButton.ToString();
-            MapMouseButton mouseButton = (MapMouseButton)Enum.Parse(typeof(MapMouseButton), changedButton);
-            return mouseButton;
-        }
-
-        private static MapMouseButton CollectMapMouseButton(MouseEventArgs e)
-        {
-            MapMouseButton mouseButton = MapMouseButton.None;
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                mouseButton = MapMouseButton.Left;
-            }
-            else if (e.RightButton == MouseButtonState.Pressed)
-            {
-                mouseButton = MapMouseButton.Right;
-            }
-            else if (e.MiddleButton == MouseButtonState.Pressed)
-            {
-                mouseButton = MapMouseButton.Middle;
-            }
-
-            return mouseButton;
-        }*/
     }
 }

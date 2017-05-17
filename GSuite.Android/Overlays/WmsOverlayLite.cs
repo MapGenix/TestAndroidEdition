@@ -128,7 +128,7 @@ namespace Mapgenix.GSuite.Android
             return new UriTile(Context);
         }
 
-        protected override void DrawTileCore(Tile tile, RectangleShape targetExtent)
+        protected override void DrawTileCore(Tile tile, RectangleShape targetExtent, Action<Tile> callback)
         {
             UriTile uriTile = tile as UriTile;
 
@@ -154,7 +154,7 @@ namespace Mapgenix.GSuite.Android
                 geoCanvas.BeginDrawing(nativeImage, targetExtent, MapArguments.MapUnit);
                 if (uriTile.IsAsync)
                 {
-                    uriTile.DrawAsync(geoCanvas);
+                    uriTile.DrawAsync(geoCanvas, callback);
                 }
                 else
                 {
