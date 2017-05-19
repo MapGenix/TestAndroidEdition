@@ -103,29 +103,29 @@ namespace Mapgenix.GSuite.Android
             return interactiveResult;
         }
 
-        protected override InteractiveResult DoubleTapCore(MapMotionEventArgs interactionArguments)
+        protected override InteractiveResult DoubleTapCore(MapMotionEventArgs motionArgs)
         {
-            InteractiveResult interactiveResult = base.DoubleTapCore(interactionArguments);
+            InteractiveResult interactiveResult = base.DoubleTapCore(motionArgs);
             if (MapDoubleTapMode == MapDoubleTapMode.Disabled)
             {
                 return interactiveResult;
             }
 
-            int level = MapArguments.GetSnappedZoomLevelIndex(interactionArguments.CurrentExtent);
+            int level = MapArguments.GetSnappedZoomLevelIndex(motionArgs.CurrentExtent);
             double targetScale = MapArguments.ZoomLevelScales[level];
 
             ExtentChangedType = ExtentChangedType.DoubleTap;
             targetScale *= ((100d - (double)ZoomPercentage) / 100d);
 
-            _tapPosition = new PointF(interactionArguments.ScreenX, interactionArguments.ScreenY);
+            _tapPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             targetScale = MapArguments.ZoomLevelScales[MapUtil.GetSnappedZoomLevelIndex(targetScale, MapArguments.ZoomLevelScales, MapArguments.MinimumScale, MapArguments.MaximumScale)];
-            double deltaX = interactionArguments.MapWidth * .5 - _tapPosition.X;
-            double deltaY = _tapPosition.Y - interactionArguments.MapHeight * .5;
-            double newResolution = MapUtil.GetResolutionFromScale(targetScale, interactionArguments.MapUnit);
+            double deltaX = motionArgs.MapWidth * .5 - _tapPosition.X;
+            double deltaY = _tapPosition.Y - motionArgs.MapHeight * .5;
+            double newResolution = MapUtil.GetResolutionFromScale(targetScale, motionArgs.MapUnit);
             PointShape newWorldCenter = MapArguments.ToWorldCoordinate(new PointShape(_tapPosition.X, _tapPosition.Y));
             newWorldCenter.X += deltaX * newResolution;
             newWorldCenter.Y += deltaY * newResolution;
-            interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)newWorldCenter.X, (float)newWorldCenter.Y), targetScale, interactionArguments.MapUnit, interactionArguments.MapWidth, interactionArguments.MapHeight);
+            interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)newWorldCenter.X, (float)newWorldCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight);
 
             return interactiveResult;
         }
@@ -140,10 +140,23 @@ namespace Mapgenix.GSuite.Android
             targetScale /= motionArgs.PinchFactor;
 
             ExtentChangedType = ExtentChangedType.Pinch;
-            PointShape currentCenter = new PointShape(motionArgs.WorldX, motionArgs.WorldY);
-            interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)currentCenter.X, (float)currentCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight, motionArgs.Dpi);
-            interactiveResult.NewZoomLevel = MapUtil.GetSnappedZoomLevelIndex(MapUtil.GetScale(motionArgs.MapUnit, interactiveResult.NewCurrentExtent, motionArgs.MapWidth, motionArgs.MapHeight), MapArguments.ZoomLevelScales);
-            interactiveResult.ScreenCenterPoint = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
+            //PointShape currentCenter = new PointShape(motionArgs.WorldX, motionArgs.WorldY);
+            //interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)currentCenter.X, (float)currentCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight, motionArgs.Dpi);
+            //interactiveResult.NewZoomLevel = MapUtil.GetSnappedZoomLevelIndex(MapUtil.GetScale(motionArgs.MapUnit, interactiveResult.NewCurrentExtent, motionArgs.MapWidth, motionArgs.MapHeight), MapArguments.ZoomLevelScales);
+
+            //PointF newWorldCenter = MapUtil.ToWorldCoordinate(interactiveResult.NewCurrentExtent, motionArgs.ScreenX, motionArgs.ScreenY, MapArguments.ActualWidth, MapArguments.ActualHeight);
+            //PointF newScreenCenter = MapUtil.ToScreenCoordinate(interactiveResult.NewCurrentExtent, newWorldCenter.X, newWorldCenter.Y, MapArguments.ActualWidth, MapArguments.ActualHeight);
+            //interactiveResult.ScreenCenterPoint = new PointF(newScreenCenter.X, newScreenCenter.Y);
+
+            _tapPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
+            targetScale = MapArguments.ZoomLevelScales[MapUtil.GetSnappedZoomLevelIndex(targetScale, MapArguments.ZoomLevelScales, MapArguments.MinimumScale, MapArguments.MaximumScale)];
+            double deltaX = motionArgs.MapWidth * .5 - _tapPosition.X;
+            double deltaY = _tapPosition.Y - motionArgs.MapHeight * .5;
+            double newResolution = MapUtil.GetResolutionFromScale(targetScale, motionArgs.MapUnit);
+            PointShape newWorldCenter = MapArguments.ToWorldCoordinate(new PointShape(_tapPosition.X, _tapPosition.Y));
+            newWorldCenter.X += deltaX * newResolution;
+            newWorldCenter.Y += deltaY * newResolution;
+            interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)newWorldCenter.X, (float)newWorldCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight);
 
             return interactiveResult;
         }

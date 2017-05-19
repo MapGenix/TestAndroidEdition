@@ -142,7 +142,7 @@ namespace TestApp2
             MainMap.Overlays.Add(osmOverlay);
 
             MainMap.CurrentExtent = new RectangleShape(-9000000, 1300000, -8100000, 560000);
-            MainMap.ZoomAnimationDuration = 200;
+            MainMap.ZoomAnimationDuration = 1000;
 
             MainMap.Refresh();
         }
@@ -196,8 +196,8 @@ namespace TestApp2
 
             MainMap.Overlays.Add("GoogleOverlay", googleMapsOverlay);
 
-            /*MainMap.CurrentExtent = new RectangleShape(-9000000, 1300000, -8100000, 560000);
-            MainMap.Refresh();*/
+            MainMap.CurrentExtent = new RectangleShape(-9000000, 1300000, -8100000, 560000);
+            MainMap.Refresh();
         }
 
         private void PrintImageFromStream()
@@ -235,8 +235,10 @@ namespace TestApp2
             InitButtonEvents();
             System.Net.ServicePointManager.ServerCertificateValidationCallback += (o, certificate, chain, errors) => true;
             MainMap.MapUnit = GeographyUnit.DecimalDegree;
+            MainMap.ZoomAnimationDuration = 500;
             //MainMap.BackgroundOverlay.BackgroundBrush = new GeoSolidBrush(GeoColor.StandardColors.LightBlue);
             GoogleMaps();
+            //OpenStreetMap();
             LoadData();  
             //WmsOverlay();
         }
@@ -390,8 +392,6 @@ namespace TestApp2
                 districtLayer.Close();
                 var obj = MainMap.LayoutParameters;
 
-                MainMap.ZoomAnimationDuration = 200;
-
                 MainMap.MapTools.ScaleLine.Enabled = true;
                 MainMap.MapTools.MouseCoordinate.Enabled = true;
 
@@ -431,7 +431,7 @@ namespace TestApp2
         protected override void OnResume()
         {
             base.OnResume();
-            InitMapShapes();   
+            //InitMapShapes();   
             //GEOJSON();
         }
     }

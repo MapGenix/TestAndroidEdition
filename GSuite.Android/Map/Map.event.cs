@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Mapgenix.Shapes;
 using Android.Graphics;
 using Android.Views;
+using Android.Widget;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -265,14 +266,6 @@ namespace Mapgenix.GSuite.Android
                 }
                 else
                 {
-                    if(ExtentOverlay.ExtentChangedType == ExtentChangedType.Pinch)
-                    {
-                        float factor = (float)(CurrentScale / ZoomLevelScales[interactiveResult.NewZoomLevel]);
-                        //PointShape center = ToScreenCoordinate(interactiveResult.NewCurrentExtent.GetCenterPoint());
-                        OverlayCanvas.PostScale(factor, _currentMousePosition.X, _currentMousePosition.Y);
-                        //return true;
-                    }
-
                     Draw(interactiveResult.NewCurrentExtent, OverlayRefreshType.Redraw);
                 }
             }
@@ -286,9 +279,6 @@ namespace Mapgenix.GSuite.Android
             {
                 isBreak = true;
             }
-
-            if (ExtentOverlay.ExtentChangedType == ExtentChangedType.Pinch && interactiveResult.ScreenCenterPoint != null)
-                OverlayCanvas.PostScale(1, _currentMousePosition.X, _currentMousePosition.Y);
 
             return isBreak;
         }        
@@ -360,7 +350,7 @@ namespace Mapgenix.GSuite.Android
         }
 
         private void EventManagerPinchCore(MapMotionEventArgs interactionArguments)
-        {
+        {           
             OverlayCanvas.PostScale(interactionArguments.PinchFactor, interactionArguments.ScreenX, interactionArguments.ScreenY);
         }
 
@@ -372,10 +362,12 @@ namespace Mapgenix.GSuite.Android
             interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
             interactionArguments.Dpi = _dpi;
             PointShape point = ToScreenCoordinate(CurrentExtent.GetCenterPoint());
-            //_currentMousePosition = new PointF((float)point.X, (float)point.Y);
+
             _currentMousePosition = new PointF(startingFocusX, startingFocusY);
-            EventManagerPinchEndCore(interactionArguments);
+            //Toast.MakeText(Context, "Scale factor" + interactionArguments.PinchFactor + "Center: X: " + startingFocusX + " Y: " + startingFocusY, ToastLength.Short).Show();
             OverlayCanvas.PostScale(1, startingFocusX, startingFocusY);
+            EventManagerPinchEndCore(interactionArguments);
+            
         }
 
         private void EventManagerPinchEndCore(MapMotionEventArgs interactionArguments)

@@ -16,6 +16,7 @@ using Android.Graphics;
 using System.Threading.Tasks;
 using Android.OS;
 using System.Collections.ObjectModel;
+using Android.Graphics.Drawables;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -58,7 +59,7 @@ namespace Mapgenix.GSuite.Android
 
         [NonSerialized]
         private Action<Tile> _callbackComplete;
-     
+
         public Tile(Context context)
             : base(context)
         {
@@ -68,12 +69,11 @@ namespace Mapgenix.GSuite.Android
             IsPartial = false;
             Focusable = false;
             _view = new ImageView(context);
-            
+
             _matrix = new Matrix();
             _view.ImageMatrix = _matrix;
             m = new float[9];
             _view.SetScaleType(ImageView.ScaleType.Matrix);
-
             AddView(_view);            
         }
 
@@ -149,6 +149,14 @@ namespace Mapgenix.GSuite.Android
         {
             get { return _saveScale; }
             set { _saveScale = value; }
+        }
+
+        public Drawable Drawable
+        {
+            get
+            {
+                return _view.Drawable;
+            }
         }
 
         #endregion
@@ -402,11 +410,11 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        protected virtual Tile Clone()
+        public virtual Tile Clone()
         {
             Tile tile = new Tile(Context);
             tile.View.SetImageBitmap(this.ImageSource);
-            tile.LayoutParameters = new LinearLayout.LayoutParams(tile.LayoutParameters);
+            tile.LayoutParameters = new RelativeLayout.LayoutParams(this.LayoutParameters);
             tile.TargetExtent = new RectangleShape(this.TargetExtent.UpperLeftPoint, this.TargetExtent.LowerRightPoint);
             tile.RowIndex = this.RowIndex;
             tile.ColumnIndex = this.ColumnIndex;

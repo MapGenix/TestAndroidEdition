@@ -191,6 +191,7 @@
     <Compile Include="Types\TileType.cs" />
     <Compile Include="Types\TrackMode.cs" />
     <Compile Include="Types\TransitionEffect.cs" />
+    <Compile Include="Types\UriTileMode.cs" />
     <Compile Include="Types\WrapDatelineMode.cs" />
   </ItemGroup>
   <ItemGroup>

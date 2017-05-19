@@ -5,6 +5,7 @@ using Mapgenix.Shapes;
 using Mapgenix.Layers;
 using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 
 namespace Mapgenix.GSuite.Android
 {

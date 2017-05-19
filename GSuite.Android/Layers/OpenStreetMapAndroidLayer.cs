@@ -22,8 +22,8 @@ namespace Mapgenix.GSuite.Android
         private const double openStreetMapLimitLatitud = 85.0;
         private const int openStreetMapLayerTileHeight = 256;
         private const double inchPerDecimalDegree = 4374754;
-        private const int tileHeight = 400;
-        private const int tileWidth = 400;
+        private const int tileHeight = 256;
+        private const int tileWidth = 256;
 
         [NonSerialized]
         private Exception exception;
@@ -139,14 +139,22 @@ namespace Mapgenix.GSuite.Android
             tileImageId = 0;
             images = new ConcurrentDictionary<int, Bitmap>();
             //imageInfoUncached = new Collection<OpenStreetMapLayerTileInfo>();
-            zoomlevelNumber = GetCurrentZoomLevelNumber(canvas.Width, canvas.CurrentWorldExtent, canvas.MapUnit, canvas.Dpi);
+            zoomlevelNumber = GetCurrentZoomLevelNumber(256, canvas.CurrentWorldExtent, canvas.MapUnit, canvas.Dpi);
             vu = openStreetMapLayerTileHeight * Math.Pow(2.0, zoomlevelNumber) / (2.0 * Math.PI);
             ru = openStreetMapLayerTileHeight * Math.Pow(2.0, zoomlevelNumber) / (2.0);
             uu = openStreetMapLayerTileHeight * Math.Pow(2.0, zoomlevelNumber) / (360.0);
             maxPixelInZoomLevel = (int)Math.Round(openStreetMapLayerTileHeight * Math.Pow(2.0, zoomlevelNumber));
 
-            int renderWidth = (int)canvas.Width;
-            int renderHeight = (int)canvas.Height;
+            /*zoomlevelNumber = GetCurrentZoomLevelNumber(canvas.Width, canvas.CurrentWorldExtent, canvas.MapUnit, canvas.Dpi);
+            vu = canvas.Height * Math.Pow(2.0, zoomlevelNumber) / (2.0 * Math.PI);
+            ru = canvas.Height * Math.Pow(2.0, zoomlevelNumber) / (2.0);
+            uu = canvas.Height * Math.Pow(2.0, zoomlevelNumber) / (360.0);
+            maxPixelInZoomLevel = (int)Math.Round(canvas.Height * Math.Pow(2.0, zoomlevelNumber));*/
+
+            //int renderWidth = (int)canvas.Width;
+            //int renderHeight = (int)canvas.Height;
+            int renderWidth = 256;
+            int renderHeight = 256;
             RectangleShape currentExtent = GetExtentInDecimalDegree(canvas);
             RectangleShape renderExtent = GetRenderExtent(currentExtent, ref renderHeight);
 
@@ -156,6 +164,7 @@ namespace Mapgenix.GSuite.Android
 
             if (gdiplusCanvas != null)
             {
+                //gdiplusCanvas.DrawScreenImageWithoutScaling(Bitmap.CreateScaledBitmap(resultImage, (int)canvas.Width, (int)canvas.Height, false), resultImage.Width * 0.5f, resultImage.Height * 0.5f, DrawingLevel.LevelOne, 0, 0, 0);
                 gdiplusCanvas.DrawScreenImageWithoutScaling(resultImage, resultImage.Width * 0.5f, resultImage.Height * 0.5f, DrawingLevel.LevelOne, 0, 0, 0);
             }
             else

@@ -20,22 +20,21 @@ namespace Mapgenix.GSuite.Android
         public event EventHandler UriFormatted;
 
         public UriTile(Context context)
-            :base(context)
+            : base(context)
         {
             TimeoutInSeconds = 100;
         }
 
         public Uri Uri { get; set; }
 
-       
         public WebProxy WebProxy { get; set; }
 
-       
         public int TimeoutInSeconds { get; set; }
 
         internal object ThreadLocker { get; set; }
 
-       
+        public UriTileMode UriTileMode { get; set; }
+               
         protected override void DrawCore(BaseGeoCanvas geoCanvas)
         {
             HttpWebResponse response = null;
@@ -47,10 +46,13 @@ namespace Mapgenix.GSuite.Android
             {
                 lock (ThreadLocker)
                 {
-                    FormatUri(geoCanvas);
-                    OnUriFormatted();
-
-                    WebRequest request = HttpWebRequest.Create(Uri);
+                    if(UriTileMode == UriTileMode.Default)
+                    {
+                        FormatUri(geoCanvas);
+                        OnUriFormatted();
+                    }
+                    
+                    WebRequest request = HttpWebRequest.Create(this.Uri);
                     request.Proxy = WebProxy;
                     if (TimeoutInSeconds > 0) request.Timeout = TimeoutInSeconds * 1000;
                     response = (HttpWebResponse)request.GetResponse();
@@ -66,6 +68,13 @@ namespace Mapgenix.GSuite.Android
                     geoCanvas.Height * .5f,
                     geoCanvas.Width,
                     geoCanvas.Height, DrawingLevel.LevelOne, 0f, 0f, 0f);
+            }
+            catch(Exception ex)
+            {
+                if (ex != null)
+                {
+
+                }
             }
             finally
             {
