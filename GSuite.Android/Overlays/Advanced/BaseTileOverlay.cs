@@ -65,9 +65,9 @@ namespace Mapgenix.GSuite.Android
             _copyCanvas.Elevation = ZIndexes.CopyTileCanvas;
             OverlayCanvas.AddView(_copyCanvas);
 
-            /*_stretchCanvas = new MapLayout(context);
+            _stretchCanvas = new MapLayout(context);
             _stretchCanvas.Elevation = ZIndexes.StretchTileCanvas;
-            OverlayCanvas.AddView(_stretchCanvas);*/
+            OverlayCanvas.AddView(_stretchCanvas);
 
             /*_translateTransform = new TranslateTransform();
             OverlayCanvas.RenderTransform = _translateTransform;*/
@@ -268,7 +268,6 @@ namespace Mapgenix.GSuite.Android
             base.Dispose(disposing);
             if (disposing)
             {
-
                 ClearTiles(ClearTilesMode.AllTiles);
             }
         }
@@ -514,7 +513,7 @@ namespace Mapgenix.GSuite.Android
             int totalCount = _drawingCanvas.ChildCount;
             int loadedCount = 0;
 
-            //RemoveCurrentGhostTile(currentTile.TargetExtent);
+            RemoveCurrentGhostTile(currentTile.TargetExtent);
 
             int elapsedMilliseconds = 0;
             for(int i = 0; i < totalCount; i++)
@@ -580,7 +579,7 @@ namespace Mapgenix.GSuite.Android
                     targetScale = MapUtil.GetScale(MapArguments.MapUnit, targetExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
                     previousScale = MapUtil.GetScale(MapArguments.MapUnit, PreviousExtent, MapArguments.ActualWidth, MapArguments.ActualHeight);
 
-                    /*if (!MapUtil.IsFuzzyEqual(targetScale, previousScale))
+                    if (!MapUtil.IsFuzzyEqual(targetScale, previousScale))
                     {
                         ClearTiles(ClearTilesMode.StretchedTiles);
                         if (TransitionEffect == TransitionEffect.Stretch)
@@ -592,7 +591,7 @@ namespace Mapgenix.GSuite.Android
                     else
                     {
                         ShiftAndRemoveStretchTiles(targetExtent, MapArguments.CurrentResolution, isPanning);
-                    }*/
+                    }
                 }
 
                 ClearTiles(ClearTilesMode.CopyTiles);
@@ -650,12 +649,12 @@ namespace Mapgenix.GSuite.Android
                         string currentCellSimpleExtentString = GetTileKey(tile.ZoomLevelIndex, tile.RowIndex, tile.ColumnIndex);
                         if (cells.ContainsKey(currentCellSimpleExtentString))
                         {
-                            //cells.Remove(currentCellSimpleExtentString);
+                            cells.Remove(currentCellSimpleExtentString);
                         }
 
                         if (refreshType == OverlayRefreshType.Redraw)
                         {
-                            //DrawTile(tile, tile.TargetExtent);
+                            DrawTile(tile, tile.TargetExtent);
                         }
                     }
                 }

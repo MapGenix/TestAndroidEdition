@@ -157,13 +157,20 @@ namespace Mapgenix.GSuite.Android
             }
             finally
             {
-                background.Dispose();
-                paint.Dispose();                
-                leftLine.Dispose();
-                topLine.Dispose();
-                middleLine.Dispose();
-                bottomLine.Dispose();
-                backGroundCanvas.Dispose();
+                if(background != null)
+                    background.Dispose();
+                if(paint != null)
+                    paint.Dispose();                
+                if(leftLine != null)
+                    leftLine.Dispose();
+                if(topLine != null)
+                    topLine.Dispose();
+                if(middleLine != null)
+                    middleLine.Dispose();
+                if(bottomLine!= null)
+                    bottomLine.Dispose();
+                if(backGroundCanvas != null)
+                    backGroundCanvas.Dispose();
             }
                         
         }
