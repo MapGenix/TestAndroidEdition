@@ -770,15 +770,15 @@ namespace Mapgenix.GSuite.Android
             IEnumerable<ScreenPointF> textPathInScreen, DrawingLevel drawingLevel, float xOffset, float yOffset,
             float rotateAngle)
         {
-            /*Validators.CheckParameterIsNotNull(fillBrush, "fillBrush");
+            Validators.CheckParameterIsNotNull(fillBrush, "fillBrush");
             Validators.CheckParameterIsNotNull(font, "font");
             Validators.CheckParameterIsNotNull(text, "text");
-            Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
+            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
             Validators.CheckParameterIsNotNullOrEmpty(text, "text");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
             Validators.CheckParameterIsNotNull(textPathInScreen, "textPathInScreen");
 
-            var gdiFont = GetGdiPlusFontFromGeoFont(font);
+            /*var gdiFont = GetGdiPlusFontFromGeoFont(font);
 
             var g = SelectImageGraphicsByDrawingLevel(drawingLevel);
             var mode = g.CompositingMode;

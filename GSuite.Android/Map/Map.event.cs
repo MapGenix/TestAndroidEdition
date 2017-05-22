@@ -12,19 +12,20 @@ namespace Mapgenix.GSuite.Android
     public partial class Map
     {
         private const int ClickPointTolerance = 50;
-        /*private PointF _tempMotionDownPosition = new PointF(0, 0);
-        private int _activePointerId = -1;
-        private float _lastTouchX;
-        private float _lastTouchY;
-        private float _posX;
-        private float _posY;*/
         private GestureDetector _gestureDetector;
         private ScaleGestureDetector _scaleDetector;
-        //private int _fingerDown = 0;
+        
+        public event EventHandler<MapMotionEventArgs> MapTapDown;
 
-        //public event EventHandler<MapClickEventArgs> MapClick;
+        public event EventHandler<MapMotionEventArgs> MapTapUp;
 
-        //public event EventHandler<MapClickEventArgs> MapDoubleClick;
+        public event EventHandler<MapMotionEventArgs> MapDoubleTap;
+
+        public event EventHandler<MapMotionEventArgs> MapMove;
+
+        public event EventHandler<MapMotionEventArgs> MapPinchMove;
+
+        public event EventHandler<MapMotionEventArgs> MapPinchEnd;
 
         public event EventHandler<ExtentChangingEventArgs> CurrentExtentChanging;
 
@@ -42,33 +43,14 @@ namespace Mapgenix.GSuite.Android
 
         public event EventHandler<OverlaysEventArgs> OverlaysDrawn;
 
-        public event EventHandler<MapMotionEventArgs> MapMove;
-
-        /*protected virtual void OnMapClick(MapClickEventArgs e)
-        {
-            EventHandler<MapClickEventArgs> handler = MapClick;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        protected virtual void OnMapDoubleClick(MapClickEventArgs e)
-        {
-            EventHandler<MapClickEventArgs> handler = MapDoubleClick;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }*/
-
-
         private void InitMapGestures()
         {
             _gestureDetector = new GestureDetector(Context, new MapSimpleGestureManager());
 
             _gestureDetector.DoubleTap += (object sender, GestureDetector.DoubleTapEventArgs e) => {
-                EventManagerDoubleTap(sender, e.Event);
+                MapMotionEventArgs motionArgs = CollectMotionEventArguments(e.Event);
+                EventManagerDoubleTap(motionArgs);
+                OnMapDoubleTap(motionArgs);
             };
 
             _scaleDetector = new ScaleGestureDetector(Context, new MapPinchGestureManager()
@@ -98,6 +80,7 @@ namespace Mapgenix.GSuite.Android
             {
                 case MotionEventActions.Down:
                     EventManagerMotionDownCore(motionArgs);
+                    OnMapTapDown(motionArgs);
                     break;
 
                 case MotionEventActions.Move:                    
@@ -107,6 +90,7 @@ namespace Mapgenix.GSuite.Android
 
                 case MotionEventActions.Up:
                     EventManagerMotionUpCore(motionArgs);
+                    OnMapTapUp(motionArgs);
                     break;
                 case MotionEventActions.Cancel:
                     break;
@@ -117,6 +101,51 @@ namespace Mapgenix.GSuite.Android
             return true;
         }
 
+        protected virtual void OnMapTapDown(MapMotionEventArgs e)
+        {
+            EventHandler<MapMotionEventArgs> handler = MapTapDown;
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnMapTapUp(MapMotionEventArgs e)
+        {
+            EventHandler<MapMotionEventArgs> handler = MapTapUp;
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnMapDoubleTap(MapMotionEventArgs e)
+        {
+            EventHandler<MapMotionEventArgs> handler = MapDoubleTap;
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnMapPinchMove(MapMotionEventArgs e)
+        {
+            EventHandler<MapMotionEventArgs> handler = MapPinchMove;
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        protected virtual void OnMapPinchEnd(MapMotionEventArgs e)
+        {
+            EventHandler<MapMotionEventArgs> handler = MapPinchEnd;
+            if(handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
         protected virtual void OnCurrentExtentChanging(ExtentChangingEventArgs e)
         {
             EventHandler<ExtentChangingEventArgs> handler = CurrentExtentChanging;
@@ -125,7 +154,6 @@ namespace Mapgenix.GSuite.Android
                 handler(this, e);
             }
         }
-
       
         protected virtual void OnCurrentExtentChanged(ExtentChangedEventArgs e)
         {
@@ -289,7 +317,6 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
-                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.MotionMove(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
@@ -301,7 +328,6 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
-                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.MotionDown(motionArgs);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
             }
@@ -313,18 +339,16 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
-                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.MotionUp(motionArgs);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; };
             }
         }
 
-        private void EventManagerDoubleTap(object sender, MotionEvent e)
+        private void EventManagerDoubleTap(MapMotionEventArgs motionArgs)
         {
-            MapMotionEventArgs interactionArguments = CollectMotionEventArguments(e);
-            interactionArguments.MotionAction = MotionEventActions.Down;
-            interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;            
-            EventManagerDoubleTapCore(interactionArguments);
+            motionArgs.MotionAction = MotionEventActions.Down;
+            motionArgs.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;            
+            EventManagerDoubleTapCore(motionArgs);           
         }
 
         private void EventManagerDoubleTapCore(MapMotionEventArgs interactionArguments)
@@ -333,7 +357,6 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
-                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.DoubleTap(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }
@@ -347,6 +370,7 @@ namespace Mapgenix.GSuite.Android
 
             interactionArguments.CurrentExtent = _targetSnappedExtent == null ? CurrentExtent : _targetSnappedExtent;
             EventManagerPinchCore(interactionArguments);
+            OnMapPinchMove(interactionArguments);
         }
 
         private void EventManagerPinchCore(MapMotionEventArgs interactionArguments)
@@ -364,10 +388,9 @@ namespace Mapgenix.GSuite.Android
             PointShape point = ToScreenCoordinate(CurrentExtent.GetCenterPoint());
 
             _currentMousePosition = new PointF(startingFocusX, startingFocusY);
-            //Toast.MakeText(Context, "Scale factor" + interactionArguments.PinchFactor + "Center: X: " + startingFocusX + " Y: " + startingFocusY, ToastLength.Short).Show();
             OverlayCanvas.PostScale(1, startingFocusX, startingFocusY);
             EventManagerPinchEndCore(interactionArguments);
-            
+            OnMapPinchEnd(interactionArguments);
         }
 
         private void EventManagerPinchEndCore(MapMotionEventArgs interactionArguments)
@@ -376,7 +399,6 @@ namespace Mapgenix.GSuite.Android
             foreach (BaseInteractiveOverlay overlay in currentInteractiveOverlays)
             {
                 if (!overlay.IsVisible) continue;
-                //if (TrackOverlay.TrackMode != TrackMode.None && !(overlay is TrackInteractiveOverlay)) continue;
                 InteractiveResult interactiveResult = overlay.PinchEnd(interactionArguments);
                 if (ProcessWithInteractiveResult(interactiveResult, overlay)) { break; }
             }

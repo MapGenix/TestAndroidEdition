@@ -32,7 +32,6 @@ namespace Mapgenix.GSuite.Android
         private MapLayout _overlayCanvas;
         private MapLayout _eventCanvas;
         private MapLayout _toolsGrid;
-        //private DispatcherTimer _resizeTimer;
         private GeographyUnit _mapUnit;
         private RectangleShape _maxExtent;
         private RectangleShape _previousResizeExtent;
@@ -44,7 +43,6 @@ namespace Mapgenix.GSuite.Android
         private PointF _currentCenter;
         private PointF _currentMousePosition;
         private BackgroundOverlay _backgroundOverlay;
-        //private AdornmentOverlay _adornmentOverlay;
         private MapTools _mapTools;
         private Collection<RectangleShape> _mapPreviousExtents;
         private bool _needsRefreshOverlayChildren;
@@ -69,7 +67,6 @@ namespace Mapgenix.GSuite.Android
             _mapTools = new MapTools(this);
            
             _mapPreviousExtents = new Collection<RectangleShape>();
-            //InitializeResizeTimer();
 
             _interactiveOverlays = new SafeCollection<BaseInteractiveOverlay>();
             _overlays = new SafeCollection<BaseOverlay>();
@@ -98,7 +95,6 @@ namespace Mapgenix.GSuite.Android
             AddView(_overlayCanvas, p);*/
 
             InitMapGestures();
-            InitAnimation();
 
             _minimumScale = 200;
             _maximumScale = double.MaxValue;
@@ -136,14 +132,6 @@ namespace Mapgenix.GSuite.Android
 
         public EditInteractiveOverlay EditOverlay { get; set; }
 
-
-        /*public AdornmentOverlay AdornmentOverlay
-        {
-            get { return _adornmentOverlay; }
-            set { _adornmentOverlay = value; }
-        }*/
-        
-
         public GeographyUnit MapUnit
         {
             get { return _mapUnit; }
@@ -154,7 +142,6 @@ namespace Mapgenix.GSuite.Android
                 _mapUnit = value;
             }
         }
-
 
         public RectangleShape CurrentExtent
         {
@@ -328,17 +315,9 @@ namespace Mapgenix.GSuite.Android
         }
 
         public int GetSnappedZoomLevelIndex(RectangleShape targetExtent)
-        {
-            
+        {            
             double screenWidth = MapWidth;
             double screenHeight = MapHeight;
-            if (screenWidth == 0 || screenHeight == 0)
-            {                
-                /*Measure(new Size(float.PositiveInfinity, float.PositiveInfinity));
-                screenWidth = DesiredSize.Width;
-                screenHeight = DesiredSize.Height;*/
-            }
-
             double resolution = MapUtil.GetResolution(targetExtent, screenWidth, screenHeight);
             double scale = MapUtil.GetScaleFromResolution(resolution, MapUnit);
             return GetSnappedZoomLevelIndex(scale);
@@ -617,10 +596,7 @@ namespace Mapgenix.GSuite.Android
             RemoveAllViews();
             foreach (BaseOverlay overlay in Overlays)
             {
-                /*if (!(overlay is BaseMarkerOverlay) && !(overlay is PopupOverlay))
-                {*/
                 overlay.Elevation = index++;
-                //}
             }
         }
 
@@ -639,7 +615,6 @@ namespace Mapgenix.GSuite.Android
             {
                 currentOverlays.Add(interactiveOverlay);
             }
-            //currentOverlays.Add(AdornmentOverlay);
 
             return currentOverlays;
         }
@@ -668,7 +643,6 @@ namespace Mapgenix.GSuite.Android
         {
             if (ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
             {
-                //ReOrderOverlayElements();
                 OverlaysEventArgs drawingArgs = new OverlaysEventArgs(drawingOverlays, targetExtent);
                 OnOverlaysDrawing(drawingArgs);
                 if (drawingArgs.Cancel) { return; }
@@ -681,13 +655,6 @@ namespace Mapgenix.GSuite.Android
                     DrawOverlay(overlay, targetExtent, refreshType);
                 }
             }
-
-            /*if (ExtentOverlay != null && ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
-            {
-                _previousResizeExtent = targetExtent;
-                _mapPreviousExtents.Add(targetExtent);
-                LimitPreviousExtentCapability();
-            }*/
 
             if (ExtentOverlay.ExtentChangedType != ExtentChangedType.Pan)
             {

@@ -7,11 +7,6 @@ namespace Mapgenix.GSuite.Android
 {
     public partial class Map
     {
-        /*private Storyboard _zoomStoryboard;
-        private DoubleAnimation _zoomAnimationX;
-        private DoubleAnimation _zoomAnimationY;
-        private ScaleTransform _zoomTransform;*/
-
         private Animation _zoomAnimation;
         private PointF _lastZoomingCenter = new PointF(0, 0);
         private PointF _tempZoomingCenter = new PointF(0, 0);
@@ -36,19 +31,6 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        private void InitAnimation()
-        {
-
-            /*_zoomStoryboard = (Storyboard)_overlayCanvas.Resources["ZoomStoryboard"];
-            _zoomStoryboard.FillBehavior = FillBehavior.Stop;
-            _zoomStoryboard.Completed += ZoomStoryboard_Completed;
-            _zoomAnimationX = (DoubleAnimation)_zoomStoryboard.Children[0];
-            _zoomAnimationY = (DoubleAnimation)_zoomStoryboard.Children[1];
-            _zoomAnimationX.To = 1;
-            _zoomAnimationY.To = 1;
-            _zoomTransform = (ScaleTransform)_overlayCanvas.RenderTransform;*/
-        }
-
         private void ZoomAnimation_AnimationEnd(object sender, Animation.AnimationEndEventArgs e)
         {
             _zoomAnimation.Dispose();
@@ -64,22 +46,12 @@ namespace Mapgenix.GSuite.Android
 
         private void ExecuteZoomAnimation(double targetZoomingScale, double previousZoomingScale, PointF zoomLogicCenter)
         {
-            /*_zoomTransform.CenterX = zoomLogicCenter.X - 1;
-            _zoomTransform.CenterY = zoomLogicCenter.Y - 1;*/
-
             float fromX = Convert.ToSingle(zoomLogicCenter.X - 1);
             float fromy = Convert.ToSingle(zoomLogicCenter.Y - 1);
-            //float zoomFactor = Math.Max(1f, Convert.ToSingle(previousZoomingScale / targetZoomingScale));
+
             _previosZoomFactor = _zoomFactor;
             _zoomFactor = Convert.ToSingle(previousZoomingScale / targetZoomingScale);
 
-            /* _zoomAnimationX.To = zoomFactor;
-             _zoomAnimationY.To = zoomFactor;
-
-             _zoomStoryboard.Stop();
-             _zoomStoryboard.Begin();*/
-
-            //_zoomAnimation = new ScaleAnimation(_lastZoomingCenter.X, zoomLogicCenter.X, _lastZoomingCenter.Y, _lastZoomingCenter.X);
             _zoomAnimation = new ScaleAnimation(1, _zoomFactor, 1, _zoomFactor, zoomLogicCenter.X, zoomLogicCenter.Y);
             _zoomAnimation.Duration = ZoomAnimationDuration;
             _zoomAnimation.AnimationEnd += ZoomAnimation_AnimationEnd;
@@ -87,9 +59,6 @@ namespace Mapgenix.GSuite.Android
             _tempZoomingCenter = zoomLogicCenter;
 
             OverlayCanvas.StartAnimation(_zoomAnimation);
-
-            /*CurrentExtent = _targetSnappedExtent;
-            Refresh();*/
         }
     }
 }
