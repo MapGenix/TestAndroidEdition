@@ -3,6 +3,7 @@ using System.Globalization;
 using Mapgenix.Shapes;
 using Mapgenix.Utils;
 using Mapgenix.GSuite.Android.Properties;
+using Mapgenix.Canvas;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -148,6 +149,26 @@ namespace Mapgenix.GSuite.Android
             if (fromUnit != GeographyUnit.Meter)
             {
                 throw new ArgumentException(ExceptionMessage.GeographicUnitNotValidWithGoogle, parameterName);
+            }
+        }
+
+        internal static void CheckDrawingLevelIsValid(DrawingLevel drawingLevel, string parameterName)
+        {
+            switch (drawingLevel)
+            {
+                case DrawingLevel.LevelFour:
+                    break;
+                case DrawingLevel.LevelOne:
+                    break;
+                case DrawingLevel.LevelThree:
+                    break;
+                case DrawingLevel.LevelTwo:
+                    break;
+                case DrawingLevel.LabelLevel:
+                    break;
+                default:
+                    var errorDescription = ExceptionMessage.EnumerationOutOfRange;
+                    throw new ArgumentOutOfRangeException(parameterName, errorDescription);
             }
         }
 

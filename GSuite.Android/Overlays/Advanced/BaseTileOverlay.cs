@@ -31,8 +31,8 @@ namespace Mapgenix.GSuite.Android
         private MapLayout _stretchCanvas;
         [NonSerialized]
         private MapLayout _copyCanvas;
-        /*[NonSerialized]
-        private TranslateTransform _translateTransform;*/
+        [NonSerialized]
+        private TranslateTransform _translateTransform;
         private TileType _tileType;
         private int _tileBuffer;
         private bool _isDrawing;
@@ -46,7 +46,7 @@ namespace Mapgenix.GSuite.Android
         private object _lockerObject;
 
         protected BaseTileOverlay(Context context)
-            :base (context)
+            : base(context)
         {
             TileWidth = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(256, Context.Resources.DisplayMetrics.Xdpi));
             TileHeight = Convert.ToInt32(LayoutUnitsUtil.convertDpToPixel(256, Context.Resources.DisplayMetrics.Xdpi)); ;
@@ -68,9 +68,9 @@ namespace Mapgenix.GSuite.Android
             _stretchCanvas = new MapLayout(context);
             _stretchCanvas.Elevation = ZIndexes.StretchTileCanvas;
             OverlayCanvas.AddView(_stretchCanvas);
-
-            /*_translateTransform = new TranslateTransform();
-            OverlayCanvas.RenderTransform = _translateTransform;*/
+                    
+            _translateTransform = new TranslateTransform(OverlayCanvas);
+            /*OverlayCanvas.RenderTransform = _translateTransform;*/
 
             /*_panningTimer = new DispatcherTimer(DispatcherPriority.Background);
             _panningTimer.Interval = TimeSpan.FromMilliseconds(200);
@@ -176,8 +176,8 @@ namespace Mapgenix.GSuite.Android
             else
             {
                 _isDrawing = true;
-                /*_translateTransform.X = 0;
-                _translateTransform.Y = 0;*/
+                _translateTransform.X = 0;
+                _translateTransform.Y = 0;
 
                 if (TileType == TileType.SingleTile)
                 {
@@ -554,7 +554,7 @@ namespace Mapgenix.GSuite.Android
             }
 
             Tile newTile = GetTile(bufferedTargetExtent, mapScreenWidth, mapScreenHeight, 0, 0, MapArguments.GetSnappedZoomLevelIndex(targetExtent));
-            LayoutParams p = new LayoutParams(newTile.Width, newTile.Height);
+            LayoutParams p = new LayoutParams(newTile.LayoutParameters.Width, newTile.LayoutParameters.Height);
             p.LeftMargin = -TileBuffer * TileWidth;
             p.TopMargin = -TileBuffer * TileHeight;
 
@@ -693,6 +693,9 @@ namespace Mapgenix.GSuite.Android
                 double worldOffsetY = targetExtent.UpperLeftPoint.Y - PreviousExtent.UpperLeftPoint.Y;
                 double screenOffsetX = worldOffsetX / resolution;
                 double screenOffsetY = worldOffsetY / resolution;
+
+                _translateTransform.X -= (float)screenOffsetX;
+                _translateTransform.Y += (float)screenOffsetY;
             }
         }
 
@@ -731,7 +734,6 @@ namespace Mapgenix.GSuite.Android
         private void panningTimer_Tick(object sender, EventArgs e)
         {
             DrawMultipleTiles(_targetExtentForPanning, OverlayRefreshType.Pan);
-            //_panningTimer.Stop();
         }
 
         private static string GetTileKey(int level, long row, long column)

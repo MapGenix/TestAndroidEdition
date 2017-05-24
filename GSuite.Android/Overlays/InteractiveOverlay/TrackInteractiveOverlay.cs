@@ -33,8 +33,8 @@ namespace Mapgenix.GSuite.Android
         private GestureDetector _gestureDetector;
         private Map _map;
 
-        /*[NonSerialized]
-        private TranslateTransform _translateTransform;*/
+        [NonSerialized]
+        private TranslateTransform _translateTransform;
 
         public event EventHandler<ShapeEventArgs> TrackEnded;
 
@@ -66,7 +66,9 @@ namespace Mapgenix.GSuite.Android
             MapSimpleGestureManager manager = new MapSimpleGestureManager();
             manager.LongPress += MotionLongPress;
             _gestureDetector = new GestureDetector(Context, manager);
-            
+
+            _translateTransform = new TranslateTransform(OverlayCanvas);
+
             SetDefaultStyle();
         }
 
@@ -514,29 +516,50 @@ namespace Mapgenix.GSuite.Android
         protected override void DrawCore(RectangleShape targetExtent, OverlayRefreshType overlayRefreshType)
         {
             Validators.CheckParameterIsNotNull(targetExtent, "targetExtent");
-            LayerTile tile = OverlayCanvas.FindViewById<LayerTile>(TrackLayerId);
-
-            if (tile == null)
+            if (overlayRefreshType == OverlayRefreshType.Pan)
             {
-                tile = new LayerTile(Context);
-                tile.Id = TrackLayerId;
-                tile.IsAsync = false;
-                tile.HasWatermark = false;
-                tile.Elevation = 1;
-                OverlayCanvas.AddView(tile);
+                if (PreviousExtent != null)
+                {
+                    double resolution = MapArguments.CurrentResolution;
+                    double worldOffsetX = targetExtent.UpperLeftPoint.X - PreviousExtent.UpperLeftPoint.X;
+                    double worldOffsetY = targetExtent.UpperLeftPoint.Y - PreviousExtent.UpperLeftPoint.Y;
+                    double screenOffsetX = worldOffsetX / resolution;
+                    double screenOffsetY = worldOffsetY / resolution;
+
+                    _translateTransform.X -= (float)screenOffsetX;
+                    _translateTransform.Y += (float)screenOffsetY;
+                }
             }
             else
             {
-                tile.DrawingLayers.Clear();
+                _translateTransform.X = 0;
+                _translateTransform.Y = 0;
+
+                LayerTile tile = OverlayCanvas.FindViewById<LayerTile>(TrackLayerId);
+
+                if (tile == null)
+                {
+                    tile = new LayerTile(Context);
+                    tile.Id = TrackLayerId;
+                    tile.IsAsync = false;
+                    tile.HasWatermark = false;
+                    tile.Elevation = 1;
+                    OverlayCanvas.AddView(tile);
+                }
+                else
+                {
+                    tile.DrawingLayers.Clear();
+                }
+
+                tile.TargetExtent = targetExtent;
+                RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams((int)MapArguments.ActualWidth, (int)MapArguments.ActualHeight);
+                tile.LayoutParameters = p;
+                tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
+                tile.DrawingLayers.Add(_trackShapeLayer);
+
+                DrawTile(tile);
+
             }
-
-            tile.TargetExtent = targetExtent;
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams((int)MapArguments.ActualWidth, (int)MapArguments.ActualHeight);
-            tile.LayoutParameters = p;
-            tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
-            tile.DrawingLayers.Add(_trackShapeLayer);
-
-            DrawTile(tile);
         }
 
        

@@ -84,8 +84,12 @@
     <Compile Include="Cache\BaseNativeImageTileCache.cs" />
     <Compile Include="Cache\BaseTileCache.cs" />
     <Compile Include="Cache\FileBitmapTileCache.cs" />
+    <Compile Include="Drawing\Font.cs" />
+    <Compile Include="Drawing\FontAling.cs" />
+    <Compile Include="Drawing\FontStyle.cs" />
     <Compile Include="Drawing\Graphics.cs" />
     <Compile Include="Drawing\GraphicsPath.cs" />
+    <Compile Include="Drawing\TranslateTransform.cs" />
     <Compile Include="Events\Android\MapMotionEventArgs.cs" />
     <Compile Include="Events\Android\MapMotionEventManager.cs" />
     <Compile Include="Events\Android\MapPinchGestureManager.cs" />
@@ -191,6 +195,7 @@
     <Compile Include="Types\TileType.cs" />
     <Compile Include="Types\TrackMode.cs" />
     <Compile Include="Types\TransitionEffect.cs" />
+    <Compile Include="Types\LayoutPostType.cs" />
     <Compile Include="Types\UriTileMode.cs" />
     <Compile Include="Types\WrapDatelineMode.cs" />
   </ItemGroup>

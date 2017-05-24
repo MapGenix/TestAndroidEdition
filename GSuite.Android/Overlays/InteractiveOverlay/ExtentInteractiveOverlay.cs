@@ -41,18 +41,6 @@ namespace Mapgenix.GSuite.Android
 
         public MapDoubleTapMode MapDoubleTapMode { get; set; }
 
-        //public MapDoubleLeftClickMode DoubleLeftClickMode { get; set; }
-
-        //public MapDoubleRightClickMode DoubleRightClickMode { get; set; }
-
-        //public MapLeftClickDragMode LeftClickDragMode { get; set; }
-
-        //public Keys LeftClickDragKey { get; set; }
-
-        //public MapRightClickDragMode RightClickDragMode { get; set; }
-
-        //public Keys RightClickDragKey { get; set; }
-
         public ExtentChangedType ExtentChangedType { get; protected set; }
 
         public int ZoomPercentage
@@ -67,12 +55,25 @@ namespace Mapgenix.GSuite.Android
        
             if(motionArgs.MotionAction == MotionEventActions.Down)
             {
-                ExtentChangedType = ExtentChangedType.Pan;
+                ExtentChangedType = ExtentChangedType.None;
             }
             else return interactiveResult;
 
             _originPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             interactiveResult.ProcessOtherOverlaysMode = ProcessOtherOverlaysMode.DoNotProcessOtherOverlays;
+            return interactiveResult;
+        }
+
+        protected override InteractiveResult MotionUpCore(MapMotionEventArgs interactionArguments)
+        {
+            InteractiveResult interactiveResult = base.MotionUpCore(interactionArguments);
+            if (ExtentChangedType == ExtentChangedType.Pan)
+            {
+                _originPosition = new PointF(interactionArguments.ScreenX, interactionArguments.ScreenY); ;
+                interactiveResult.NewCurrentExtent = interactionArguments.CurrentExtent;
+                ExtentChangedType = ExtentChangedType.None;
+            }
+
             return interactiveResult;
         }
 
@@ -83,8 +84,10 @@ namespace Mapgenix.GSuite.Android
             PointF currentPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             _tapPosition = currentPosition;
 
-            if (ExtentChangedType == ExtentChangedType.Pan && motionArgs.ScreenPointers.Count == 1)
+            if ((ExtentChangedType == ExtentChangedType.None || ExtentChangedType == ExtentChangedType.Pan) 
+                && motionArgs.ScreenPointers.Count == 1)
             {
+                ExtentChangedType = ExtentChangedType.Pan;
                 double currentResolution = MapArguments.CurrentResolution;
                 double offsetScreenX = currentPosition.X - _originPosition.X;
                 double offsetScreenY = currentPosition.Y - _originPosition.Y;
@@ -140,14 +143,6 @@ namespace Mapgenix.GSuite.Android
             targetScale /= motionArgs.PinchFactor;
 
             ExtentChangedType = ExtentChangedType.Pinch;
-            //PointShape currentCenter = new PointShape(motionArgs.WorldX, motionArgs.WorldY);
-            //interactiveResult.NewCurrentExtent = MapUtil.CalculateExtent(new PointF((float)currentCenter.X, (float)currentCenter.Y), targetScale, motionArgs.MapUnit, motionArgs.MapWidth, motionArgs.MapHeight, motionArgs.Dpi);
-            //interactiveResult.NewZoomLevel = MapUtil.GetSnappedZoomLevelIndex(MapUtil.GetScale(motionArgs.MapUnit, interactiveResult.NewCurrentExtent, motionArgs.MapWidth, motionArgs.MapHeight), MapArguments.ZoomLevelScales);
-
-            //PointF newWorldCenter = MapUtil.ToWorldCoordinate(interactiveResult.NewCurrentExtent, motionArgs.ScreenX, motionArgs.ScreenY, MapArguments.ActualWidth, MapArguments.ActualHeight);
-            //PointF newScreenCenter = MapUtil.ToScreenCoordinate(interactiveResult.NewCurrentExtent, newWorldCenter.X, newWorldCenter.Y, MapArguments.ActualWidth, MapArguments.ActualHeight);
-            //interactiveResult.ScreenCenterPoint = new PointF(newScreenCenter.X, newScreenCenter.Y);
-
             _tapPosition = new PointF(motionArgs.ScreenX, motionArgs.ScreenY);
             targetScale = MapArguments.ZoomLevelScales[MapUtil.GetSnappedZoomLevelIndex(targetScale, MapArguments.ZoomLevelScales, MapArguments.MinimumScale, MapArguments.MaximumScale)];
             double deltaX = motionArgs.MapWidth * .5 - _tapPosition.X;

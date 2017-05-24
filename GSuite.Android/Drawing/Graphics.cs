@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using NativeAndroid = Android;
 using Android.Graphics;
+using Android.Util;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -289,6 +290,21 @@ namespace Mapgenix.GSuite.Android
         {
             _canvas.Rotate(degrees);
             Paint p = new Paint();
+        }
+
+        public SizeF MeasureString(string text, Font font)
+        {
+            Paint p = font.toPaint();
+            Rect bounds = new Rect();
+            p.GetTextBounds(text, 0, text.Length, bounds);
+            return new SizeF(bounds.Width(), bounds.Height());
+        }
+
+        public void DrawString(string text, Font font, Color color, PointF position)
+        {
+            font.Color = color;
+            Paint p = font.toPaint();
+            _canvas.DrawText(text, position.X, position.Y, p);
         }
 
         public void Dispose()

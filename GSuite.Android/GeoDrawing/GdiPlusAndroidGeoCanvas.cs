@@ -16,6 +16,7 @@ using NativeAndroid = Android;
 using Mapgenix.GSuite.Android.Properties;
 using Mapgenix.Shapes;
 using System.IO;
+using Android.Util;
 
 namespace Mapgenix.GSuite.Android
 {
@@ -33,7 +34,7 @@ namespace Mapgenix.GSuite.Android
 
         //private CompositingQuality _compositiongQuality = CompositingQuality.Default;
         private object _drawingImage;
-        //private Dictionary<long, NativeDrawing.Font> _fontCache;
+        private Dictionary<long, Font> _fontCache;
         private Guid _formatOfCanvasImage;
         private object _graphicsForLabel;
 
@@ -778,11 +779,11 @@ namespace Mapgenix.GSuite.Android
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
             Validators.CheckParameterIsNotNull(textPathInScreen, "textPathInScreen");
 
-            /*var gdiFont = GetGdiPlusFontFromGeoFont(font);
+            var gdiFont = GetGdiPlusFontFromGeoFont(font);
 
             var g = SelectImageGraphicsByDrawingLevel(drawingLevel);
-            var mode = g.CompositingMode;
-            g.CompositingMode = CompositingMode.SourceOver;
+            //var mode = g.CompositingMode;
+            //g.CompositingMode = CompositingMode.SourceOver;
 
             var rectangle = MeasureText(text, font);
 
@@ -835,7 +836,7 @@ namespace Mapgenix.GSuite.Android
                 }
             }
 
-            g.CompositingMode = mode;*/
+            //g.CompositingMode = mode;
         }
 
         /// <summary>Returns the rectangle containing a text.</summary>
@@ -845,7 +846,7 @@ namespace Mapgenix.GSuite.Android
         /// <param name="font">Font of the text to measure.</param>
         protected override DrawingRectangleF MeasureTextCore(string text, GeoFont font)
         {
-            /*Validators.CheckParameterIsNotNull(text, "text");
+            Validators.CheckParameterIsNotNull(text, "text");
 
             Bitmap bitmap = null;
             Graphics graphics = null;
@@ -854,18 +855,20 @@ namespace Mapgenix.GSuite.Android
 
             try
             {
-                bitmap = new Bitmap(1, 1);
+                bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888);
                 if (_bufferImageForLevel01 != null)
                 {
-                    bitmap.SetResolution(Dpi, Dpi);
+                    //bitmap.SetResolution(Dpi, Dpi);
                 }
                 graphics = Graphics.FromImage(bitmap);
 
-                size = graphics.MeasureString(text, GetGdiPlusFontFromGeoFont(font), new PointF(),
-                    StringFormat.GenericTypographic);
+                /*size = graphics.MeasureString(text, GetGdiPlusFontFromGeoFont(font), new PointF(),
+                    StringFormat.GenericTypographic);*/
+
+                size = graphics.MeasureString(text, GetGdiPlusFontFromGeoFont(font));
                 if (size.Width == 0 && size.Height != 0 && text.Length != 0)
                 {
-                    size.Width = 1;
+                    size = new SizeF(1, 1);
                 }
             }
             finally
@@ -880,8 +883,7 @@ namespace Mapgenix.GSuite.Android
                 }
             }
 
-            return new DrawingRectangleF(size.Width/2, size.Height/2, size.Width, size.Height);*/
-            return new DrawingRectangleF();
+            return new DrawingRectangleF(size.Width/2, size.Height/2, size.Width, size.Height);
         }
 
         /// <summary>Begins the drawing on the canvas.</summary>
@@ -1391,7 +1393,7 @@ namespace Mapgenix.GSuite.Android
             return geoImage;
         }
 
-        /*private void DrawString(Graphics graphics, string text, Font font, BaseGeoBrush fillBrush, GeoPen haloPen,
+        private void DrawString(Graphics graphics, string text, Font font, BaseGeoBrush fillBrush, GeoPen haloPen,
             PointF position, double width, double height)
         {
             var brush = GetGdiPlusBrushFromGeoBrush(fillBrush,
@@ -1404,11 +1406,11 @@ namespace Mapgenix.GSuite.Android
 
             if (haloPen == null || haloPen.Brush == null || haloPen.Color.AlphaComponent == 0)
             {
-                graphics.DrawString(text, font, brush, position, StringFormat.GenericTypographic);
+                graphics.DrawString(text, font, brush, position);
             }
             else
             {
-                var tempSmoothingMode = graphics.SmoothingMode;
+                //var tempSmoothingMode = graphics.SmoothingMode;
                 GraphicsPath path = null;
                 float xOffset = 0;
                 float yOffset = 0;
@@ -1445,8 +1447,8 @@ namespace Mapgenix.GSuite.Android
                     graphics.TranslateTransform(-xOffset, -yOffset);
                 }
 
-            }
-        }*/
+            }*/
+        }
 
         private void ClearCache()
         {
@@ -1497,7 +1499,7 @@ namespace Mapgenix.GSuite.Android
 
         private Graphics SelectImageGraphicsByDrawingLevel(DrawingLevel drawingLevel)
         {
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
+            Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
 
             switch (drawingLevel)
             {
@@ -1578,7 +1580,7 @@ namespace Mapgenix.GSuite.Android
             return null;
         }
 
-        /*private Font GetGdiPlusFontFromGeoFont(GeoFont font)
+        private Font GetGdiPlusFontFromGeoFont(GeoFont font)
         {
             if (font == null)
             {
@@ -1602,7 +1604,7 @@ namespace Mapgenix.GSuite.Android
             _fontCache.Add(font.Id, resultFont);
 
             return resultFont;
-        }*/
+        }
 
         private Color GetGdiPlusBrushFromGeoBrush(BaseGeoBrush brush, IEnumerable<ScreenPointF> areaPointsCache)
         {
@@ -1881,7 +1883,7 @@ namespace Mapgenix.GSuite.Android
             return wrapMode;
         }*/
 
-        /*private static FontStyle GetFontStyleFromDrawingFontStyle(DrawingFontStyles style)
+        private static FontStyle GetFontStyleFromDrawingFontStyle(DrawingFontStyles style)
         {
             var returnFontStyle = FontStyle.Regular;
 
@@ -1893,7 +1895,7 @@ namespace Mapgenix.GSuite.Android
                                             DrawingFontStyles.Underline |
                                             DrawingFontStyles.Strikeout))
             {
-                throw new ArgumentOutOfRangeException("style", ExceptionDescription.EnumerationOutOfRange);
+                throw new ArgumentOutOfRangeException("style", ExceptionMessage.EnumerationOutOfRange);
             }
 
             if ((style & DrawingFontStyles.Bold) != 0)
@@ -1914,7 +1916,7 @@ namespace Mapgenix.GSuite.Android
             }
 
             return returnFontStyle;
-        }*/
+        }
 
         private static Paint.Cap GetDashCapFromGeoDashCap(GeoDashCap dashCap)
         {

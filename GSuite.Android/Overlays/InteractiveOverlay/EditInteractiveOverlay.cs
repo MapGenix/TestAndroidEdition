@@ -42,8 +42,8 @@ namespace Mapgenix.GSuite.Android
 
         private Feature _originalEditingFeature;
         private ControlPointType _controlPointType;
-        /*[NonSerialized]
-        private TranslateTransform _translateTransform;*/
+        [NonSerialized]
+        private TranslateTransform _translateTransform;
 
         private InMemoryFeatureLayer _editShapesLayer;
         private InMemoryFeatureLayer _dragControlPointsLayer;
@@ -68,8 +68,7 @@ namespace Mapgenix.GSuite.Android
         {
             //OverlayCanvas.SetValue(System.Windows.Controls.Panel.ZIndexProperty, ZIndexes.EditInteractiveOverlay);
             OverlayCanvas.Elevation = ZIndexes.EditInteractiveOverlay;
-            //_translateTransform = new TranslateTransform();
-            //OverlayCanvas.RenderTransform = _translateTransform;
+            _translateTransform = new TranslateTransform(OverlayCanvas);
             RenderMode = RenderMode.GdiPlus;
             
             _editShapesLayer = FeatureLayerFactory.CreateInMemoryFeatureLayer();
@@ -200,19 +199,39 @@ namespace Mapgenix.GSuite.Android
 
         protected override void DrawCore(RectangleShape targetExtent, OverlayRefreshType overlayRefreshType)
         {
+
             Validators.CheckParameterIsNotNull(targetExtent, "targetExtent");
-
-            if (OverlayCanvas.ChildCount == 0)
+            if (overlayRefreshType == OverlayRefreshType.Pan)
             {
-                OverlayCanvas.AddView(_tile);
+                if (PreviousExtent != null)
+                {
+                    double resolution = MapArguments.CurrentResolution;
+                    double worldOffsetX = targetExtent.UpperLeftPoint.X - PreviousExtent.UpperLeftPoint.X;
+                    double worldOffsetY = targetExtent.UpperLeftPoint.Y - PreviousExtent.UpperLeftPoint.Y;
+                    double screenOffsetX = worldOffsetX / resolution;
+                    double screenOffsetY = worldOffsetY / resolution;
+
+                    _translateTransform.X -= (float)screenOffsetX;
+                    _translateTransform.Y += (float)screenOffsetY;
+                }
             }
+            else
+            {
+                _translateTransform.X = 0;
+                _translateTransform.Y = 0;
 
-            _tile.TargetExtent = targetExtent;
+                if (OverlayCanvas.ChildCount == 0)
+                {
+                    OverlayCanvas.AddView(_tile);
+                }
 
-            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(Convert.ToInt32(MapArguments.ActualWidth), Convert.ToInt32(MapArguments.ActualHeight));
-            _tile.LayoutParameters = p;
-            _tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
-            DrawTile(_tile);
+                _tile.TargetExtent = targetExtent;
+
+                RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(Convert.ToInt32(MapArguments.ActualWidth), Convert.ToInt32(MapArguments.ActualHeight));
+                _tile.LayoutParameters = p;
+                _tile.ZoomLevelIndex = MapArguments.GetSnappedZoomLevelIndex(targetExtent);
+                DrawTile(_tile);
+            }
         }
 
         protected override void Dispose(bool disposing)
