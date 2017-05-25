@@ -86,7 +86,7 @@ namespace Mapgenix.GSuite.Android
                     if(ChildCount == 0)
                         AddView(_scaleLineCanvas);
 
-                    _scaleLineCanvas.RemoveAllViews();
+                    //_scaleLineCanvas.RemoveAllViews();
                     _scaleLineCanvas.AddView(_topText);
                     _scaleLineCanvas.AddView(_bottomText);
                 }
@@ -108,19 +108,16 @@ namespace Mapgenix.GSuite.Android
             leftLine.LineTo(0, (float)_scaleLineHeightPixel * 2 - 2);
             leftLine.Close();
 
-            //_topLine = GetLine(0, 2, 0, _scaleLineHeightPixel);
             Path topLine = new Path();
             topLine.MoveTo(xTopLine, 2);
             topLine.LineTo(xTopLine, (float)_scaleLineHeightPixel / 2);
             topLine.Close();
 
-            //_middleLine = GetLine(0, _scaleLineHeightPixel, 0, _scaleLineHeightPixel);
             Path middleLine = new Path();
             middleLine.MoveTo(0, (float)_scaleLineHeightPixel / 2);
             middleLine.LineTo(xMiddleLine, (float)_scaleLineHeightPixel / 2);
             middleLine.Close();
 
-            //_bottomLine = GetLine(0, _scaleLineHeightPixel, 0, _scaleLineHeightPixel * 2 - 2);
             Path bottomLine = new Path();
             bottomLine.MoveTo(xBottomLine, (float)_scaleLineHeightPixel / 2);
             bottomLine.LineTo(xBottomLine, (float)_scaleLineHeightPixel * 2 - 2);

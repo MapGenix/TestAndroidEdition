@@ -70,13 +70,10 @@ namespace Mapgenix.GSuite.Android
 
             _interactiveOverlays = new SafeCollection<BaseInteractiveOverlay>();
             _overlays = new SafeCollection<BaseOverlay>();
-            /*_overlays.Removing += OverlaysRemoving;
+            _overlays.Removing += OverlaysRemoving;
             _overlays.ClearingItems += OverlaysClearingItems;
             _interactiveOverlays.Removing += InteractiveOverlaysRemoving;
-            _interactiveOverlays.ClearingItems += InteractiveOverlaysClearingItems;*/
-
-            //_toolsGrid = new RelativeLayout(Context);
-
+            _interactiveOverlays.ClearingItems += InteractiveOverlaysClearingItems;
             _currentCenter = new PointF(0f, 0f);
             _previousSnappedScale = Double.NaN;
             _zoomLevelScales = new Collection<double>();
@@ -85,14 +82,6 @@ namespace Mapgenix.GSuite.Android
             ExtentOverlay = new ExtentInteractiveOverlay(Context);
             TrackOverlay = new TrackInteractiveOverlay(Context);
             EditOverlay = new EditInteractiveOverlay(Context);
-            //_adornmentOverlay = new AdornmentOverlay();*/
-
-            /*_overlayCanvas = new RelativeLayout(Context);
-            RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
-            p.TopMargin = 0;
-            p.LeftMargin = 0;
-            _overlayCanvas.LayoutParameters = p;
-            AddView(_overlayCanvas, p);*/
 
             InitMapGestures();
 
@@ -102,8 +91,6 @@ namespace Mapgenix.GSuite.Android
             SetMinimumHeight(1);
 
             _dpi = (int)Context.Resources.DisplayMetrics.Xdpi;
-
-            //SizeChanged += WpfMapSizeChanged;
         }
 
         #region public properties
@@ -590,6 +577,58 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
+        private void InteractiveOverlaysClearingItems(object sender, EventArgs e)
+        {
+            if (_overlayCanvas != null)
+            {
+                foreach (BaseInteractiveOverlay overlay in InteractiveOverlays)
+                {
+                    if (OverlayCanvas.IndexOfChild(overlay.OverlayCanvas) != -1)
+                    {
+                        OverlayCanvas.RemoveView(overlay.OverlayCanvas);
+                    }
+                }
+            }
+        }
+
+        private void InteractiveOverlaysRemoving(object sender, Mapgenix.Utils.ItemEventArgs e)
+        {
+            if (_overlayCanvas != null && e.Item != null)
+            {
+                BaseInteractiveOverlay overlay = e.Item as BaseInteractiveOverlay;
+                if (overlay != null && _overlayCanvas.IndexOfChild(overlay.OverlayCanvas) != -1)
+                {
+                    _overlayCanvas.RemoveView(overlay.OverlayCanvas);
+                }
+            }
+        }
+
+        private void OverlaysClearingItems(object sender, EventArgs e)
+        {
+            if (_overlayCanvas != null)
+            {
+                foreach (BaseOverlay overlay in Overlays)
+                {
+                    if (OverlayCanvas.IndexOfChild(overlay.OverlayCanvas) != -1)
+                    {
+                        OverlayCanvas.RemoveView(overlay.OverlayCanvas);
+                    }
+                }
+            }
+        }
+
+        private void OverlaysRemoving(object sender, Mapgenix.Utils.ItemEventArgs e)
+        {
+            if (_overlayCanvas != null && e.Item != null)
+            {
+                BaseOverlay overlay = e.Item as BaseOverlay;
+                if (overlay != null && _overlayCanvas.IndexOfChild(overlay.OverlayCanvas) != -1)
+                {
+                    _overlayCanvas.RemoveView(overlay.OverlayCanvas);
+                }
+            }
+        }
+
         private void ReOrderOverlayElements()
         {
             int index = 1;
@@ -731,21 +770,6 @@ namespace Mapgenix.GSuite.Android
             }
         }
 
-        private bool CheckIfZoomAnimationSkipped()
-        {
-            bool isSkipped = false;
-            /*if (ExtentOverlay != null && (ExtentOverlay.ExtentChangedType == ExtentChangedType.TrackZoomIn || ExtentOverlay.ExtentChangedType == ExtentChangedType.TrackZoomOut))
-            {
-                isSkipped = true;
-            }
-            else if (_isResizing)
-            {
-                isSkipped = true;
-            }*/
-
-            return isSkipped;
-        }
-
         private void SyncZoomLevelScales(IEnumerable<ZoomLevel> zoomLevels)
         {
             _zoomLevelScales.Clear();
@@ -815,43 +839,15 @@ namespace Mapgenix.GSuite.Android
             }
             else
             {
-                if (CheckIfZoomAnimationSkipped())
-                {
-                    CurrentExtent = _targetSnappedExtent;
-                    Draw(_targetSnappedExtent, overlayRefreshType);
-                }
+                if(ExtentOverlay.ExtentChangedType != ExtentChangedType.Pinch)
+                    ExecuteZoomAnimation(_targetSnappedScale, _previousSnappedScale, _currentMousePosition);
                 else
                 {
-                    if(ExtentOverlay.ExtentChangedType != ExtentChangedType.Pinch)
-                        ExecuteZoomAnimation(_targetSnappedScale, _previousSnappedScale, _currentMousePosition);
-                    else
-                    {
-                        CurrentExtent = _targetSnappedExtent;
-                        Refresh();
-                    }
-                        
+                    CurrentExtent = _targetSnappedExtent;
+                    Refresh();
                 }
             }
         }
-
-        protected override void OnDraw(NativeAndroid.Graphics.Canvas canvas)
-        {
-            base.OnDraw(canvas);
-            /*if (_overlayCanvas == null)
-            {
-                _overlayCanvas = new RelativeLayout(Context);
-                RelativeLayout.LayoutParams p = new LayoutParams(this.LayoutParameters);
-                p.TopMargin = 0;
-                p.LeftMargin = 0;
-                _overlayCanvas.LayoutParameters = p;
-                AddView(_overlayCanvas, p);
-            }
-
-            _needsRefreshOverlayChildren = true;
-            Draw(CurrentExtent);
-            _needsRefreshOverlayChildren = false;*/
-        }
-
         #endregion
     }
 }

@@ -135,10 +135,6 @@ namespace Mapgenix.GSuite.Android
 			{
 				case GoogleMapsPictureFormat.Jpeg:
 					return Bitmap.CompressFormat.Jpeg;
-
-				/*case GoogleMapsPictureFormat.Gif:
-					return ImageFormat.Gif;*/
-
 				case GoogleMapsPictureFormat.Png8:
 				case GoogleMapsPictureFormat.Png32:
 					return Bitmap.CompressFormat.Png;
@@ -155,12 +151,6 @@ namespace Mapgenix.GSuite.Android
                 case GoogleMapsPictureFormat.Png8:
                 case GoogleMapsPictureFormat.Png32:
                     return "png";
-
-                /*case HEREMapsPictureFormat.Gif:
-                    return "gif";
-
-                case HEREMapsPictureFormat.BMP:
-                    return "bmp";*/
 
                 case GoogleMapsPictureFormat.Jpeg:
                     return "jpg";

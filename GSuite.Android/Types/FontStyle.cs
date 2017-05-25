@@ -1,11 +1,11 @@
 namespace Mapgenix.GSuite.Android
 {
-    internal enum FontStyle
+    public enum FontStyle
     {
-        Regular = 0,
-        Bold = 1,
-        Italic = 2,
-        Underline = 3,
-        Strikeout = 4
+        Regular = 1,
+        Bold = 2,
+        Italic = 4,
+        Underline = 8,
+        Strikeout = 16
     }
 }

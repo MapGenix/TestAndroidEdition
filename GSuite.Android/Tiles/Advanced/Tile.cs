@@ -180,7 +180,7 @@ namespace Mapgenix.GSuite.Android
                 OnDrawing(new GeoCanvasEventArgs(geoCanvas));
                 Stopwatch stopwatch = new Stopwatch();
                 stopwatch.Start();
-                if (TileCache == null || geoCanvas is DrawingVisualGeoCanvas)
+                if (TileCache == null)
                 {
                     DrawCore(geoCanvas);
                     geoCanvas.Flush();

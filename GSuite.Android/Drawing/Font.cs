@@ -13,7 +13,7 @@ using Android.Graphics;
 
 namespace Mapgenix.GSuite.Android
 {
-    internal class Font
+    internal class Font :IDisposable
     {
         private float _size;
         private Color _color;
@@ -94,11 +94,11 @@ namespace Mapgenix.GSuite.Android
             Typeface plain = Typeface.Create(_fontName, TypefaceStyle.Normal);
             Typeface tf = null;
 
-            if ((_style | FontStyle.Bold) != 0 && (_style | FontStyle.Italic) != 0)
+            if ((_style & FontStyle.Bold) != 0 && (_style & FontStyle.Italic) != 0)
                 tf = Typeface.Create(plain, TypefaceStyle.BoldItalic);
-            else if ((_style | FontStyle.Bold) != 0)
+            else if ((_style & FontStyle.Bold) != 0)
                 tf = Typeface.Create(plain, TypefaceStyle.Bold);
-            else if ((_style | FontStyle.Italic) != 0)
+            else if ((_style & FontStyle.Italic) != 0)
                 tf = Typeface.Create(plain, TypefaceStyle.Italic);
             else
                 tf = plain;
@@ -107,9 +107,23 @@ namespace Mapgenix.GSuite.Android
             p.SetTypeface(tf);
             p.TextSize = _size;
             p.TextAlign = PaintAling;
-            //p.UnderlineText = (_style | FontStyle.Underline) != 0 ? true : false;
-            //p.StrikeThruText = (_style | FontStyle.Strikeout) != 0 ? true : false;
+            p.AntiAlias = true;
+            var underline = (int)(_style & FontStyle.Underline);
+            var strike = (int)(_style & FontStyle.Strikeout);            
+            p.UnderlineText = (_style & FontStyle.Underline) != 0 ? true : false;
+            p.StrikeThruText = (_style & FontStyle.Strikeout) != 0 ? true : false;
             return p;
-        }        
+        }    
+        
+        public Font Clone()
+        {
+            Font f = new Font(_fontName, _size, _style, _color, _aling);
+            return f;
+        }
+
+        public void Dispose()
+        {
+            
+        }
     }
 }

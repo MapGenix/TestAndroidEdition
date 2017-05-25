@@ -15,7 +15,6 @@ namespace Mapgenix.GSuite.Android
         {
             _zoomLevelScales = new Collection<double>();
         }
-
        
         public GeographyUnit MapUnit { get; set; }
 

@@ -1,14 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Mapgenix.Canvas;
 using System.Collections.ObjectModel;
 using Android.Graphics;
@@ -31,8 +23,6 @@ namespace Mapgenix.GSuite.Android
         private Bitmap _bufferImageForLevel03;
         private Bitmap _bufferImageForLevel04;
         private Context _context;
-
-        //private CompositingQuality _compositiongQuality = CompositingQuality.Default;
         private object _drawingImage;
         private Dictionary<long, Font> _fontCache;
         private Guid _formatOfCanvasImage;
@@ -44,9 +34,6 @@ namespace Mapgenix.GSuite.Android
         private object _graphicsForLevel04;
 
         private Bitmap _haloPenBitmap;
-
-        //private InterpolationMode _interpolationMode;
-
         private bool _isBitmap;
         private int _localCanvasHeight;
 
@@ -58,45 +45,7 @@ namespace Mapgenix.GSuite.Android
         {
             _context = context;
         }
-
-        //private SmoothingMode _smoothingMode = SmoothingMode.HighQuality;
-        //private TextRenderingHint _textRenderingHint = TextRenderingHint.AntiAlias;
-
-        /// <summary>Gets or sets the quality level of composing.</summary>
-        /// <remarks>
-        /// 	<para>Used for GDI+ drawing.<br/>
-        ///     <br/>
-        ///     Compositing is done during rendering when the source pixels are
-        ///     combined with the destination pixels to produce the resultant pixels. The quality
-        ///     of compositing directly relates to the visual quality of the output and is
-        ///     inversely proportional to the render time. The higher the quality, the slower the
-        ///     render time. This is because the higher the quality level, the more surrounding
-        ///     pixels need to be taken into account during the composite. The linear quality
-        ///     setting (AssumeLinear) compromises by providing better quality than the default
-        ///     quality at a slightly lower speed.</para>
-        /// </remarks>
-
-        /*public CompositingQuality CompositingQuality
-        {
-            get { return _compositiongQuality; }
-            set { _compositiongQuality = value; }
-        }*/
-
-        /// <summary>Gets or sets the rendering quality.</summary>
-        /// <remarks>
-        /// 	<para>Used for GDI+ drawing.<br/>
-        /// 		<br/>
-        /// 		<br/>
-        ///     The smoothing mode specifies whether lines, curves, and the edges of filled areas
-        ///     use smoothing (also called antialiasing). One exception is that path gradient
-        ///     brushes do not obey the smoothing mode. Areas filled using a PathGradientBrush are
-        ///     rendered the same way (aliased) regardless of the SmoothingMode property.</para>
-        /// </remarks>
-        /*public SmoothingMode SmoothingMode
-         {
-             get { return _smoothingMode; }
-             set { _smoothingMode = value; }
-         }*/
+        
 
         /// <summary>Indicates if GdiPlusGeoCanvas has the KeyColor or not. </summary>
         /// <remarks>The default value is true.</remarks>
@@ -104,28 +53,6 @@ namespace Mapgenix.GSuite.Android
         {
             get { return true; }
         }
-
-       
-        /// <summary>Gets or sets the rendering mode of the text in this canvas.</summary>
-        /// <remarks>
-        /// 	<para>Used for GDI+ drawing.<br/>
-        /// 		<br/>
-        ///     The text rendering hint specifies whether text renders with antialiasing.</para>
-        /// </remarks>
-        /// <value>Rendering mode of the text in this canvas.</value>
-        /*public TextRenderingHint TextRenderingHint
-        {
-            get { return _textRenderingHint; }
-            set { _textRenderingHint = value; }
-        }*/
-
-        /// <summary>Gets or sets the interpolation mode.</summary>
-        /// <value>System.Drawing.Drawing2D.InterpolationMode.</value>
-        /*public InterpolationMode InterpolationMode
-        {
-            get { return _interpolationMode; }
-            set { _interpolationMode = value; }
-        }*/
 
         /// <summary>Draws an area (polygons, circles, ellipses etc) on the canvas.</summary>
         /// <overloads>
@@ -148,8 +75,6 @@ namespace Mapgenix.GSuite.Android
             PenBrushDrawingOrder penBrushDrawingOrder)
         {
             Validators.CheckParameterIsNotNull(screenPoints, "screenPoints");
-            //Validators.CheckParameterIsNotBothNull(outlinePen, fillBrush, "outlinePen", "fillBrush");
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
 
             foreach (var screenPointsArray in screenPoints)
@@ -182,9 +107,7 @@ namespace Mapgenix.GSuite.Android
                     screenPointsArray[i] = new ScreenPointF(screenPointX, screenPointY);
                 }
             }
-
-            /*if (DrawingQuality == DrawingQuality.HighSpeed ||
-                (DrawingQuality == DrawingQuality.CanvasSettings && SmoothingMode == SmoothingMode.HighSpeed))*/
+            
             if (DrawingQuality == DrawingQuality.HighSpeed ||
                 (DrawingQuality == DrawingQuality.CanvasSettings))
             {
@@ -394,7 +317,6 @@ namespace Mapgenix.GSuite.Android
                 try
                 {
                     graphicsPath = new GraphicsPath();
-                    //graphicsPath.FillMode = FillMode.Winding;
                     foreach (var points in ringsCollection)
                     {
                         graphicsPath.AddPolygon(points);
@@ -451,7 +373,6 @@ namespace Mapgenix.GSuite.Android
         {
             Validators.CheckParameterIsNotNull(screenPoints, "screenPoints");
             Validators.CheckParameterIsNotNull(linePen, "outlinePen");
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
 
             var points = new List<PointF>();
@@ -530,8 +451,6 @@ namespace Mapgenix.GSuite.Android
             BaseGeoBrush fillBrush, DrawingLevel drawingLevel, float xOffset, float yOffset,
             PenBrushDrawingOrder penBrushDrawingOrder)
         {
-            //Validators.CheckParameterIsNotBothNull(outlinePen, fillBrush, "outlinePen", "fillBrush");
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
 
             var screenX = screenPoint.X - width*0.5f + xOffset;
@@ -583,18 +502,13 @@ namespace Mapgenix.GSuite.Android
         {
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
             Validators.CheckParameterIsNotNull(image, "image");
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
-
 
             Bitmap bitmap;
             lock (image)
             {
-                //bitmap = new System.Drawing.Bitmap(image.GetImageStream(this));
-                //Bitmap.CreateBitmap()
                 bitmap = BitmapFactory.DecodeStream(image.GetImageStream(this));
             }
 
-            //bitmap.SetResolution(Dpi, Dpi);
             UseKeyColor(bitmap);
             var imageWidth = bitmap.Width;
             var imageHeight = bitmap.Height;
@@ -667,11 +581,6 @@ namespace Mapgenix.GSuite.Android
             float rotateAngle)
         {
             Validators.CheckParameterIsNotNull(image, "image");
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
-            //Validators.CheckIfInputValueIsBiggerThan(widthInScreen, "widthInScreen", 0,RangeCheckingInclusion.ExcludeValue);
-            //Validators.CheckIfInputValueIsBiggerThan(heightInScreen, "heightInScreen", 0, RangeCheckingInclusion.ExcludeValue);
-
-
             var screenX = centerXInScreen;
             var screenY = centerYInScreen;
 
@@ -687,14 +596,11 @@ namespace Mapgenix.GSuite.Android
                 {
                     lock (image)
                     {
-                        //bitmap = new Bitmap(image.GetImageStream(this));
                         bitmap = BitmapFactory.DecodeStream(image.GetImageStream(this));
                     }
-                    //bitmap.SetResolution(Dpi, Dpi);
                     UseKeyColor(bitmap);
                     var sourceRectangle = new RectF(0, 0, bitmap.Width, bitmap.Height);
                     var graphics = SelectImageGraphicsByDrawingLevel(drawingLevel);
-                    //graphics.DrawImage(bitmap, destinateRectangle, sourceRectangle, GraphicsUnit.Pixel);
                     graphics.DrawImage(bitmap, destinateRectangle, sourceRectangle);
                 }
                 finally
@@ -727,10 +633,8 @@ namespace Mapgenix.GSuite.Android
                 {
                     lock (image)
                     {
-                        //bitmap = new Bitmap(image.GetImageStream(this));
                         bitmap = BitmapFactory.DecodeStream(image.GetImageStream(this));
                     }
-                    //bitmap.SetResolution(Dpi, Dpi);
                     UseKeyColor(bitmap);
                     var sourceRectangle = new RectF(0, 0, bitmap.Width, bitmap.Height);
 
@@ -738,8 +642,6 @@ namespace Mapgenix.GSuite.Android
 
                     graphics.TranslateTransform(screenX, screenY);
                     graphics.RotateTransform(-rotateAngle);
-
-                    //graphics.DrawImage(bitmap, destinateRectangle, sourceRectangle, GraphicsUnit.Pixel);
                     graphics.DrawImage(bitmap, destinateRectangle, sourceRectangle);
 
                     graphics.RotateTransform(rotateAngle);
@@ -774,7 +676,6 @@ namespace Mapgenix.GSuite.Android
             Validators.CheckParameterIsNotNull(fillBrush, "fillBrush");
             Validators.CheckParameterIsNotNull(font, "font");
             Validators.CheckParameterIsNotNull(text, "text");
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
             Validators.CheckParameterIsNotNullOrEmpty(text, "text");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
             Validators.CheckParameterIsNotNull(textPathInScreen, "textPathInScreen");
@@ -782,8 +683,6 @@ namespace Mapgenix.GSuite.Android
             var gdiFont = GetGdiPlusFontFromGeoFont(font);
 
             var g = SelectImageGraphicsByDrawingLevel(drawingLevel);
-            //var mode = g.CompositingMode;
-            //g.CompositingMode = CompositingMode.SourceOver;
 
             var rectangle = MeasureText(text, font);
 
@@ -835,8 +734,6 @@ namespace Mapgenix.GSuite.Android
                     g.TranslateTransform(-newPointX, -newPointY);
                 }
             }
-
-            //g.CompositingMode = mode;
         }
 
         /// <summary>Returns the rectangle containing a text.</summary>
@@ -856,14 +753,7 @@ namespace Mapgenix.GSuite.Android
             try
             {
                 bitmap = Bitmap.CreateBitmap(1, 1, Bitmap.Config.Argb8888);
-                if (_bufferImageForLevel01 != null)
-                {
-                    //bitmap.SetResolution(Dpi, Dpi);
-                }
                 graphics = Graphics.FromImage(bitmap);
-
-                /*size = graphics.MeasureString(text, GetGdiPlusFontFromGeoFont(font), new PointF(),
-                    StringFormat.GenericTypographic);*/
 
                 size = graphics.MeasureString(text, GetGdiPlusFontFromGeoFont(font));
                 if (size.Width == 0 && size.Height != 0 && text.Length != 0)
@@ -1027,10 +917,6 @@ namespace Mapgenix.GSuite.Android
                 if (!_isBitmap)
                 {
                     bitmap.Compress(Bitmap.CompressFormat.Png, 0,((GeoImage) _drawingImage).GetImageStream(this));
-                    if (!string.IsNullOrEmpty(((GeoImage) _drawingImage).PathFilename))
-                    {
-                        //bitmap.Compress(Bitmap.CompressFormat.Png, 0,((GeoImage) _drawingImage).PathFilename, new ImageFormat(_formatOfCanvasImage));
-                    }
                 }
             }
             finally
@@ -1099,11 +985,6 @@ namespace Mapgenix.GSuite.Android
                 }
                 ClearCache();
             }
-
-            if (_bufferImageForLevel01 != null && KeyColor.AlphaComponent != 0)
-            {
-                //_bufferImageForLevel01.MakeTransparent(Color.Transparent);
-            }
         }
 
         /// <summary>Flushes drawing and commits the drawing on the canvas.</summary>
@@ -1140,12 +1021,7 @@ namespace Mapgenix.GSuite.Android
 
                 if (!_isBitmap)
                 {
-                    //bitmap.Save(((GeoImage) _drawingImage).GetImageStream(this), ImageFormat.Png);
                     bitmap.Compress(Bitmap.CompressFormat.Png, 0, ((GeoImage)_drawingImage).GetImageStream(this));
-                    if (!string.IsNullOrEmpty(((GeoImage) _drawingImage).PathFilename))
-                    {
-                        //bitmap.Save(((GeoImage) _drawingImage).PathFilename, new ImageFormat(_formatOfCanvasImage));
-                    }
                 }
             }
             finally
@@ -1214,17 +1090,16 @@ namespace Mapgenix.GSuite.Android
         /// <returns>GeoImage containing.</returns>
         protected override GeoImage ToGeoImageCore(object nativeImage)
         {
-            /*var image = nativeImage as Image;
+            var image = nativeImage as Bitmap;
             if (image != null)
             {
                 var stream = new MemoryStream();
-                image.Save(stream, ImageFormat.Png);
+                image.Compress(Bitmap.CompressFormat.Png, 0, stream);
                 stream.Seek(0, SeekOrigin.Begin);
                 return new GeoImage(stream);
             }
 
-            throw new ArgumentException(ExceptionDescription.ParameterIsNull, "nativeImage");*/
-            return new GeoImage();
+            throw new ArgumentException(ExceptionMessage.ParameterIsNull, "nativeImage");
         }
 
         /// <summary>Returns stream representing the GeoImage in TIFF format.</summary>
@@ -1246,19 +1121,17 @@ namespace Mapgenix.GSuite.Android
 
             try
             {
-                /*imageStream = new MemoryStream();
-                bitmap = new Bitmap(image.PathFilename);
-
-                image.CanvasImageFormat = bitmap.RawFormat.Guid;
-                bitmap.Save(imageStream, ImageFormat.Png);
-                imageStream.Seek(0, SeekOrigin.Begin);*/
+                imageStream = new MemoryStream();
+                bitmap = BitmapFactory.DecodeFile(image.PathFilename);
+                bitmap.Compress(Bitmap.CompressFormat.Png, 0, imageStream);
+                imageStream.Seek(0, SeekOrigin.Begin);
             }
             finally
             {
-                /*if (bitmap != null)
+                if (bitmap != null)
                 {
                     bitmap.Dispose();
-                }*/
+                }
             }
 
             return imageStream;
@@ -1290,7 +1163,6 @@ namespace Mapgenix.GSuite.Android
                 gdiBrush = canvas.GetGdiPlusBrushFromGeoBrush(brush, null);
                 g.FillRectangle(gdiBrush, 0, 0, bitmap.Width, bitmap.Height);
                 imageStream.Seek(0, SeekOrigin.Begin);
-                //bitmap.Save(imageStream, bitmap.RawFormat);
                 bitmap.Compress(Bitmap.CompressFormat.Png, 0, imageStream);
             }
             finally
@@ -1302,10 +1174,6 @@ namespace Mapgenix.GSuite.Android
                 if (bitmap != null)
                 {
                     bitmap.Dispose();
-                }
-                if (gdiBrush != null)
-                {
-                   // gdiBrush.Dispose();
                 }
             }
         }
@@ -1377,7 +1245,6 @@ namespace Mapgenix.GSuite.Android
             {
                 bitmap = Bitmap.CreateBitmap(width, height, Bitmap.Config.Argb8888);
                 var imageStream = new MemoryStream();
-                //bitmap.Save(imageStream, ImageFormat.Png);
                 bitmap.Compress(Bitmap.CompressFormat.Png, 0, imageStream);
                 imageStream.Seek(0, SeekOrigin.Begin);
                 geoImage = new GeoImage(imageStream);
@@ -1410,31 +1277,17 @@ namespace Mapgenix.GSuite.Android
             }
             else
             {
-                //var tempSmoothingMode = graphics.SmoothingMode;
                 GraphicsPath path = null;
-                float xOffset = 0;
-                float yOffset = 0;
 
                 try
                 {
-                    path = new GraphicsPath();
-                    var fontSize = font.Size*Dpi/StandardDpi;
-                    path.AddString(text, font.FontFamily, (int) font.Style, fontSize*1.3f, position,
-                        StringFormat.GenericTypographic);
 
-                    var bound = path.GetBounds();
-                    var boundWidth = bound.Width;
-                    var boundHeight = bound.Height;
+                    Font haloFont = font.Clone();
+                    var fontSize = font.Size;
+                    haloFont.Size = fontSize * 1.05f;
 
-                    xOffset = (float) ((width - boundWidth)*0.5);
-                    yOffset = (float) ((height - boundHeight)*0.3);
-
-                    graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-                    graphics.TranslateTransform(xOffset, yOffset);
-
-                    graphics.DrawPath(pen, path);
-                    graphics.FillPath(brush, path);
+                    graphics.DrawString(text, haloFont, pen.Color, position);
+                    graphics.DrawString(text, font, brush, position);
                 }
                 finally
                 {
@@ -1442,25 +1295,14 @@ namespace Mapgenix.GSuite.Android
                     {
                         path.Dispose();
                     }
-
-                    graphics.SmoothingMode = tempSmoothingMode;
-                    graphics.TranslateTransform(-xOffset, -yOffset);
                 }
-
-            }*/
+            }
         }
 
         private void ClearCache()
         {
             if (_brushCache != null)
             {
-                foreach (var brush in _brushCache.Values)
-                {
-                    if (brush != null)
-                    {
-                        //brush.Dispose();
-                    }
-                }
                 _brushCache.Clear();
             }
 
@@ -1470,31 +1312,23 @@ namespace Mapgenix.GSuite.Android
                 {
                     if (pen != null)
                     {
-                        /*if (pen.Brush != null)
-                        {
-                            pen.Brush.Dispose();
-                        }*/
                         pen.Dispose();
                     }
                 }
                 _penCache.Clear();
             }
 
-            /*if (_fontCache != null)
+            if (_fontCache != null)
             {
                 foreach (var font in _fontCache.Values)
                 {
                     if (font != null)
                     {
-                        if (font.FontFamily != null)
-                        {
-                            font.FontFamily.Dispose();
-                        }
                         font.Dispose();
                     }
                 }
                 _fontCache.Clear();
-            }*/
+            }
         }
 
         private Graphics SelectImageGraphicsByDrawingLevel(DrawingLevel drawingLevel)
@@ -1529,7 +1363,6 @@ namespace Mapgenix.GSuite.Android
                         if (_bufferImageForLevel02 == null)
                         {
                             _bufferImageForLevel02 = Bitmap.CreateBitmap(_localCanvasWidth, _localCanvasHeight, Bitmap.Config.Argb8888);
-                            //_bufferImageForLevel02.SetResolution(Dpi, Dpi);
                         }
                         _graphicsForLevel02 = Graphics.FromImage(_bufferImageForLevel02);
                     }
@@ -1542,7 +1375,6 @@ namespace Mapgenix.GSuite.Android
                         if (_bufferImageForLevel03 == null)
                         {
                             _bufferImageForLevel03 = Bitmap.CreateBitmap(_localCanvasWidth, _localCanvasHeight, Bitmap.Config.Argb8888);
-                            //_bufferImageForLevel03.SetResolution(Dpi, Dpi);
                         }
                         _graphicsForLevel03 = Graphics.FromImage(_bufferImageForLevel03);
                     }
@@ -1555,8 +1387,6 @@ namespace Mapgenix.GSuite.Android
                         if (_bufferImageForLevel04 == null)
                         {
                             _bufferImageForLevel04 = Bitmap.CreateBitmap(_localCanvasWidth, _localCanvasHeight, Bitmap.Config.Argb8888);
-                            //new Bitmap(_localCanvasWidth, _localCanvasHeight);
-                            //_bufferImageForLevel04.SetResolution(Dpi, Dpi);
                         }
                         _graphicsForLevel04 = Graphics.FromImage(_bufferImageForLevel04);
                     }
@@ -1568,8 +1398,7 @@ namespace Mapgenix.GSuite.Android
                     {
                         if (_bufferImageForLabel == null)
                         {
-                            _bufferImageForLabel = Bitmap.CreateBitmap(_localCanvasWidth, _localCanvasHeight, Bitmap.Config.Argb8888);//new Bitmap(_localCanvasWidth, _localCanvasHeight);
-                            //_bufferImageForLabel.SetResolution(Dpi, Dpi);
+                            _bufferImageForLabel = Bitmap.CreateBitmap(_localCanvasWidth, _localCanvasHeight, Bitmap.Config.Argb8888);
                         }
                         _graphicsForLabel = Graphics.FromImage(_bufferImageForLabel);
                     }
@@ -1655,13 +1484,13 @@ namespace Mapgenix.GSuite.Android
                         height = 1;
                     }
 
-                    /*resultBrush = GetGdiBrushFromGeoLinearGradientBrush(geoLinearGradientBrush,
-                        new RectangleF(minX, minY, width, height));*/
+                    resultBrush = GetGdiBrushFromGeoLinearGradientBrush(geoLinearGradientBrush,
+                        new RectF(minX, minY, width, height));
                 }
                 else
                 {
-                    /*resultBrush = GetGdiBrushFromGeoLinearGradientBrush(geoLinearGradientBrush,
-                        new RectangleF(0, 0, _localCanvasWidth, _localCanvasHeight));*/
+                    resultBrush = GetGdiBrushFromGeoLinearGradientBrush(geoLinearGradientBrush,
+                        new RectF(0, 0, _localCanvasWidth, _localCanvasHeight));
                 }
             }
             else
@@ -1734,20 +1563,13 @@ namespace Mapgenix.GSuite.Android
                 return _penCache[pen.Id];
             }
 
-            var resultPen = new Paint();//new Pen(GetGdiPlusColorFromGeoColor(pen.Color));
+            var resultPen = new Paint();
             resultPen.SetStyle(Paint.Style.Stroke);
-            //resultPen.Width = pen.Width*(Dpi/StandardDpi);
             resultPen.StrokeWidth = pen.Width * (Dpi / StandardDpi);
-            //resultPen.Brush = GetGdiPlusBrushFromGeoBrush(pen.Brush, null);
             resultPen.Color = GetGdiPlusColorFromGeoColor(pen.Color);
-            //resultPen.DashCap = GetDashCapFromGeoDashCap(pen.DashCap);
             resultPen.StrokeCap = GetDashCapFromGeoDashCap(pen.DashCap);
-            //resultPen.LineJoin = GetLineJoinFromDrawingLingJoin(pen.LineJoin);
             resultPen.StrokeJoin = GetLineJoinFromDrawingLingJoin(pen.LineJoin);
-            //resultPen.MiterLimit = pen.MiterLimit;
             resultPen.StrokeMiter = pen.MiterLimit;
-            //resultPen.StartCap = GetLineCapFromDrawingLineCap(pen.StartCap);
-            //resultPen.EndCap = GetLineCapFromDrawingLineCap(pen.EndCap);
 
             if (pen.DashPattern != null && pen.DashPattern.Count > 0)
             {
@@ -1756,8 +1578,6 @@ namespace Mapgenix.GSuite.Android
                 {
                     dashPattern[i] = pen.DashPattern[i];
                 }
-
-                //resultPen.DashPattern = dashPattern;
             }
 
             _penCache.Add(pen.Id, resultPen);
@@ -1773,115 +1593,15 @@ namespace Mapgenix.GSuite.Android
         private static Color GetGdiBrushFromGeoSolidBrush(GeoSolidBrush brush)
         {
             return GetGdiPlusColorFromGeoColor(brush.Color);
-            //return new SolidBrush(color);
         }
 
         private static Color GetGdiBrushFromGeoLinearGradientBrush(GeoLinearGradientBrush brush, RectF rectangle)
         {
-            if (brush == null)
-            {
-                return Color.Transparent;
-            }
-
-            /*LinearGradientBrush resultBrush;
-
-            var color1 = GetGdiPlusColorFromGeoColor(brush.StartColor);
-            var color2 = GetGdiPlusColorFromGeoColor(brush.EndColor);
-
-            resultBrush = new LinearGradientBrush(rectangle, color1, color2, brush.DirectionAngle);
-            resultBrush.WrapMode = GetWrapModeFromGeoWrapMode(brush.WrapMode);*/
-
             return Color.Transparent;
         }
 
         private void UseKeyColor(Bitmap image)
-        {
-            if (KeyColor.AlphaComponent != 0)
-            {
-                /*image.MakeTransparent(Color.FromArgb(KeyColor.AlphaComponent, KeyColor.RedComponent,
-                    KeyColor.GreenComponent, KeyColor.BlueComponent));
-
-                var canvas = new NativeAndroid.Graphics.Canvas(image);
-                canvas.DrawColor(Color.Transparent);*/
-            }
-
-            foreach (var oneKeyColor in KeyColors)
-            {
-                /*if (oneKeyColor.AlphaComponent != 0)
-                {
-                    image.MakeTransparent(Color.FromArgb(oneKeyColor.AlphaComponent, oneKeyColor.RedComponent,
-                        oneKeyColor.GreenComponent, oneKeyColor.BlueComponent));
-                }*/
-            }
-        }
-
-        /*private static Brush GetGdiBrushFromGeoHatchBrush(GeoHatchBrush brush)
-        {
-            if (brush == null)
-            {
-                return null;
-            }
-
-            var foregroundColor = GetGdiPlusColorFromGeoColor(brush.ForegroundColor);
-            var backgroundColor = GetGdiPlusColorFromGeoColor(brush.BackgroundColor);
-            var hatchStyle = GetHatchStyleFromGeoHatchStyle(brush.HatchStyle);
-
-            return new HatchBrush(hatchStyle, foregroundColor, backgroundColor);
-        }*/
-
-        /*private static Brush GetGdiBrushFromGeoTextureBrush(GeoTextureBrush brush)
-        {
-            if (brush == null)
-            {
-                return null;
-            }
-
-            var drawingRectangleF = brush.DrawingRectangleF;
-            var upperLeftX = drawingRectangleF.CenterX - drawingRectangleF.Width/2;
-            var upperLeftY = drawingRectangleF.CenterY - drawingRectangleF.Width/2;
-
-            var image = Image.FromStream(brush.GeoImage.GetImageStream(new GdiPlusGeoCanvas()));
-            var rectangleF = new RectangleF(upperLeftX, upperLeftY, drawingRectangleF.Width, drawingRectangleF.Height);
-
-            TextureBrush resultBrush;
-            if (rectangleF.Width == 0)
-            {
-                resultBrush = new TextureBrush(image);
-            }
-            else
-            {
-                resultBrush = new TextureBrush(image, GetWrapModeFromGeoWrapMode(brush.GeoWrapMode), rectangleF);
-            }
-            return resultBrush;
-        }*/
-
-        /*private static WrapMode GetWrapModeFromGeoWrapMode(GeoWrapMode geoWrapMode)
-        {
-            WrapMode wrapMode;
-
-            switch (geoWrapMode)
-            {
-                case GeoWrapMode.Clamp:
-                    wrapMode = WrapMode.Clamp;
-                    break;
-                case GeoWrapMode.Tile:
-                    wrapMode = WrapMode.Tile;
-                    break;
-                case GeoWrapMode.TileFlipX:
-                    wrapMode = WrapMode.TileFlipX;
-                    break;
-                case GeoWrapMode.TileFlipXY:
-                    wrapMode = WrapMode.TileFlipXY;
-                    break;
-                case GeoWrapMode.TileFlipY:
-                    wrapMode = WrapMode.TileFlipY;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("geoWrapMode");
-            }
-
-            return wrapMode;
-        }*/
+        { }
 
         private static FontStyle GetFontStyleFromDrawingFontStyle(DrawingFontStyles style)
         {
@@ -1938,53 +1658,7 @@ namespace Mapgenix.GSuite.Android
             }
 
             return returnDashCap;
-        }
-
-        /*private static LineCap GetLineCapFromDrawingLineCap(DrawingLineCap lineCap)
-        {
-            LineCap returnLineCap;
-
-            switch (lineCap)
-            {
-                case DrawingLineCap.Round:
-                    returnLineCap = LineCap.Round;
-                    break;
-                case DrawingLineCap.AnchorMask:
-                    returnLineCap = LineCap.AnchorMask;
-                    break;
-                case DrawingLineCap.ArrowAnchor:
-                    returnLineCap = LineCap.ArrowAnchor;
-                    break;
-                case DrawingLineCap.Custom:
-                    returnLineCap = LineCap.Custom;
-                    break;
-                case DrawingLineCap.DiamondAnchor:
-                    returnLineCap = LineCap.DiamondAnchor;
-                    break;
-                case DrawingLineCap.Flat:
-                    returnLineCap = LineCap.Flat;
-                    break;
-                case DrawingLineCap.NoAnchor:
-                    returnLineCap = LineCap.NoAnchor;
-                    break;
-                case DrawingLineCap.RoundAnchor:
-                    returnLineCap = LineCap.RoundAnchor;
-                    break;
-                case DrawingLineCap.Square:
-                    returnLineCap = LineCap.Square;
-                    break;
-                case DrawingLineCap.SquareAnchor:
-                    returnLineCap = LineCap.SquareAnchor;
-                    break;
-                case DrawingLineCap.Triangle:
-                    returnLineCap = LineCap.Triangle;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("lineCap", ExceptionDescription.EnumerationOutOfRange);
-            }
-
-            return returnLineCap;
-        }*/
+        }        
 
         private static Paint.Join GetLineJoinFromDrawingLingJoin(DrawingLineJoin lineJoin)
         {
@@ -2010,128 +1684,7 @@ namespace Mapgenix.GSuite.Android
 
             return returnLineJoin;
         }
-
-        /*private static HatchStyle GetHatchStyleFromGeoHatchStyle(GeoHatchStyle hatchStyle)
-        {
-            switch (hatchStyle)
-            {
-                case GeoHatchStyle.Horizontal:
-                    return HatchStyle.Horizontal;
-                case GeoHatchStyle.Vertical:
-                    return HatchStyle.Vertical;
-                case GeoHatchStyle.ForwardDiagonal:
-                    return HatchStyle.ForwardDiagonal;
-                case GeoHatchStyle.BackwardDiagonal:
-                    return HatchStyle.BackwardDiagonal;
-                case GeoHatchStyle.LargeGrid:
-                    return HatchStyle.LargeGrid;
-                case GeoHatchStyle.DiagonalCross:
-                    return HatchStyle.DiagonalCross;
-                case GeoHatchStyle.Percent05:
-                    return HatchStyle.Percent05;
-                case GeoHatchStyle.Percent10:
-                    return HatchStyle.Percent10;
-                case GeoHatchStyle.Percent20:
-                    return HatchStyle.Percent20;
-                case GeoHatchStyle.Percent25:
-                    return HatchStyle.Percent25;
-                case GeoHatchStyle.Percent30:
-                    return HatchStyle.Percent30;
-                case GeoHatchStyle.Percent40:
-                    return HatchStyle.Percent40;
-                case GeoHatchStyle.Percent50:
-                    return HatchStyle.Percent50;
-                case GeoHatchStyle.Percent60:
-                    return HatchStyle.Percent60;
-                case GeoHatchStyle.Percent70:
-                    return HatchStyle.Percent70;
-                case GeoHatchStyle.Percent75:
-                    return HatchStyle.Percent75;
-                case GeoHatchStyle.Percent80:
-                    return HatchStyle.Percent80;
-                case GeoHatchStyle.Percent90:
-                    return HatchStyle.Percent90;
-                case GeoHatchStyle.LightDownwardDiagonal:
-                    return HatchStyle.LightDownwardDiagonal;
-                case GeoHatchStyle.LightUpwardDiagonal:
-                    return HatchStyle.LightUpwardDiagonal;
-                case GeoHatchStyle.DarkDownwardDiagonal:
-                    return HatchStyle.DarkDownwardDiagonal;
-                case GeoHatchStyle.DarkUpwardDiagonal:
-                    return HatchStyle.DarkUpwardDiagonal;
-                case GeoHatchStyle.WideDownwardDiagonal:
-                    return HatchStyle.WideDownwardDiagonal;
-                case GeoHatchStyle.WideUpwardDiagonal:
-                    return HatchStyle.WideUpwardDiagonal;
-                case GeoHatchStyle.LightVertical:
-                    return HatchStyle.LightVertical;
-                case GeoHatchStyle.LightHorizontal:
-                    return HatchStyle.LightHorizontal;
-                case GeoHatchStyle.NarrowVertical:
-                    return HatchStyle.NarrowVertical;
-                case GeoHatchStyle.NarrowHorizontal:
-                    return HatchStyle.NarrowHorizontal;
-                case GeoHatchStyle.DarkVertical:
-                    return HatchStyle.DarkVertical;
-                case GeoHatchStyle.DarkHorizontal:
-                    return HatchStyle.DarkHorizontal;
-                case GeoHatchStyle.DashedDownwardDiagonal:
-                    return HatchStyle.DashedDownwardDiagonal;
-                case GeoHatchStyle.DashedUpwardDiagonal:
-                    return HatchStyle.DashedUpwardDiagonal;
-                case GeoHatchStyle.DashedHorizontal:
-                    return HatchStyle.DashedHorizontal;
-                case GeoHatchStyle.DashedVertical:
-                    return HatchStyle.DashedVertical;
-                case GeoHatchStyle.SmallConfetti:
-                    return HatchStyle.SmallConfetti;
-                case GeoHatchStyle.LargeConfetti:
-                    return HatchStyle.LargeConfetti;
-                case GeoHatchStyle.ZigZag:
-                    return HatchStyle.ZigZag;
-                case GeoHatchStyle.Wave:
-                    return HatchStyle.Wave;
-                case GeoHatchStyle.DiagonalBrick:
-                    return HatchStyle.DiagonalBrick;
-                case GeoHatchStyle.HorizontalBrick:
-                    return HatchStyle.HorizontalBrick;
-                case GeoHatchStyle.Weave:
-                    return HatchStyle.Weave;
-                case GeoHatchStyle.Plaid:
-                    return HatchStyle.Plaid;
-                case GeoHatchStyle.Divot:
-                    return HatchStyle.Divot;
-                case GeoHatchStyle.DottedGrid:
-                    return HatchStyle.DottedGrid;
-                case GeoHatchStyle.DottedDiamond:
-                    return HatchStyle.DottedDiamond;
-                case GeoHatchStyle.Shingle:
-                    return HatchStyle.Shingle;
-                case GeoHatchStyle.Trellis:
-                    return HatchStyle.Trellis;
-                case GeoHatchStyle.Sphere:
-                    return HatchStyle.Sphere;
-                case GeoHatchStyle.SmallGrid:
-                    return HatchStyle.SmallGrid;
-                case GeoHatchStyle.SmallCheckerBoard:
-                    return HatchStyle.SmallCheckerBoard;
-                case GeoHatchStyle.LargeCheckerBoard:
-                    return HatchStyle.LargeCheckerBoard;
-                case GeoHatchStyle.OutlinedDiamond:
-                    return HatchStyle.OutlinedDiamond;
-                case GeoHatchStyle.SolidDiamond:
-                    return HatchStyle.SolidDiamond;
-                case GeoHatchStyle.Min:
-                    return HatchStyle.Min;
-                case GeoHatchStyle.Max:
-                    return HatchStyle.Max;
-                case GeoHatchStyle.Cross:
-                    return HatchStyle.Cross;
-                default:
-                    throw new ArgumentOutOfRangeException("hatchStyle", ExceptionDescription.EnumerationOutOfRange);
-            }
-        }*/
-
+        
         private void SetGraphicsMode(Graphics graphics)
         {
             if (graphics == null)
@@ -2142,40 +1695,27 @@ namespace Mapgenix.GSuite.Android
             switch (DrawingQuality)
             {
                 case DrawingQuality.Default:
-                    //graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    //graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                    //graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
                     graphics.DrawConfig.AntiAlias = true;
                     graphics.DrawConfig.Hinting = PaintHinting.On;
                     break;
 
                 case DrawingQuality.HighQuality:
-                    //graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                    //graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-                    //graphics.CompositingQuality = CompositingQuality.Default;
                     graphics.DrawConfig.AntiAlias = true;
                     graphics.DrawConfig.Hinting = PaintHinting.On;
                     break;
 
                 case DrawingQuality.HighSpeed:
-                    //graphics.SmoothingMode = SmoothingMode.HighSpeed;
-                    //graphics.CompositingQuality = CompositingQuality.HighSpeed;
-                    //graphics.TextRenderingHint = TextRenderingHint.SystemDefault;
                     graphics.DrawConfig.AntiAlias = false;
                     graphics.DrawConfig.Hinting = PaintHinting.Off;
                     break;
 
                 case DrawingQuality.CanvasSettings:
-                    //graphics.SmoothingMode = _smoothingMode;
-                    //graphics.TextRenderingHint = _textRenderingHint;
-                    //graphics.CompositingQuality = _compositiongQuality;
                     graphics.DrawConfig.AntiAlias = true;
                     graphics.DrawConfig.Hinting = PaintHinting.On;
                     break;
                 default:
                     break;
             }
-            //graphics.InterpolationMode = InterpolationMode;
         }
 
         /// <summary>Gets the canvas width of a native image object.</summary>
@@ -2220,10 +1760,6 @@ namespace Mapgenix.GSuite.Android
         {
             Validators.CheckParameterIsNotNull(image, "image");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
-   
-            //HasDrawn = true;
-
             DrawWorldImageWithoutScaling(image, centerXInWorld, centerYInWorld, drawingLevel, 0, 0, 0);
         }
 
@@ -2244,7 +1780,6 @@ namespace Mapgenix.GSuite.Android
         {
             Validators.CheckParameterIsNotNull(image, "image");
             Validators.CheckGeoCanvasIsInDrawing(IsDrawing);
-            //Validators.CheckDrawingLevelIsValid(drawingLevel, "drawingLevel");
    
             var upperLeftX = CurrentWorldExtent.UpperLeftPoint.X;
             var upperLeftY = CurrentWorldExtent.UpperLeftPoint.Y;
@@ -2253,8 +1788,6 @@ namespace Mapgenix.GSuite.Android
             var screenY = (float) ((upperLeftY - centerYInWorld)*Height/CurrentWorldExtent.Height);
 
             DrawScreenImageWithoutScalingCore(image, screenX, screenY, drawingLevel, xOffset, yOffset, rotateAngle);
-
-            //HasDrawn = true;
         }
 
         /// <summary>Draws an unscaled image on the canvas.</summary>
@@ -2301,13 +1834,6 @@ namespace Mapgenix.GSuite.Android
 
             screenX += -imageWidth/2.0f + xOffset;
             screenY += -imageHeight/2.0f + yOffset;        
-
-            /*var tempVDpi = image.HorizontalResoluton;
-            var tempHDpi = image.VerticalResolution;
-            if (image.HorizontalResolution != Dpi)
-            {
-                image.SetResolution(Dpi, Dpi);
-            }*/
             UseKeyColor(image);
 
             if (rotateAngle == 0)
@@ -2340,8 +1866,6 @@ namespace Mapgenix.GSuite.Android
                 graphics.RotateTransform(rotateAngle);
                 graphics.TranslateTransform(-screenX, -screenY);
             }
-
-            //image.SetResolution(tempHDpi, tempVDpi);
         }
     }
 }

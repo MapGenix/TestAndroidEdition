@@ -80,14 +80,12 @@ namespace Mapgenix.GSuite.Android
                     break;
              
                 case GeographyUnit.Meter:
-                    //BaseBitmapTileCache meterCache = new Mapgenix.GSuite.Android.FileNativeImageTileCache();
                     FileNativeImageTileCache meterCache = new FileNativeImageTileCache();
                     meterCache.TileMatrix.BoundingBoxUnit = GeographyUnit.Meter;
                     meterCache.TileMatrix.BoundingBox = new RectangleShape(-1000000000, 1000000000, 1000000000, -1000000000);
                     maxExtent = meterCache.TileMatrix.BoundingBox;
                     break;
                 case GeographyUnit.Feet:
-                    //BaseBitmapTileCache feetCache = new FileBitmapTileCache();
                     FileNativeImageTileCache feetCache = new FileNativeImageTileCache();
                     feetCache.TileMatrix.BoundingBoxUnit = GeographyUnit.Feet;
                     feetCache.TileMatrix.BoundingBox = new RectangleShape(-1000000000, 1000000000, 1000000000, -1000000000);
@@ -226,13 +224,5 @@ namespace Mapgenix.GSuite.Android
 
             return imageSource;
         }
-
-        /*internal static void FreezeElement(Freezable freezable)
-        {
-            if (freezable.CanFreeze)
-            {
-                freezable.Freeze();
-            }
-        }*/
     }
 }
