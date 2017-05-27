@@ -16,7 +16,7 @@ using Mapgenix.Layers;
 namespace Mapgenix.GSuite.Android
 {
     /// <summary>Layer for GoogleMaps web map service.</summary>
-    public class GoogleMapsAndroidLayer : BaseLayer
+    internal class GoogleMapsAndroidLayer : BaseLayer
     {
         private const double divideDpi = 1.0 / 96.0;
         private const double googleLimitLatitud = 85.0;

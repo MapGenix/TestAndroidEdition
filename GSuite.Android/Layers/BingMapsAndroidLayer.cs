@@ -18,7 +18,7 @@ using Android.Graphics;
 namespace Mapgenix.GSuite.Android
 {
     /// <summary>Layer for Bing Maps</summary>
-    public class BingMapsAndroidLayer : BaseLayer
+    internal class BingMapsAndroidLayer : BaseLayer
     {
 
         private const double DIVIDE_DPI = 1.0 / 96.0;

@@ -14,7 +14,7 @@ using NativeAndroid = Android;
 
 namespace Mapgenix.GSuite.Android
 {
-    public class GraphicsPath
+    internal class GraphicsPath
     {
         private Path _path;
 

@@ -15,7 +15,7 @@ namespace Mapgenix.GSuite.Android
 {
     /// <summary>Layer for OpenStreetMap web map service.</summary>
     [Serializable]
-    public class OpenStreetMapAndroidLayer : BaseLayer
+    internal class OpenStreetMapAndroidLayer : BaseLayer
     {
         private const string serverUrl = "http://tile.openstreetmap.org/{0}/{1}/{2}.png";
         private const double divideDpi = 1.0 / 96.0;

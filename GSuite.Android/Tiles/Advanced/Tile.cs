@@ -1,21 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
-//using System.Drawing;
-using System.Globalization;
 using System.IO;
-using System.Windows;
 using Mapgenix.Canvas;
 using Mapgenix.Shapes;
 using Mapgenix.Layers;
 using Android.Widget;
 using Android.Content;
-using System.Threading;
 using NativeAndroid = Android;
 using Android.Graphics;
 using System.Threading.Tasks;
 using Android.OS;
-using System.Collections.ObjectModel;
 using Android.Graphics.Drawables;
 
 namespace Mapgenix.GSuite.Android
@@ -28,7 +23,6 @@ namespace Mapgenix.GSuite.Android
     [DesignTimeVisible(false)]
     public partial class Tile : LinearLayout, IDisposable
     {
-        //public static readonly DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(ImageSource), typeof(Tile));
         [NonSerialized]
         private Bitmap _imageSource;
         [NonSerialized]

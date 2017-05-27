@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Mapgenix.GSuite.Android
 {
-    public class BingMapAndroidRequestBuilder
+    internal class BingMapAndroidRequestBuilder
     {
         public String LicenseKey
         {

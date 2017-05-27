@@ -15,7 +15,7 @@ using Android.Util;
 
 namespace Mapgenix.GSuite.Android
 {
-    class Graphics
+    internal class Graphics
     {
 
         private NativeAndroid.Graphics.Canvas _canvas;

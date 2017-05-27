@@ -30,7 +30,6 @@ namespace Mapgenix.GSuite.Android
         private int _mapHeight;
         private GeographyUnit _mapUnit;
         private ZoomLevelSet _zoomLevelSet;
-        //private int _mouseWheelDelta;
         private double _scale;
         private MotionEventActions _motionAction;
         private float _pinchFactor = 1;

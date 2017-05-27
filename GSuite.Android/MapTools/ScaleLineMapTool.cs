@@ -86,7 +86,6 @@ namespace Mapgenix.GSuite.Android
                     if(ChildCount == 0)
                         AddView(_scaleLineCanvas);
 
-                    //_scaleLineCanvas.RemoveAllViews();
                     _scaleLineCanvas.AddView(_topText);
                     _scaleLineCanvas.AddView(_bottomText);
                 }

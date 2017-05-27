@@ -21,7 +21,7 @@ using System.Threading;
 
 namespace Mapgenix.GSuite.Android
 {
-    public class HEREMapsAndroidLayer : BaseLayer
+    internal class HEREMapsAndroidLayer : BaseLayer
     {
         private const double DIVIDE_DPI = 1.0 / 96.0;
         private const double INCH_PER_DECIAML_DEGREE = 4374754;

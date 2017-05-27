@@ -357,7 +357,10 @@ namespace TestApp2
         private void InitMapShapes()
         {
             if (MainMap != null)
-            {                
+            {
+
+                MainMap.MapUnit = GeographyUnit.Meter;
+
                 ShapeFileFeatureLayer districtLayer = FeatureLayerFactory.CreateShapeFileFeatureLayer(sampleDataPath + "/panama_districts.shp");
                 districtLayer.ZoomLevelSet.ZoomLevel01.DefaultAreaStyle = AreaStyles.CreateSimpleAreaStyle(GeoColor.StandardColors.LightPink, GeoColor.StandardColors.Black);
                 districtLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
@@ -370,22 +373,38 @@ namespace TestApp2
                 locationLayer.ZoomLevelSet.ZoomLevel01.DefaultPointStyle = PointStyles.CreateSimpleCircleStyle(GeoColor.StandardColors.LightSkyBlue, 20, GeoColor.StandardColors.Black);
                 locationLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
 
+                //label layer
+                ShapeFileFeatureLayer labelLocationLayer = FeatureLayerFactory.CreateShapeFileFeatureLayer(sampleDataPath + "/panama_locations.shp");
+                LabelStyle labelStyle = new LabelStyle("NAME", new GeoFont("Centaur", 20, DrawingFontStyles.Bold), new GeoSolidBrush(GeoColor.StandardColors.Brown));
+                labelStyle.HaloPen = new GeoPen(GeoColor.StandardColors.White);
+                labelStyle.PointPlacement = PointPlacement.UpperLeft;
+                labelStyle.XOffsetInPixel = 5;
+                labelStyle.OverlappingRule = LabelOverlappingRule.NoOverlapping;
+                labelLocationLayer.ZoomLevelSet.ZoomLevel01.DefaultTextStyle = labelStyle;
+                labelLocationLayer.ZoomLevelSet.ZoomLevel01.ApplyUntilZoomLevel = ApplyUntilZoomLevel.Level20;
+
                 Proj4Projection proj4Projection = new Proj4Projection();
                 proj4Projection.InternalProjectionParametersString = Proj4Projection.GetWgs84ParametersString();
                 proj4Projection.ExternalProjectionParametersString = Proj4Projection.GetSphericalMercatorParametersString();
                 districtLayer.FeatureSource.Projection = proj4Projection;
                 roadLayer.FeatureSource.Projection = proj4Projection;
                 locationLayer.FeatureSource.Projection = proj4Projection;
+                labelLocationLayer.FeatureSource.Projection = proj4Projection;
 
                 LayerOverlay overlay = new LayerOverlay(MainMap.Context);
                 overlay.Layers.Add("District", districtLayer);
                 overlay.Layers.Add("Road", roadLayer);
                 overlay.Layers.Add("Location", locationLayer);
 
+                LayerOverlay labelOverlay = new LayerOverlay(MainMap.Context);
+                labelOverlay.TileType = TileType.SingleTile;
+                labelOverlay.Layers.Add("LabelLocation", labelLocationLayer);
+
                 string basePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 string cachePath = System.IO.Path.Combine(basePath, "Temp");
 
                 MainMap.Overlays.Add(overlay);
+                MainMap.Overlays.Add(labelOverlay);
 
                 districtLayer.Open();
                 MainMap.CurrentExtent = districtLayer.GetBoundingBox();                
@@ -394,7 +413,7 @@ namespace TestApp2
 
                 MainMap.MapTools.ScaleLine.Enabled = true;
                 MainMap.MapTools.MouseCoordinate.Enabled = true;
-
+                MainMap.ZoomAnimationDuration = 500;
                 MainMap.Refresh();
             }
         }
@@ -431,7 +450,7 @@ namespace TestApp2
         protected override void OnResume()
         {
             base.OnResume();
-            //InitMapShapes();   
+            InitMapShapes();   
             //GEOJSON();
         }
     }

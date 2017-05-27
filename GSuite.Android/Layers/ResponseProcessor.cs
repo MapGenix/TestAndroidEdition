@@ -4,7 +4,7 @@ using Android.Graphics;
 
 namespace Mapgenix.GSuite.Android
 {
-    public static class ResponseProcessor
+    internal static class ResponseProcessor
     {
 
         public static void ProcessResponse(BaseGeoCanvas canvas, Bitmap image)

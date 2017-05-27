@@ -9,7 +9,7 @@ using System.Text;
 namespace Mapgenix.GSuite.Android
 {
     [Serializable]
-    public class GoogleMapsAndroidLayerImageCache
+    internal class GoogleMapsAndroidLayerImageCache
     {
         private string cacheDirectory;
 
